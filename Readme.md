@@ -10,4 +10,5 @@ A possible plan for this is as follows:
 
 1. Given parameters for a world size, randomize the location of plate tectonics
 2. Using tectonic activity and plate boundaries, estimate elevation
+
 3. Work hard
