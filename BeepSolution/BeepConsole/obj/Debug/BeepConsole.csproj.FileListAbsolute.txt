@@ -1,0 +1,6 @@
+d:\Documents\Visual Studio 2017\Projects\Beep\BeepSolution\BeepConsole\bin\Debug\BeepConsole.exe.config
+d:\Documents\Visual Studio 2017\Projects\Beep\BeepSolution\BeepConsole\bin\Debug\BeepConsole.exe
+d:\Documents\Visual Studio 2017\Projects\Beep\BeepSolution\BeepConsole\bin\Debug\BeepConsole.pdb
+d:\Documents\Visual Studio 2017\Projects\Beep\BeepSolution\BeepConsole\obj\Debug\BeepConsole.csprojResolveAssemblyReference.cache
+d:\Documents\Visual Studio 2017\Projects\Beep\BeepSolution\BeepConsole\obj\Debug\BeepConsole.exe
+d:\Documents\Visual Studio 2017\Projects\Beep\BeepSolution\BeepConsole\obj\Debug\BeepConsole.pdb
