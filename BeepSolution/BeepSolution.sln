@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeepConsole", "BeepConsole\BeepConsole.csproj", "{AA49DB1D-D517-45FB-92EB-195E98635ECD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeepWorld", "ClassLibrary1\BeepWorld.csproj", "{28130B90-570F-4EF6-8617-A527767171E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeepWPF", "BeepWPF\BeepWPF.csproj", "{B1E25052-6669-4235-8BF5-9365AC8D55CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{AA49DB1D-D517-45FB-92EB-195E98635ECD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA49DB1D-D517-45FB-92EB-195E98635ECD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA49DB1D-D517-45FB-92EB-195E98635ECD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28130B90-570F-4EF6-8617-A527767171E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28130B90-570F-4EF6-8617-A527767171E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28130B90-570F-4EF6-8617-A527767171E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28130B90-570F-4EF6-8617-A527767171E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1E25052-6669-4235-8BF5-9365AC8D55CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1E25052-6669-4235-8BF5-9365AC8D55CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1E25052-6669-4235-8BF5-9365AC8D55CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1E25052-6669-4235-8BF5-9365AC8D55CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
