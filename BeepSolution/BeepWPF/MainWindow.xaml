@@ -5,16 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Beep"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="325"
+        Title="Beep"
+        MinWidth="300" MinHeight="300"
+        Height="300" Width="300"
         Padding="0,0,0,0"
-        Margin="0,0,0,0"
+        Margin="0,0,0,0" Background="White"
+        MouseMove="OnMouseMove"
         >
     <Grid>
         <Canvas
             Name="canvas"
-            Background="PeachPuff"
-            HorizontalAlignment="Left" Height="300" Margin="10,10,10,10" VerticalAlignment="Top" Width="300"
-            />
+            Background="#FFEFF0E1"
+            HorizontalAlignment="Left" Height="300"  VerticalAlignment="Top" Width="300"
+            >
+        </Canvas>
+        <TextBox Name="MouseText" Height="23" Canvas.Left="26" TextWrapping="Wrap" Text="TextBox" Canvas.Top="208" Width="120" Margin="31,220,142.6,27.4"/>
 
     </Grid>
 </Window>
