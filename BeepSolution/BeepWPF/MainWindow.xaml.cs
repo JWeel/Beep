@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Drawing;
 using System.Collections.Generic;
+using DrawPoint = System.Windows.Point;
 using static System.Math;
 
 namespace Beep {
@@ -25,16 +26,17 @@ namespace Beep {
 
             //canvas.Visibility = Visibility.Hidden;
 
-            BeepWorld bw = new BeepWorld(4, 4);
+            BeepWorld bw = new BeepWorld(22, 26);
 
             //foreach (Line line in MakeHexagon(30, 30)) {
             //    canvas.Children.Add(line);
             //}
 
-            double relativeX = canvas.Width / 2;
-            double relativeY = canvas.Height / 2;
+            double relativeX = 0;
+            double relativeY = HEXAGON_VERTICAL_EDGE;
 
-            for (int j = -bw.Size.Y + 1; j < bw.Size.Y; j++) {
+            //for (int j = -bw.Size.Y + 1; j < bw.Size.Y; j++) {
+            for (int j = 100000; j < bw.Size.Y; j++) {
 
                 double posY = j * (HEXAGON_VERTICAL_LENGTH/2 + HEXAGON_SIDE_LENGTH/2) + relativeY;
 
@@ -42,20 +44,17 @@ namespace Beep {
                 //if (Abs(j % 2) == 1) continue;
                 //if (j < 0) continue;
 
-//                for (int i = 0; i < bw.Size.X; i++) {
-                for (int i = -bw.Size.X+1; i < bw.Size.X; i++) {
+                for (int i = 0; i < bw.Size.X; i++) {
+                //for (int i = -bw.Size.X+1; i < bw.Size.X; i++) {
                         //        Console.Write(" " + i + "," + j + " ");
                         //Console.Write(" * ");
-                        double posX = i * HEXAGON_HORIZONTAL_LENGTH + relativeX;
-
+                    double posX = i * HEXAGON_HORIZONTAL_LENGTH + relativeX;
 
                     if (j % 2 != 0) posX += HEXAGON_HORIZONTAL_HALF;
-
-                    foreach (Line line in MakeHexagon(posX, posY)) {
-                        canvas.Children.Add(line);
-                    }
+                    
+                    canvas.Children.Add(MakeHexagon(posX, posY));
                     Label label = new Label() {
-                        Foreground = new SolidColorBrush(Colors.Black),
+                        Foreground = new SolidColorBrush(Colors.White),
                         Content = i + "," + j,
                         FontSize = 6,
                         RenderTransform = new TranslateTransform { X = posX - HEXAGON_SIDE_LENGTH / 4, Y = posY - HEXAGON_SIDE_LENGTH / 2 }
@@ -64,67 +63,39 @@ namespace Beep {
                 }
             //    Console.WriteLine("");
             }
+
+            foreach (Tile t in bw.tiless) {
+                int xCoordinate = t.Coordinates.X;
+                int yCoordinate = t.Coordinates.Y;
+                double posY = yCoordinate * (HEXAGON_VERTICAL_LENGTH / 2 + HEXAGON_SIDE_LENGTH / 2) + relativeY;
+                double posX = xCoordinate * HEXAGON_HORIZONTAL_LENGTH + relativeX;
+                if (yCoordinate % 2 != 0) posX += HEXAGON_HORIZONTAL_HALF;
+
+                canvas.Children.Add(MakeHexagon(posX, posY));
+                Label label = new Label() {
+                    Foreground = new SolidColorBrush(Colors.White),
+                    Content = xCoordinate + "," + yCoordinate,
+                    FontSize = 6,
+                    RenderTransform = new TranslateTransform { X = posX - HEXAGON_SIDE_LENGTH / 8, Y = posY - HEXAGON_SIDE_LENGTH / 2 }
+                };
+                canvas.Children.Add(label);
+            }
         }
 
-        // returns a list of six lines representing a hexagon
-        private List<Line> MakeHexagon(double posX, double posY) {
-            //List<System.Windows.Point> hexagonPoints = new List<System.Windows.Point>();
-            Polygon p = new Polygon();
-            
-            System.Windows.Point[] hexagonPoints = new System.Windows.Point[6] {
-                new System.Windows.Point(posX, posY),
-                new System.Windows.Point(posX, posY),
-                new System.Windows.Point(posX, posY),
-                new System.Windows.Point(posX, posY),
-                new System.Windows.Point(posX, posY),
-                new System.Windows.Point(posX, posY)
+        // returns a polygon of six points representing a hexagon
+        private Polygon MakeHexagon(double posX, double posY) {
+            return new Polygon() {
+                Points = new PointCollection {
+                    new DrawPoint(posX, posY),
+                    new DrawPoint(posX, posY + HEXAGON_SIDE_LENGTH),
+                    new DrawPoint(posX + HEXAGON_HORIZONTAL_HALF, posY + HEXAGON_SIDE_LENGTH + HEXAGON_VERTICAL_EDGE),
+                    new DrawPoint(posX + HEXAGON_HORIZONTAL_LENGTH, posY + HEXAGON_SIDE_LENGTH),
+                    new DrawPoint(posX + HEXAGON_HORIZONTAL_LENGTH, posY),
+                    new DrawPoint(posX + HEXAGON_HORIZONTAL_HALF, posY - HEXAGON_VERTICAL_EDGE)
+                },
+                Stroke = Brushes.LightSteelBlue,
+                Fill = Brushes.Black
             };
-
-            #region createpoints
-            Line l1 = new Line() {
-                X1 = posX,
-                X2 = posX,
-                Y1 = posY,
-                Y2 = posY + HEXAGON_SIDE_LENGTH,
-                Stroke = Brushes.LightSteelBlue
-            };
-            Line l2 = new Line() {
-                X1 = posX,
-                X2 = posX + HEXAGON_HORIZONTAL_HALF,
-                Y1 = posY,
-                Y2 = posY - HEXAGON_VERTICAL_EDGE,
-                Stroke = System.Windows.Media.Brushes.LightSteelBlue
-            };
-            Line l3 = new Line() {
-                X1 = posX + HEXAGON_HORIZONTAL_LENGTH,
-                X2 = posX + HEXAGON_HORIZONTAL_HALF,
-                Y1 = posY,
-                Y2 = posY - HEXAGON_VERTICAL_EDGE,
-                Stroke = System.Windows.Media.Brushes.LightSteelBlue
-            };
-            Line l4 = new Line() {
-                X1 = posX + HEXAGON_HORIZONTAL_LENGTH,
-                X2 = posX + HEXAGON_HORIZONTAL_LENGTH,
-                Y1 = posY,
-                Y2 = posY + HEXAGON_SIDE_LENGTH,
-                Stroke = System.Windows.Media.Brushes.LightSteelBlue
-            };
-            Line l5 = new Line() {
-                X1 = posX + HEXAGON_HORIZONTAL_HALF,
-                X2 = posX + HEXAGON_HORIZONTAL_LENGTH,
-                Y1 = posY + HEXAGON_SIDE_LENGTH + HEXAGON_VERTICAL_EDGE,
-                Y2 = posY + HEXAGON_SIDE_LENGTH,
-                Stroke = System.Windows.Media.Brushes.LightSteelBlue
-            };
-            Line l6 = new Line() {
-                X1 = posX,
-                X2 = posX + HEXAGON_HORIZONTAL_HALF,
-                Y1 = posY + HEXAGON_SIDE_LENGTH,
-                Y2 = posY + HEXAGON_SIDE_LENGTH + HEXAGON_VERTICAL_EDGE,
-                Stroke = System.Windows.Media.Brushes.LightSteelBlue
-            };
-            #endregion
-            return new List<Line>() { l1, l2, l3, l4, l5, l6 };
         }
         
         private void OnMouseMove(object sender, System.Windows.Input.MouseEventArgs e) {

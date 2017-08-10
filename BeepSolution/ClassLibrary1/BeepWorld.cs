@@ -15,6 +15,7 @@ namespace Beep {
         //private Tile[,] tiles;
         private Dictionary<Point, Tile> tiles;
         //private NegativeArray<Tile> tiles;
+        public List<Tile> tiless;
 
         public BeepWorld(Point p) : this(p.X, p.Y) { }
 
@@ -25,11 +26,13 @@ namespace Beep {
             //tiles = new Tile[sizeX, sizeY*2 -1];
             tiles = new Dictionary<Point, Tile>();
             //tiles = new NegativeArray<Tile>(sizeY);
+            tiless = new List<Tile>();
+            for (int i = 0; i < Size.X; i++) for (int j = 0; j < Size.Y; j++) tiless.Add(new Tile(i, j));
 
             // add tiles
             for (int i = 0; i < Size.X; i++) {
                 for (int j = 0; j < Size.Y; j++) tiles[new Point(i, j)] = new Tile(i, j);
-                for (int j = -Size.Y + 1; j < 0; j++) tiles[new Point(i, j)] = new Tile(i, j);
+                //for (int j = -Size.Y + 1; j < 0; j++) tiles[new Point(i, j)] = new Tile(i, j);
             }
         }
 
@@ -46,7 +49,7 @@ namespace Beep {
     }
 
 
-    class Tile {
+    public class Tile {
         public List<Tile> Neighbors { get; set; }
         public Point Coordinates { get; set; }
         internal Tile(int x, int y) {
