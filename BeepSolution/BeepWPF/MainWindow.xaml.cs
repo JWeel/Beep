@@ -2,8 +2,7 @@
 using System.Windows.Shapes;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Drawing;
-using System.Collections.Generic;
+using System.Diagnostics;
 using DrawPoint = System.Windows.Point;
 using static System.Math;
 
@@ -14,66 +13,53 @@ namespace Beep {
 
     public partial class MainWindow : Window {
 
-        private const double HEXAGON_SIDE_LENGTH = 10;
-        private const double HEXAGON_VERTICAL_LENGTH = 2 * HEXAGON_SIDE_LENGTH;
+        // hexagon length values. only change HEXAGON_SIDE_LENGTH !
+        private const double HEXAGON_SIDE_LENGTH = 20;
+        private static readonly double HEXAGON_VERTICAL_LENGTH = 2 * HEXAGON_SIDE_LENGTH;
         private static readonly double HEXAGON_HORIZONTAL_LENGTH = Sqrt(3) * HEXAGON_SIDE_LENGTH;
         private static readonly double HEXAGON_HORIZONTAL_HALF = HEXAGON_HORIZONTAL_LENGTH / 2;
-        private static readonly double HEXAGON_VERTICAL_EDGE = HEXAGON_HORIZONTAL_HALF / Sqrt(3);
-        // total size = (line + ((line/2)/sqrt(3)) *2) -> 
+        //private static readonly double HEXAGON_VERTICAL_EDGE = HEXAGON_HORIZONTAL_HALF / Sqrt(3); // <- does same thing as sidelength /2
+        private static readonly double HEXAGON_VERTICAL_EDGE = HEXAGON_SIDE_LENGTH / 2;
+
+        //
+        private static readonly Brush HEXAGON_BORDER_COLOR = Brushes.LavenderBlush;
+        private static readonly Brush HEXAGON_FILL_COLOR = Brushes.Ivory;
+
+        private BeepWorld bw;
 
         public MainWindow() {
             InitializeComponent();
 
             //canvas.Visibility = Visibility.Hidden;
 
-            BeepWorld bw = new BeepWorld(22, 26);
-
-            //foreach (Line line in MakeHexagon(30, 30)) {
-            //    canvas.Children.Add(line);
-            //}
+            //bw = new BeepWorld(22, 26);
+            bw = new BeepWorld(11, 11);
 
             double relativeX = 0;
             double relativeY = HEXAGON_VERTICAL_EDGE;
 
-            //for (int j = -bw.Size.Y + 1; j < bw.Size.Y; j++) {
-            for (int j = 100000; j < bw.Size.Y; j++) {
-
-                double posY = j * (HEXAGON_VERTICAL_LENGTH/2 + HEXAGON_SIDE_LENGTH/2) + relativeY;
-
-                //if (j % 2 == 1) posY -= HEXAGON_VERTICAL_EDGE;
-                //if (Abs(j % 2) == 1) continue;
-                //if (j < 0) continue;
-
-                for (int i = 0; i < bw.Size.X; i++) {
-                //for (int i = -bw.Size.X+1; i < bw.Size.X; i++) {
-                        //        Console.Write(" " + i + "," + j + " ");
-                        //Console.Write(" * ");
-                    double posX = i * HEXAGON_HORIZONTAL_LENGTH + relativeX;
-
-                    if (j % 2 != 0) posX += HEXAGON_HORIZONTAL_HALF;
-                    
-                    canvas.Children.Add(MakeHexagon(posX, posY));
-                    Label label = new Label() {
-                        Foreground = new SolidColorBrush(Colors.White),
-                        Content = i + "," + j,
-                        FontSize = 6,
-                        RenderTransform = new TranslateTransform { X = posX - HEXAGON_SIDE_LENGTH / 4, Y = posY - HEXAGON_SIDE_LENGTH / 2 }
-                    };
-                    canvas.Children.Add(label);
-                }
-            //    Console.WriteLine("");
-            }
-
-            foreach (Tile t in bw.tiless) {
+            foreach (Tile t in bw.tiles.Values) {
                 int xCoordinate = t.Coordinates.X;
                 int yCoordinate = t.Coordinates.Y;
-                double posY = yCoordinate * (HEXAGON_VERTICAL_LENGTH / 2 + HEXAGON_SIDE_LENGTH / 2) + relativeY;
-                double posX = xCoordinate * HEXAGON_HORIZONTAL_LENGTH + relativeX;
+
+                double posX = HEXAGON_SIDE_LENGTH * Sqrt(3) * (xCoordinate + yCoordinate / 2) + relativeX;
+                double posY = HEXAGON_SIDE_LENGTH * (3 / 2) * yCoordinate + relativeY + (yCoordinate * HEXAGON_VERTICAL_EDGE);
+
+                //double trueX = HEXAGON_SIDE_LENGTH * (3 / 2) * xCoordinate;
+                //double trueY = HEXAGON_SIDE_LENGTH * Sqrt(3) * (yCoordinate + xCoordinate / 2);
+
+                //double posY = trueY * (HEXAGON_VERTICAL_LENGTH / 2 + HEXAGON_SIDE_LENGTH / 2) + relativeY;
+                //double posX = trueX * HEXAGON_HORIZONTAL_LENGTH + relativeX;
                 if (yCoordinate % 2 != 0) posX += HEXAGON_HORIZONTAL_HALF;
 
-                canvas.Children.Add(MakeHexagon(posX, posY));
+                string name = "x" + (xCoordinate < 0 ? "n" : "") + Abs(xCoordinate) + "y" + (yCoordinate < 0 ? "n" : "") + Abs(yCoordinate);
+
+                Polygon p = MakeHexagon(posX, posY);
+                RegisterName(name, p);
+                canvas.Children.Add(p);
+
                 Label label = new Label() {
-                    Foreground = new SolidColorBrush(Colors.White),
+                    Foreground = new SolidColorBrush(Colors.Indigo),
                     Content = xCoordinate + "," + yCoordinate,
                     FontSize = 6,
                     RenderTransform = new TranslateTransform { X = posX - HEXAGON_SIDE_LENGTH / 8, Y = posY - HEXAGON_SIDE_LENGTH / 2 }
@@ -93,14 +79,40 @@ namespace Beep {
                     new DrawPoint(posX + HEXAGON_HORIZONTAL_LENGTH, posY),
                     new DrawPoint(posX + HEXAGON_HORIZONTAL_HALF, posY - HEXAGON_VERTICAL_EDGE)
                 },
-                Stroke = Brushes.LightSteelBlue,
-                Fill = Brushes.Black
+                Stroke = HEXAGON_BORDER_COLOR,
+                Fill = HEXAGON_FILL_COLOR
             };
         }
         
+        //
         private void OnMouseMove(object sender, System.Windows.Input.MouseEventArgs e) {
             var p = e.GetPosition(this);
             MouseText.Text = (int)(p.X) + " , " + (int)(p.Y);
+        }
+
+        //
+        private void OnMouseLeftClick(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+            var p = e.GetPosition(this);
+
+            // find clicked hexagon
+            double x = p.X;
+            double y = p.Y;
+
+            double nearestTileX = (x * Sqrt(3) / 3 - y / 3) / HEXAGON_SIDE_LENGTH;
+            double nearestTileY = y * 2 / 3 / HEXAGON_SIDE_LENGTH;
+
+
+            //double nearestTileX = x - (x % HEXAGON_HORIZONTAL_LENGTH);
+            //double nearestTileY = y - (y % (HEXAGON_SIDE_LENGTH + 2 * HEXAGON_VERTICAL_EDGE));
+
+
+            MouseTextCopy.Text = (int)(nearestTileX) + " , " + (int)(nearestTileY);
+
+
+            foreach (Tile t in bw.tiles.Values) ;
+
+            Polygon po = (Polygon) this.FindName("x5y10");
+            po.Fill = Brushes.Aqua;
         }
     }
 }

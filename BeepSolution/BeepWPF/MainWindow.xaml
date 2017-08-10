@@ -14,14 +14,22 @@
         >
         <Canvas
             Name="canvas"
-            Background="#FFEFF0E1"
+            Background="#FF080F37"
             HorizontalAlignment="Left" VerticalAlignment="Top"
-            Height="400" Width="400"
+            Height="400" Width="400" MouseLeftButtonDown="OnMouseLeftClick"
             >
         </Canvas>
-        <TextBox Name="MouseText" Canvas.Left="20" TextWrapping="Wrap" Text="TextBox" Canvas.Top="20" Margin="11,270,229,10"/>
+        <TextBox 
+            Name="MouseText" 
+            Canvas.Left="20" Canvas.Top="20"
+            TextWrapping="NoWrap"  Text="TextBox" 
+            Margin="467,347,24,33"/>
         <Canvas
             Height="400" Width="150" HorizontalAlignment="Right"
             ></Canvas>
+        <TextBox 
+            x:Name="MouseTextCopy"
+            TextWrapping="NoWrap"  Text="TextBox" 
+            Margin="467,322,22,58"/>
     </Grid>
 </Window>
