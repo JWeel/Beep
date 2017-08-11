@@ -15,6 +15,7 @@ namespace Beep {
 
         public BeepWorld(Point p) : this(p, false) { }
         public BeepWorld(int sizeX, int sizeY) : this(new Point(sizeX, sizeY), false) { }
+        public BeepWorld(int sizeX, int sizeY, bool b) : this(new Point(sizeX, sizeY), b) { }
 
         public BeepWorld(Point p, bool boxed) {
             Size = p;
@@ -24,7 +25,7 @@ namespace Beep {
                 int startX = 0 - (indexY / 2);
                 int endX = Size.X + startX;
 
-                if (indexY % 2 != 0) endX--; // this line makes the grid a box if SizeY is even
+                if (boxed && indexY % 2 != 0) endX--; // this line makes the grid a box if SizeY is even
 
                 for (int indexX = startX; indexX < endX; indexX++) {
                     tiles.Add(new Point(indexX, indexY), new Tile(indexX, indexY));

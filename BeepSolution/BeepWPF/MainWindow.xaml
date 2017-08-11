@@ -8,6 +8,8 @@
         SizeToContent="WidthAndHeight"
         Title="Beep"
         >
+    <!-- SizeToContent="WidthAndHeight" is required to make screen size be exactly as defined below -->
+    
     <Grid
         Height="400" Width="550"
         >

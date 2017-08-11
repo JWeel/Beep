@@ -94,7 +94,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClassLibrary1\BeepWorld.csproj">
+    <ProjectReference Include="..\BeepLibrary\BeepWorld.csproj">
       <Project>{28130b90-570f-4ef6-8617-a527767171e3}</Project>
       <Name>BeepWorld</Name>
     </ProjectReference>

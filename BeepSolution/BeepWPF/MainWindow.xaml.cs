@@ -29,9 +29,9 @@ namespace Beep {
         public MainWindow() {
             InitializeComponent();
 
-            bw = new BeepWorld(46, 53);
-            //bw = new BeepWorld(22, 26);
-            //bw = new BeepWorld(11, 13);
+            bw = new BeepWorld(46, 53, true); // best with 5
+            //bw = new BeepWorld(22, 26, false); // 10
+            //bw = new BeepWorld(11, 13, false); // 20
 
             double relativeX = 0;
             double relativeY = HEXAGON_VERTICAL_EDGE;
