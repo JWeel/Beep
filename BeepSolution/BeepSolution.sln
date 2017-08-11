@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeepWorld", "ClassLibrary1\BeepWorld.csproj", "{28130B90-570F-4EF6-8617-A527767171E3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeepWorld", "BeepLibrary\BeepWorld.csproj", "{28130B90-570F-4EF6-8617-A527767171E3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeepWPF", "BeepWPF\BeepWPF.csproj", "{B1E25052-6669-4235-8BF5-9365AC8D55CC}"
 EndProject
