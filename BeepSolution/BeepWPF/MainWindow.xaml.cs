@@ -3,8 +3,7 @@ using System.Windows.Shapes;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Diagnostics;
-using System.Text;
-using DrawPoint = System.Windows.Point;
+using PixelPoint = System.Windows.Point;
 using static System.Math;
 
 namespace Beep {
@@ -15,27 +14,24 @@ namespace Beep {
     public partial class MainWindow : Window {
 
         // hexagon length values. only change HEXAGON_SIDE_LENGTH !
-        private const double HEXAGON_SIDE_LENGTH = 30;
-        private static readonly double HEXAGON_VERTICAL_LENGTH = 2 * HEXAGON_SIDE_LENGTH;
+        private const double HEXAGON_SIDE_LENGTH = 5;
         private static readonly double HEXAGON_HORIZONTAL_LENGTH = Sqrt(3) * HEXAGON_SIDE_LENGTH;
         private static readonly double HEXAGON_HORIZONTAL_HALF = HEXAGON_HORIZONTAL_LENGTH / 2;
-        //private static readonly double HEXAGON_VERTICAL_EDGE = HEXAGON_HORIZONTAL_HALF / Sqrt(3); // <- does same thing as sidelength /2
         private static readonly double HEXAGON_VERTICAL_EDGE = HEXAGON_SIDE_LENGTH / 2;
 
         //
-        private static readonly Brush HEXAGON_BORDER_COLOR = Brushes.LavenderBlush;
-        private static readonly Brush HEXAGON_FILL_COLOR = Brushes.Ivory;
+        private static readonly Brush HEXAGON_BORDER_COLOR = Brushes.LightGray;
+        private static readonly Brush HEXAGON_FILL_COLOR = Brushes.GhostWhite; // NavajoWhite LOL
 
         private BeepWorld bw;
-        private Polygon previousHexagon;
+        private Polygon selectedHexagon;
 
         public MainWindow() {
             InitializeComponent();
 
-            //canvas.Visibility = Visibility.Hidden;
-
+            bw = new BeepWorld(46, 53);
             //bw = new BeepWorld(22, 26);
-            bw = new BeepWorld(5, 5);
+            //bw = new BeepWorld(11, 13);
 
             double relativeX = 0;
             double relativeY = HEXAGON_VERTICAL_EDGE;
@@ -44,21 +40,23 @@ namespace Beep {
                 int xCoordinate = t.Coordinates.X;
                 int yCoordinate = t.Coordinates.Y;
 
-                double posX = HEXAGON_SIDE_LENGTH * Sqrt(3) * (xCoordinate + yCoordinate / 2) + relativeX;
-                double posY = HEXAGON_SIDE_LENGTH * (3 / 2) * yCoordinate + relativeY + (yCoordinate * relativeY);
+                // apply axial conversion
+                double posX = HEXAGON_SIDE_LENGTH * Sqrt(3) * (xCoordinate + yCoordinate / 2);
+                double posY = HEXAGON_SIDE_LENGTH * (3 / 2) * yCoordinate;
 
-                //double trueX = HEXAGON_SIDE_LENGTH * (3 / 2) * xCoordinate;
-                //double trueY = HEXAGON_SIDE_LENGTH * Sqrt(3) * (yCoordinate + xCoordinate / 2);
+                // add offset
+                posX += relativeX;
+                posY += relativeY + (yCoordinate * relativeY);
 
-                //double posY = trueY * (HEXAGON_VERTICAL_LENGTH / 2 + HEXAGON_SIDE_LENGTH / 2) + relativeY;
-                //double posX = trueX * HEXAGON_HORIZONTAL_LENGTH + relativeX;
+                // apply odd row offset
                 if (yCoordinate % 2 != 0) posX += HEXAGON_HORIZONTAL_HALF;
 
-
+                // create polygon to be placed on canvas
                 Polygon hexPolygon = MakeHexagon(posX, posY);
                 RegisterName(HexagonPointToName(t.Coordinates), hexPolygon);
                 canvas.Children.Add(hexPolygon);
 
+                continue;
                 Label label = new Label() {
                     Foreground = new SolidColorBrush(Colors.Indigo),
                     Content = xCoordinate + "," + yCoordinate,
@@ -73,95 +71,85 @@ namespace Beep {
         private Polygon MakeHexagon(double posX, double posY) {
             return new Polygon() {
                 Points = new PointCollection {
-                    new DrawPoint(posX, posY),
-                    new DrawPoint(posX, posY + HEXAGON_SIDE_LENGTH),
-                    new DrawPoint(posX + HEXAGON_HORIZONTAL_HALF, posY + HEXAGON_SIDE_LENGTH + HEXAGON_VERTICAL_EDGE),
-                    new DrawPoint(posX + HEXAGON_HORIZONTAL_LENGTH, posY + HEXAGON_SIDE_LENGTH),
-                    new DrawPoint(posX + HEXAGON_HORIZONTAL_LENGTH, posY),
-                    new DrawPoint(posX + HEXAGON_HORIZONTAL_HALF, posY - HEXAGON_VERTICAL_EDGE)
+                    new PixelPoint(posX, posY),
+                    new PixelPoint(posX, posY + HEXAGON_SIDE_LENGTH),
+                    new PixelPoint(posX + HEXAGON_HORIZONTAL_HALF, posY + HEXAGON_SIDE_LENGTH + HEXAGON_VERTICAL_EDGE),
+                    new PixelPoint(posX + HEXAGON_HORIZONTAL_LENGTH, posY + HEXAGON_SIDE_LENGTH),
+                    new PixelPoint(posX + HEXAGON_HORIZONTAL_LENGTH, posY),
+                    new PixelPoint(posX + HEXAGON_HORIZONTAL_HALF, posY - HEXAGON_VERTICAL_EDGE)
                 },
                 Stroke = HEXAGON_BORDER_COLOR,
                 Fill = HEXAGON_FILL_COLOR
             };
         }
-        
+
         //
         private void OnMouseMove(object sender, System.Windows.Input.MouseEventArgs e) {
-            var p = e.GetPosition(this);
+            PixelPoint p = e.GetPosition(sender as IInputElement);
             MouseText.Text = (int)(p.X) + " , " + (int)(p.Y);
 
-
-            /*
-            double clickedX = p.X;
-            double clickedY = p.Y;
-
-            double axialX = (clickedX * Sqrt(3) / 3 - clickedY / 3) / HEXAGON_SIDE_LENGTH;
-            double axialY = clickedY * 2 / 3 / HEXAGON_SIDE_LENGTH;
-
-            Polygon po = (Polygon)this.FindName(HexagonPointToName(new Point((int)axialX, (int)axialY)));
-            if (po != null && po != previousHexagon) {
-                po.Fill = Brushes.Aqua;
-                if (previousHexagon != null) previousHexagon.Fill = HEXAGON_FILL_COLOR;
-                previousHexagon = po;
+            Point axialPoint = MouseCoordinatesToAxialCoordinates(p.X, p.Y);
+            Polygon po = (Polygon)this.FindName(HexagonPointToName(axialPoint));
+            if (po != null && po != selectedHexagon) {
+                po.Fill = Brushes.SlateGray;
+                if (selectedHexagon != null) selectedHexagon.Fill = HEXAGON_FILL_COLOR;
+                selectedHexagon = po;
             }
-            */
         }
 
         //
         private void OnMouseLeftClick(object sender, System.Windows.Input.MouseButtonEventArgs e) {
-            var p = e.GetPosition(this);
+            return;
+            PixelPoint p = e.GetPosition(sender as IInputElement);
 
-            // find clicked hexagon
-            double clickedX = p.X - HEXAGON_HORIZONTAL_HALF; // DONT ASK ME WHY
-            double clickedY = p.Y - HEXAGON_SIDE_LENGTH; // I HAVE NO IDEA
+            Point axialPoint = MouseCoordinatesToAxialCoordinates(p.X, p.Y);
+            Polygon po = (Polygon)this.FindName(HexagonPointToName(axialPoint));
+            if (po != null && po != selectedHexagon) {
+                po.Fill = Brushes.SlateGray;
+                if (selectedHexagon != null) selectedHexagon.Fill = HEXAGON_FILL_COLOR;
+                selectedHexagon = po;
+            }
+            MouseTextCopy.Text = axialPoint.X + " , " + axialPoint.Y;
+        }
 
-            double axialX = (clickedX * Sqrt(3) / 3 - clickedY / 3) / HEXAGON_SIDE_LENGTH;
-            double axialY = clickedY * 2 / 3 / HEXAGON_SIDE_LENGTH;
+        // converts coordinates of mouse to axial coordinates
+        private Point MouseCoordinatesToAxialCoordinates(double mouseX, double mouseY) {
+            // invert offset
+            double offsetX = mouseX - HEXAGON_HORIZONTAL_HALF; // DONT ASK ME WHY
+            double offsetY = mouseY - HEXAGON_SIDE_LENGTH; // I HAVE NO IDEA
 
-            
-            var cubeX = axialX;
-            var cubeZ = axialY;
-            var cubeY = -axialX - axialY;
+            // apply axial conversion
+            double axialX = (offsetX * Sqrt(3) / 3 - offsetY / 3) / HEXAGON_SIDE_LENGTH;
+            double axialY = offsetY * 2 / 3 / HEXAGON_SIDE_LENGTH;
 
-            var roundX = Round(cubeX);
-            var roundY = Round(cubeY);
-            var roundZ = Round(cubeZ);
+            // convert axial to cube coordinates
+            double cubeX = axialX;
+            double cubeZ = axialY;
+            double cubeY = -axialX - axialY;
+            double roundX = Round(cubeX);
+            double roundY = Round(cubeY);
+            double roundZ = Round(cubeZ);
 
-            Debug.WriteLine("aX" + axialX + "aY" + axialY + "rx" + roundX + "ry" + roundY + "rz" + roundZ);
-
-            var xdif = Abs(roundX - cubeX);
-            var ydif = Abs(roundY - cubeY);
-            var zdif = Abs(roundZ - cubeZ);
-
+            // find structure so roundX + roundY + roundZ == 0
+            double xdif = Abs(roundX - cubeX);
+            double ydif = Abs(roundY - cubeY);
+            double zdif = Abs(roundZ - cubeZ);
             if (xdif > ydif && xdif > zdif) roundX = -roundY - roundZ;
             else if (ydif > zdif) roundY = -roundX - roundZ;
             else roundZ = -roundX - roundY;
 
-            double trueX = roundX;
-            double trueY = roundZ;
-            
-
-            //double nearestTileX = x - (x % HEXAGON_HORIZONTAL_LENGTH);
-            //double nearestTileY = y - (y % (HEXAGON_SIDE_LENGTH + 2 * HEXAGON_VERTICAL_EDGE));
-
-
-            //MouseTextCopy.Text = (int)(axialX) + " , " + (int)(axialY);
-            MouseTextCopy.Text = (int)(trueX) + " , " + (int)(trueY);
-
-
-
-            Polygon po = (Polygon)this.FindName(HexagonPointToName(new Point((int)trueX, (int)trueY)));
-            if (po != null && po != previousHexagon) {
-                po.Fill = Brushes.Aqua;
-                if (previousHexagon != null) previousHexagon.Fill = HEXAGON_FILL_COLOR;
-                previousHexagon = po;
-            }
+            // cast to int and return
+            int trueX = (int) roundX;
+            int trueY = (int) roundZ;
+            return new Point(trueX, trueY);
         }
 
+        // creates string representation of hexagon coordinates that can be used f0r WPF component name
         private string HexagonPointToName(Point p) {
             return string.Format("hexX{0}{1}Y{2}{3}", (p.X < 0 ? "n" : ""), Abs(p.X), (p.Y < 0 ? "n" : ""), Abs(p.Y));
         }
 
+        // extracts hexagon coordinates from WPF component name defined by HeaxgonPointToName(Point)
         private Point HexagonNameToPoint(string name) {
             string[] s = name.Substring(4).Split('Y'); // skip hexX and split over Y
             int x, y;

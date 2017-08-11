@@ -6,8 +6,7 @@
         xmlns:local="clr-namespace:Beep"
         mc:Ignorable="d"
         SizeToContent="WidthAndHeight"
-        Title="MainWindow"
-        MouseMove="OnMouseMove"
+        Title="Beep"
         >
     <Grid
         Height="400" Width="550"
@@ -15,21 +14,26 @@
         <Canvas
             Name="canvas"
             Background="#FF080F37"
-            HorizontalAlignment="Left" VerticalAlignment="Top"
-            Height="400" Width="400" MouseLeftButtonDown="OnMouseLeftClick"
+            HorizontalAlignment="Left"  VerticalAlignment="Top"
+            Height="400" Width="400"
+            MouseMove="OnMouseMove"
+            MouseLeftButtonDown="OnMouseLeftClick"
             >
         </Canvas>
-        <TextBox 
-            Name="MouseText" 
-            Canvas.Left="20" Canvas.Top="20"
-            TextWrapping="NoWrap"  Text="TextBox" 
-            Margin="467,347,24,33"/>
         <Canvas
-            Height="400" Width="150" HorizontalAlignment="Right"
-            ></Canvas>
-        <TextBox 
+            Height="400" Width="150"  HorizontalAlignment="Right"
+            Background="FloralWhite"
+            >
+            <TextBox 
+            Name="MouseText" 
+            Canvas.Left="77" Canvas.Top="357"
+            TextWrapping="NoWrap"  Text="TextBox"
+                />
+            <TextBox 
             x:Name="MouseTextCopy"
-            TextWrapping="NoWrap"  Text="TextBox" 
-            Margin="467,322,22,58"/>
+            TextWrapping="NoWrap"  Text="TextBox" Canvas.Left="77" Canvas.Top="334"
+                />
+
+        </Canvas>
     </Grid>
 </Window>
