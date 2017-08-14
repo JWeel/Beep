@@ -5,6 +5,7 @@ using System.Windows.Media;
 using System.Diagnostics;
 using PixelPoint = System.Windows.Point;
 using static System.Math;
+using System.Collections.Generic;
 
 namespace Beep {
     /// <summary>
@@ -14,7 +15,7 @@ namespace Beep {
     public partial class MainWindow : Window {
 
         // hexagon length values. only change HEXAGON_SIDE_LENGTH !
-        private const double HEXAGON_SIDE_LENGTH = 20;
+        private const double HEXAGON_SIDE_LENGTH = 15;
         private static readonly double HEXAGON_HORIZONTAL_LENGTH = Sqrt(3) * HEXAGON_SIDE_LENGTH;
         private static readonly double HEXAGON_HORIZONTAL_HALF = HEXAGON_HORIZONTAL_LENGTH / 2;
         private static readonly double HEXAGON_VERTICAL_EDGE = HEXAGON_SIDE_LENGTH / 2;
@@ -22,21 +23,29 @@ namespace Beep {
         //
         private static readonly Brush HEXAGON_BORDER_COLOR = Brushes.LightGray;
         private static readonly Brush HEXAGON_FILL_COLOR = Brushes.GhostWhite; // NavajoWhite LOL
+		private static readonly Brush HEXAGON_FUN_COLOR = Brushes.Purple;
+
+        // point that is selected by user
+        private List<Point> SelectedPointList = new List<Point>();
+        private List<Point> ColouredPointList = new List<Point>();
+																	 
 
         private BeepWorld bw;
         private Polygon selectedHexagon;
 
-        public MainWindow() {
+        public MainWindow()
+        {
             InitializeComponent();
 
             //bw = new BeepWorld(46, 53, true); // best with 5
             //bw = new BeepWorld(23, 26, true); // 10
-            bw = new BeepWorld(11, 13, false); // 20
+            bw = new BeepWorld(11, 13, true); // 20
 
             double relativeX = 0;
             double relativeY = HEXAGON_VERTICAL_EDGE;
 
-            foreach (Tile t in bw.tiles.Values) {
+            foreach (Tile t in bw.tiles.Values)
+            {
                 int xCoordinate = t.Coordinates.X;
                 int yCoordinate = t.Coordinates.Y;
 
@@ -57,7 +66,8 @@ namespace Beep {
                 canvas.Children.Add(hexPolygon);
 
                 continue;
-                Label label = new Label() {
+                Label label = new Label()
+                {
                     Foreground = new SolidColorBrush(Colors.Indigo),
                     Content = xCoordinate + "," + yCoordinate,
                     FontSize = 6,
@@ -66,7 +76,36 @@ namespace Beep {
                 canvas.Children.Add(label);
             }
         }
+        private void ColourListTiles(List<Point> listPoint)
+        {
+            foreach (Point m in listPoint)
+            {
+                Polygon temp = (Polygon)this.FindName(HexagonPointToName(m));
+                if (temp != null)
+                    temp.Fill = HEXAGON_FUN_COLOR;
+                 ColouredPointList.Add(m);
+                
+            }
 
+        }
+        
+
+	        private List<Point> NeighborsToList(Point p)
+        {
+            List<Point> neighbors = new List<Point>();
+     
+                neighbors.Add(new Point(p.X + 1, p.Y));
+                neighbors.Add(new Point(p.X + 1, p.Y - 1));
+                neighbors.Add(new Point(p.X, p.Y - 1));
+                neighbors.Add(new Point(p.X, p.Y + 1));
+                neighbors.Add(new Point(p.X - 1, p.Y));
+                neighbors.Add(new Point(p.X - 1, p.Y + 1));
+
+            return neighbors;
+
+
+        }
+												
         // returns a polygon of six points representing a hexagon
         private Polygon MakeHexagon(double posX, double posY) {
             return new Polygon() {
@@ -85,10 +124,14 @@ namespace Beep {
 
         //
         private void OnMouseMove(object sender, System.Windows.Input.MouseEventArgs e) {
+			return;	   
             PixelPoint p = e.GetPosition(sender as IInputElement);
             MouseText.Text = (int)(p.X) + " , " + (int)(p.Y);
 
             Point axialPoint = MouseCoordinatesToAxialCoordinates(p.X, p.Y);
+			
+            SelectedPointList.Add(axialPoint);
+
             Polygon po = (Polygon)this.FindName(HexagonPointToName(axialPoint));
 
             if (po != null && po != selectedHexagon) {
@@ -112,6 +155,7 @@ namespace Beep {
             PixelPoint p = e.GetPosition(sender as IInputElement);
 
             Point axialPoint = MouseCoordinatesToAxialCoordinates(p.X, p.Y);
+			 SelectedPointList.Add(axialPoint);								  
             Polygon po = (Polygon)this.FindName(HexagonPointToName(axialPoint));
             if (po != null) {
                 po.Fill = Brushes.BlueViolet;
@@ -167,6 +211,47 @@ namespace Beep {
             if (s[1][0] == 'n') y = int.Parse(s[1].Substring(1)) * -1;
             else y = int.Parse(s[1]);
             return new Point(x, y);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (Point p in SelectedPointList)
+            {
+                List<Point> z = NeighborsToList(p);
+                ColourListTiles(z);
+            }
+
+            
+        }
+        private void RemoveDoubles(List<Point> p)
+        {
+            //foreach(Point item in p)
+            //{
+            //    var z = p[0];
+            //    p.FindAll;
+
+            //}
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            List<Point> temp = ColouredPointList;
+
+            for(int i = 0; i < 100000; i++)
+            {
+                if(temp != null)
+                {
+                    List<Point> z = NeighborsToList(temp[i]);
+                    ColourListTiles(z);
+
+                }
+            }
+            //foreach (Point p in ColouredPointList)
+            //{
+            //    List<Point> z = NeighborsToList(p);
+            //    ColourListTiles(z);
+            //}
+            
         }
     }
 }

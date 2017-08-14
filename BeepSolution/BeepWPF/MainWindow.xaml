@@ -35,6 +35,8 @@
             x:Name="MouseTextCopy"
             TextWrapping="NoWrap"  Text="TextBox" Canvas.Left="77" Canvas.Top="334"
                 />
+            <Button Content="Colour Neighbors" Canvas.Left="49" Canvas.Top="51" Width="80" Click="Button_Click" Height="59"/>
+            <Button Content="Color Tiles" Canvas.Left="49" Canvas.Top="115" Width="80" Height="53" Click="Button_Click_1"/>
 
         </Canvas>
     </Grid>
