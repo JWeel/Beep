@@ -41,7 +41,7 @@
                 Name="btnRefresh"
                 Content="Refresh" Canvas.Left="48" Canvas.Top="64" Width="40" Click="btnRefreshClick"
                     />
-            <Button x:Name="btnColourNeighbours" Content="Colour Neighbors" Canvas.Left="43" Canvas.Top="256" Width="97" Click="btnColourNeighbours" Height="26"/>
+            <Button x:Name="btnColourNeighbours" Content="Colour Neighbors" Canvas.Left="43" Canvas.Top="256" Width="97" Click="btnColourNeighboursClick" Height="26"/>
             <Button x:Name="btnRandomize" Content="Randomize" Canvas.Left="50" Canvas.Top="287" Width="73" Height="21" Click="btnRandomizeClick"/>
 
         </Canvas>

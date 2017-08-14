@@ -20,7 +20,7 @@ namespace Beep {
 
         // hexagon length values. only change HEXAGON_SIDE_LENGTH !
 
-        private const double HEXAGON_SIDE_LENGTH = 1.5;
+        private const double HEXAGON_SIDE_LENGTH = 10;
 
         private static readonly double HEXAGON_HORIZONTAL_LENGTH = Sqrt(3) * HEXAGON_SIDE_LENGTH;
         private static readonly double HEXAGON_HORIZONTAL_HALF = HEXAGON_HORIZONTAL_LENGTH / 2;
@@ -232,7 +232,7 @@ namespace Beep {
             Refresh();
         }
 
-        private void btnColourNeighbours(object sender, RoutedEventArgs e)
+        private void btnColourNeighboursClick(object sender, RoutedEventArgs e)
         {
             foreach (Point p in SelectedPointList)
             {
