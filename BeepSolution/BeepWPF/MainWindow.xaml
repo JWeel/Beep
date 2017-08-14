@@ -11,19 +11,21 @@
     <!-- SizeToContent="WidthAndHeight" is required to make screen size be exactly as defined below -->
 
     <Grid
-        Height="400" Width="550"
+        Height="480" Width="960"
+        HorizontalAlignment="Left"
+        VerticalAlignment="Top"
         >
         <Canvas
             Name="canvas"
             Background="#FF080F37"
             HorizontalAlignment="Left"  VerticalAlignment="Top"
-            Height="400" Width="400"
+            Height="480" Width="593"
             MouseMove="OnMouseMove"
             MouseLeftButtonDown="OnMouseLeftClick"
             >
         </Canvas>
         <Canvas
-            Height="400" Width="150"  HorizontalAlignment="Right"
+            Height="480" Width="367"  HorizontalAlignment="Right"
             Background="FloralWhite"
             >
             <TextBox 
@@ -37,7 +39,7 @@
                 />
             <Button 
                 Name="btnRefresh"
-                Content="Refresh" Canvas.Left="48" Canvas.Top="64" Width="40" Click="btnRefresh_Click"
+                Content="Refresh" Canvas.Left="48" Canvas.Top="64" Width="40" Click="btnRefreshClick"
                     />
             <Button x:Name="btnColourNeighbours" Content="Colour Neighbors" Canvas.Left="43" Canvas.Top="256" Width="97" Click="btnColourNeighbours" Height="26"/>
             <Button x:Name="btnRandomize" Content="Randomize" Canvas.Left="50" Canvas.Top="287" Width="73" Height="21" Click="btnRandomizeClick"/>
