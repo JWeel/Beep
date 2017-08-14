@@ -1,6 +1,6 @@
 ## BeepWorld
 
-Procedural painting generation in Visual C# as part of MCSD 70-843 Certificate training
+Procedural painting generation in Visual C# as part of MCSD 70-483 Certificate training
 
 -----
 
