@@ -6,43 +6,95 @@
         xmlns:local="clr-namespace:Beep"
         mc:Ignorable="d"
         SizeToContent="WidthAndHeight"
-        Title="Beep"
-        >
+        Title="Beep">
     <!-- SizeToContent="WidthAndHeight" is required to make screen size be exactly as defined below -->
 
-    <Grid
-        Height="480" Width="960"
-        HorizontalAlignment="Left"
-        VerticalAlignment="Top"
-        >
-        <Canvas
-            Name="canvas"
-            Background="#FF080F37"
-            HorizontalAlignment="Left"  VerticalAlignment="Top"
-            Height="480" Width="593"
-            MouseMove="OnMouseMove"
-            MouseLeftButtonDown="OnMouseLeftClick"
-            >
+    <Grid Height="480"
+          Width="960"
+          HorizontalAlignment="Left"
+          VerticalAlignment="Top">
+        <Canvas Name="canvas"
+                Background="#FF080F37"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Height="480"
+                Width="593"
+                MouseMove="OnMouseMove"
+                MouseLeftButtonDown="OnMouseLeftClick">
         </Canvas>
-        <Canvas
-            Height="480" Width="367"  HorizontalAlignment="Right"
-            Background="FloralWhite"
-            >
-            <TextBox 
-            Name="MouseText" 
-            Canvas.Left="77" Canvas.Top="357"
-            TextWrapping="NoWrap"  Text="TextBox"
-                />
-            <TextBox 
-            x:Name="MouseTextCopy"
-            TextWrapping="NoWrap"  Text="TextBox" Canvas.Left="77" Canvas.Top="334"
-                />
-            <Button 
-                Name="btnRefresh"
-                Content="Refresh" Canvas.Left="48" Canvas.Top="64" Width="40" Click="btnRefreshClick"
-                    />
-            <Button x:Name="btnColourNeighbours" Content="Colour Neighbors" Canvas.Left="43" Canvas.Top="256" Width="97" Click="btnColourNeighboursClick" Height="26"/>
-            <Button x:Name="btnRandomize" Content="Randomize" Canvas.Left="50" Canvas.Top="287" Width="73" Height="21" Click="btnRandomizeClick"/>
+        <Canvas Height="480"
+                Width="367"
+                HorizontalAlignment="Right"
+                Background="FloralWhite">
+
+            <Label Name="lblHeader"
+                   Content="Beep Rules"
+                   FontSize="18"
+                   Canvas.Left="21"
+                   Canvas.Top="9"
+                   Height="44"
+                   Width="171" />
+            <Button Name="btnNewRule"
+                    Content="Add Rule"
+                    Canvas.Left="287"
+                    Canvas.Top="19"
+                    Width="56"
+                    Height="20"
+                    Click="BtnNewRuleClick" />
+
+            <ListBox Name="lbRules"
+                     Height="240"
+                     Canvas.Left="2"
+                     Canvas.Top="58"
+                     Width="363"
+                     Background="WhiteSmoke"
+                     ItemsSource="{Binding}">
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"
+                                   Foreground="BurlyWood"></TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <Button Name="btnPaint"
+                    Content="Paint"
+                    FontSize="16"
+                    HorizontalAlignment="Center"
+                    Canvas.Top="324"
+                    Click="BtnPaintClick" />
+
+            <TextBox Name="MouseText"
+                     Canvas.Left="297"
+                     Canvas.Top="448"
+                     TextWrapping="NoWrap"
+                     Text="TextBox" />
+            <TextBox x:Name="MouseTextCopy"
+                     TextWrapping="NoWrap"
+                     Text="TextBox"
+                     Canvas.Left="297"
+                     Canvas.Top="425" />
+            <Button Name="btnRefresh"
+                    Content="Refresh"
+                    Canvas.Left="126"
+                    Canvas.Top="433"
+                    Width="40"
+                    Click="BtnRefreshClick" />
+            <Button x:Name="btnColourNeighbours"
+                    Content="Colour Neighbors"
+                    Canvas.Left="126"
+                    Canvas.Top="386"
+                    Width="97"
+                    Click="BtnColourNeighboursClick"
+                    Height="26" />
+            <Button x:Name="btnRandomize"
+                    Content="Randomize"
+                    Canvas.Left="48"
+                    Canvas.Top="391"
+                    Width="73"
+                    Height="21"
+                    Click="btnRandomizeClick" />
 
         </Canvas>
     </Grid>
