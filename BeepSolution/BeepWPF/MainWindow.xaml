@@ -39,8 +39,8 @@
                 Name="btnRefresh"
                 Content="Refresh" Canvas.Left="48" Canvas.Top="64" Width="40" Click="btnRefresh_Click"
                     />
-            <Button Content="Colour Neighbors" Canvas.Left="43" Canvas.Top="181" Width="80" Click="Button_Click" Height="59"/>
-            <Button Content="Color Tiles" Canvas.Left="43" Canvas.Top="245" Width="80" Height="53" Click="Button_Click_1"/>
+            <Button x:Name="btnColourNeighbours" Content="Colour Neighbors" Canvas.Left="43" Canvas.Top="256" Width="97" Click="btnColourNeighbours" Height="26"/>
+            <Button x:Name="btnRandomize" Content="Randomize" Canvas.Left="50" Canvas.Top="287" Width="73" Height="21" Click="btnRandomizeClick"/>
 
         </Canvas>
     </Grid>

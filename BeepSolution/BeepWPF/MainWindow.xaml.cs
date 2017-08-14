@@ -15,15 +15,15 @@ namespace Beep {
     public partial class MainWindow : Window {
 
         // hexagon length values. only change HEXAGON_SIDE_LENGTH !
-        private const double HEXAGON_SIDE_LENGTH = 15;
+        private const double HEXAGON_SIDE_LENGTH = 1.5;
         private static readonly double HEXAGON_HORIZONTAL_LENGTH = Sqrt(3) * HEXAGON_SIDE_LENGTH;
         private static readonly double HEXAGON_HORIZONTAL_HALF = HEXAGON_HORIZONTAL_LENGTH / 2;
         private static readonly double HEXAGON_VERTICAL_EDGE = HEXAGON_SIDE_LENGTH / 2;
 
         //
         private static readonly Brush HEXAGON_BORDER_COLOR = Brushes.LightGray;
-        private static readonly Brush HEXAGON_FILL_COLOR = Brushes.GhostWhite; // NavajoWhite LOL
-		private static readonly Brush HEXAGON_FUN_COLOR = Brushes.Purple;
+        private static readonly Brush HEXAGON_FILL_COLOR = Brushes.NavajoWhite; // NavajoWhite LOL
+		private static readonly Brush HEXAGON_FUN_COLOR = Brushes.Gold;
 
         // point that is selected by user
         private List<Point> SelectedPointList = new List<Point>();
@@ -39,7 +39,7 @@ namespace Beep {
 
             //bw = new BeepWorld(46, 53, true); // best with 5
             //bw = new BeepWorld(23, 26, true); // 10
-            bw = new BeepWorld(11, 13, true); // 20
+            bw = new BeepWorld(200, 200, true); // 20
 
             double relativeX = 0;
             double relativeY = HEXAGON_VERTICAL_EDGE;
@@ -226,7 +226,7 @@ namespace Beep {
             Refresh();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void btnColourNeighbours(object sender, RoutedEventArgs e)
         {
             foreach (Point p in SelectedPointList)
             {
@@ -236,34 +236,13 @@ namespace Beep {
 
             
         }
-        private void RemoveDoubles(List<Point> p)
+        
+
+        private void btnRandomizeClick(object sender, RoutedEventArgs e)
         {
-            //foreach(Point item in p)
-            //{
-            //    var z = p[0];
-            //    p.FindAll;
+            
 
-            //}
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            List<Point> temp = ColouredPointList;
-
-            for(int i = 0; i < 100000; i++)
-            {
-                if(temp != null)
-                {
-                    List<Point> z = NeighborsToList(temp[i]);
-                    ColourListTiles(z);
-
-                }
-            }
-            //foreach (Point p in ColouredPointList)
-            //{
-            //    List<Point> z = NeighborsToList(p);
-            //    ColourListTiles(z);
-            //}
+        
             
         }
     }
