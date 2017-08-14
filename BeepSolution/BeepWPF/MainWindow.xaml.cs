@@ -14,7 +14,7 @@ namespace Beep {
     public partial class MainWindow : Window {
 
         // hexagon length values. only change HEXAGON_SIDE_LENGTH !
-        private const double HEXAGON_SIDE_LENGTH = 5;
+        private const double HEXAGON_SIDE_LENGTH = 20;
         private static readonly double HEXAGON_HORIZONTAL_LENGTH = Sqrt(3) * HEXAGON_SIDE_LENGTH;
         private static readonly double HEXAGON_HORIZONTAL_HALF = HEXAGON_HORIZONTAL_LENGTH / 2;
         private static readonly double HEXAGON_VERTICAL_EDGE = HEXAGON_SIDE_LENGTH / 2;
@@ -29,9 +29,9 @@ namespace Beep {
         public MainWindow() {
             InitializeComponent();
 
-            bw = new BeepWorld(46, 53, true); // best with 5
-            //bw = new BeepWorld(22, 26, false); // 10
-            //bw = new BeepWorld(11, 13, false); // 20
+            //bw = new BeepWorld(46, 53, true); // best with 5
+            //bw = new BeepWorld(23, 26, true); // 10
+            bw = new BeepWorld(11, 13, false); // 20
 
             double relativeX = 0;
             double relativeY = HEXAGON_VERTICAL_EDGE;
@@ -90,8 +90,17 @@ namespace Beep {
 
             Point axialPoint = MouseCoordinatesToAxialCoordinates(p.X, p.Y);
             Polygon po = (Polygon)this.FindName(HexagonPointToName(axialPoint));
+
             if (po != null && po != selectedHexagon) {
                 po.Fill = Brushes.SlateGray;
+
+
+                if (selectedHexagon != null && (selectedHexagon.Fill as SolidColorBrush).Color == (Brushes.BlueViolet as SolidColorBrush).Color) {
+                    selectedHexagon = null;
+                    //return;
+                }
+
+
                 if (selectedHexagon != null) selectedHexagon.Fill = HEXAGON_FILL_COLOR;
                 selectedHexagon = po;
             }
@@ -99,15 +108,15 @@ namespace Beep {
 
         //
         private void OnMouseLeftClick(object sender, System.Windows.Input.MouseButtonEventArgs e) {
-            return;
+            //return;
             PixelPoint p = e.GetPosition(sender as IInputElement);
 
             Point axialPoint = MouseCoordinatesToAxialCoordinates(p.X, p.Y);
             Polygon po = (Polygon)this.FindName(HexagonPointToName(axialPoint));
-            if (po != null && po != selectedHexagon) {
-                po.Fill = Brushes.SlateGray;
-                if (selectedHexagon != null) selectedHexagon.Fill = HEXAGON_FILL_COLOR;
-                selectedHexagon = po;
+            if (po != null) {
+                po.Fill = Brushes.BlueViolet;
+                //if (selectedHexagon != null) selectedHexagon.Fill = HEXAGON_FILL_COLOR;
+                //selectedHexagon = po;
             }
             MouseTextCopy.Text = axialPoint.X + " , " + axialPoint.Y;
         }
