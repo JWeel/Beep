@@ -14,8 +14,12 @@ namespace Beep {
 
     public partial class MainWindow : Window {
 
+        private static readonly Point BEEP_SIZE = new Point(11, 13); // best with 20
+        //private static readonly Point BEEP_SIZE = new Point(23, 26); // 10
+        //private static readonly Point BEEP_SIZE = new Point(46, 53); // 5
+
         // hexagon length values. only change HEXAGON_SIDE_LENGTH !
-        private const double HEXAGON_SIDE_LENGTH = 15;
+        private const double HEXAGON_SIDE_LENGTH = 20;
         private static readonly double HEXAGON_HORIZONTAL_LENGTH = Sqrt(3) * HEXAGON_SIDE_LENGTH;
         private static readonly double HEXAGON_HORIZONTAL_HALF = HEXAGON_HORIZONTAL_LENGTH / 2;
         private static readonly double HEXAGON_VERTICAL_EDGE = HEXAGON_SIDE_LENGTH / 2;
@@ -36,10 +40,8 @@ namespace Beep {
         public MainWindow()
         {
             InitializeComponent();
-
-            //bw = new BeepWorld(46, 53, true); // best with 5
-            //bw = new BeepWorld(23, 26, true); // 10
-            bw = new BeepWorld(11, 13, true); // 20
+            
+            bw = new BeepWorld(BEEP_SIZE, true);
 
             double relativeX = 0;
             double relativeY = HEXAGON_VERTICAL_EDGE;
@@ -132,13 +134,13 @@ namespace Beep {
 
         //
         private void OnMouseMove(object sender, System.Windows.Input.MouseEventArgs e) {
-			return;	   
+			//return;
             PixelPoint p = e.GetPosition(sender as IInputElement);
             MouseText.Text = (int)(p.X) + " , " + (int)(p.Y);
 
             Point axialPoint = MouseCoordinatesToAxialCoordinates(p.X, p.Y);
 			
-            SelectedPointList.Add(axialPoint);
+            //SelectedPointList.Add(axialPoint);
 
             Polygon po = (Polygon)this.FindName(HexagonPointToName(axialPoint));
 
@@ -222,7 +224,7 @@ namespace Beep {
         }
 
 
-        private void btnRefresh_Click(object sender, RoutedEventArgs e) {
+        private void btnRefreshClick(object sender, RoutedEventArgs e) {
             Refresh();
         }
 
