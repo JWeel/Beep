@@ -9,7 +9,7 @@
         Title="Beep"
         >
     <!-- SizeToContent="WidthAndHeight" is required to make screen size be exactly as defined below -->
-    
+
     <Grid
         Height="400" Width="550"
         >
@@ -35,6 +35,10 @@
             x:Name="MouseTextCopy"
             TextWrapping="NoWrap"  Text="TextBox" Canvas.Left="77" Canvas.Top="334"
                 />
+            <Button 
+                Name="btnRefresh"
+                Content="Refresh" Canvas.Left="48" Canvas.Top="64" Width="40" Click="btnRefresh_Click"
+                    />
 
         </Canvas>
     </Grid>

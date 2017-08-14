@@ -84,6 +84,14 @@ namespace Beep {
         }
 
         //
+        private void Refresh() {
+            foreach (Tile t in bw.tiles.Values) {
+                Polygon po = (Polygon)FindName(HexagonPointToName(t.Coordinates));
+                po.Fill = t.Color;
+            }
+        }
+
+        //
         private void OnMouseMove(object sender, System.Windows.Input.MouseEventArgs e) {
             PixelPoint p = e.GetPosition(sender as IInputElement);
             MouseText.Text = (int)(p.X) + " , " + (int)(p.Y);
@@ -167,6 +175,10 @@ namespace Beep {
             if (s[1][0] == 'n') y = int.Parse(s[1].Substring(1)) * -1;
             else y = int.Parse(s[1]);
             return new Point(x, y);
+        }
+
+        private void btnRefresh_Click(object sender, RoutedEventArgs e) {
+            Refresh();
         }
     }
 }

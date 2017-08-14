@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
+using System.Windows.Media;
 //using System.Drawing; // Point structure
 
 // TODO
@@ -38,11 +38,10 @@ namespace Beep {
         public List<Tile> Neighbors { get; set; }
         public Point Coordinates { get; set; }
         public Brush Color { get; set; }
-        internal Tile(int x, int y) {
-            this.Coordinates = new Point(x, y);
-        }
+        internal Tile(int x, int y) : this(new Point(x, y)) { }
         internal Tile(Point p) {
             this.Coordinates = p;
+            this.Color = Brushes.BlanchedAlmond;
         }
     }
 
