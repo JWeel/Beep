@@ -20,10 +20,8 @@ namespace Beep {
         //private static readonly Point BEEP_SIZE = new Point(23, 26); // 10
         //private static readonly Point BEEP_SIZE = new Point(46, 53); // 5
 
-        // hexagon length values. only change HEXAGON_SIDE_LENGTH !
-
+        // hexagon length values. only change HEXAGON_SIDE_LENGTH 
         private const double HEXAGON_SIDE_LENGTH = 10;
-
         private static readonly double HEXAGON_HORIZONTAL_LENGTH = Sqrt(3) * HEXAGON_SIDE_LENGTH;
         private static readonly double HEXAGON_HORIZONTAL_HALF = HEXAGON_HORIZONTAL_LENGTH / 2;
         private static readonly double HEXAGON_VERTICAL_EDGE = HEXAGON_SIDE_LENGTH / 2;
@@ -37,8 +35,13 @@ namespace Beep {
         private List<Point> SelectedPointList = new List<Point>();
         private List<Point> ColouredPointList = new List<Point>();
 
+
         // random number
         Random rand = new Random();
+
+
+        private List<BeepRule> rules;						
+        
 
 
         private BeepWorld bw;
@@ -47,9 +50,19 @@ namespace Beep {
         public MainWindow()
         {
             InitializeComponent();
-
             
             bw = new BeepWorld(BEEP_SIZE, true);
+
+
+            rules = new List<BeepRule>() {
+            //    new BeepRule(){ Name = "a" },
+             //   new BeepRule(){ Name = "b" },
+              //  new BeepRule(){ Name = "c" }
+            };
+
+            lbRules.ItemsSource = rules;
+
+
 
 
             double relativeX = 0;
@@ -233,11 +246,11 @@ namespace Beep {
         }
 
 
-        private void btnRefreshClick(object sender, RoutedEventArgs e) {
+        private void BtnRefreshClick(object sender, RoutedEventArgs e) {
             Refresh();
         }
 
-        private void btnColourNeighboursClick(object sender, RoutedEventArgs e)
+        private void BtnColourNeighboursClick(object sender, RoutedEventArgs e)
         {
             foreach (Point p in SelectedPointList)
             {
@@ -284,6 +297,16 @@ namespace Beep {
             int random = rand.Next(properties.Length);
             result = (Brush)properties[random].GetValue(null, null);
             return result;
+
+        }
+
+        private void BtnNewRuleClick(object sender, RoutedEventArgs e) {
+            rules.Add(new BeepRule() { Name = "hallo" });
+            lbRules.ItemsSource = null;
+            lbRules.ItemsSource = rules;
+        }
+
+        private void BtnPaintClick(object sender, RoutedEventArgs e) {
 
         }
     }
