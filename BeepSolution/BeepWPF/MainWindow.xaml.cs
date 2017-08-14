@@ -6,6 +6,8 @@ using System.Diagnostics;
 using PixelPoint = System.Windows.Point;
 using static System.Math;
 using System.Collections.Generic;
+using System;
+using System.Reflection;
 
 namespace Beep {
     /// <summary>
@@ -34,7 +36,10 @@ namespace Beep {
         // point that is selected by user
         private List<Point> SelectedPointList = new List<Point>();
         private List<Point> ColouredPointList = new List<Point>();
-																	 
+
+        // random number
+        Random rand = new Random();
+
 
         private BeepWorld bw;
         private Polygon selectedHexagon;
@@ -246,10 +251,40 @@ namespace Beep {
 
         private void btnRandomizeClick(object sender, RoutedEventArgs e)
         {
-            
+            Random rnd = new Random();
+            Random rnd2 = new Random();
+            int percentage = 50;
+            int numTiles = (BEEP_SIZE.X * BEEP_SIZE.Y)/2;
+            Brush randomColor = Brushes.HotPink;
 
-        
+            List<Tile> ListTiles = new List<Tile>();
+
+            foreach (Tile t in bw.tiles.Values) {
+                int chooser = rnd.Next(0, 2);
+                if(chooser == 1) {
+                    t.Color = HEXAGON_FILL_COLOR;
+                                 
+                }
+                else {
+                  
+                    t.Color = PickBrush();
+
+                    }
+                                     
+                }
+            Refresh();
+                    
+        }
+        private Brush PickBrush() {
+            Brush result = Brushes.Transparent;
             
+            Type brushesType = typeof(Brushes);
+            PropertyInfo[] properties = brushesType.GetProperties();
+
+            int random = rand.Next(properties.Length);
+            result = (Brush)properties[random].GetValue(null, null);
+            return result;
+
         }
     }
 }
