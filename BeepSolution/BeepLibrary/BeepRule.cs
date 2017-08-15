@@ -18,8 +18,6 @@ namespace Beep {
         private Brush color1, color2, color3;
         private int nNeighbors;
         private Dictionary<Point, Tile> tilesDict;
-        private List<Tile> tilesList;
-        
 
         public BeepRule(string name,
                 Brush color1 = null,
@@ -34,7 +32,6 @@ namespace Beep {
             this.color3 = color3;
             this.nNeighbors = nNeighbors;
             this.tilesDict = tilesDict;
-            this.tilesList = tilesList;
         }
 
         public Dictionary<Point, Tile> Run() {
@@ -93,8 +90,6 @@ namespace Beep {
            foreach(var v in tiles) {
                 alteredTiles[v.Key] = new Tile(v.Value);
             }
-
-
 
             return alteredTiles;
 
