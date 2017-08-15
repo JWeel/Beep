@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Media;
+using System.Linq;
 //using System.Drawing; // Point structure
 
 // TODO
@@ -31,17 +32,28 @@ namespace Beep {
                     tiles.Add(new Point(indexX, indexY), new Tile(indexX, indexY));
                 }
             }
+
+            // TEMPORARY TEST STUFF please ignore
+            BeepRule.ChangeColor(tiles.Values.ToList(), null, null);
         }
     }
 
+    // TODO change Tile to struct, would make life simpler
     public class Tile {
-        public List<Tile> Neighbors { get; set; }
+        public List<Point> Neighbors { get; set; }
         public Point Coordinates { get; set; }
         public Brush Color { get; set; }
         internal Tile(int x, int y) : this(new Point(x, y)) { }
         internal Tile(Point p) {
             this.Coordinates = p;
             this.Color = Brushes.BlanchedAlmond;
+        }
+
+        // (deep) copy constructor
+        public Tile(Tile t) {
+            //this.Neighbors = t.Neighbors;
+            this.Coordinates = t.Coordinates;
+            this.Color = t.Color;
         }
 
         private static List<Point> GetNeighbors(Point p) {
@@ -55,6 +67,9 @@ namespace Beep {
         public Point(int x, int y) {
             X = x;
             Y = y;
+        }
+        public override string ToString() {
+            return string.Format("({0},{1})", X, Y);
         }
     }
 }

@@ -1,20 +1,76 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Media;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Beep {
+
+    // a repository of actions
     public class BeepRule {
 
         public string Name { get; set; }
+        
+        private Brush color1, color2, color3;
+        private int nNeighbors;
+        private Dictionary<Point, Tile> tilesDict;
+        private List<Tile> tilesList;
 
-        public BeepRule() {
-
+        public BeepRule(string name,
+                Brush color1 = null,
+                Brush color2 = null,
+                Brush color3 = null,
+                int nNeighbors = 0,
+                Dictionary<Point, Tile> tilesDict = null,
+                List<Tile> tilesList = null) {
+            this.Name = name;
+            this.color1 = color1;
+            this.color2 = color2;
+            this.color3 = color3;
+            this.nNeighbors = nNeighbors;
+            this.tilesDict = tilesDict;
+            this.tilesList = tilesList;
         }
 
-        //x buren van kleur x worden x
-        void Neighbor(List<Tile> tiles) {
-            foreach(Tile t in tiles) {
-
+        public object Run() {
+            switch (Name) {
+                case "ChangeColor":
+                    return ChangeColor(tilesList, color1, color2);
+                case "ChangeNeighborColor":
+                    return ChangeNeighborColor(tilesDict, nNeighbors, color1, color2);
+                case "Virus":
+                    return null;
+                default:
+                    return null;
             }
+        }
+
+        // Tiles with designated color become target color
+        // TODO possible extension: percentage reliability, percentage of tiles to change
+        public static List<Tile> ChangeColor(List<Tile> tiles, Brush originalColor, Brush targetColor) {
+            List<Tile> alteredTiles = tiles.ConvertAll(tile => new Tile(tile));
+            foreach (Tile t in alteredTiles) {
+                if (t.Color == originalColor) t.Color = targetColor;
+            }
+            return alteredTiles;
+        }
+
+        // Specified number of neighbors of tiles with designated color become target color
+        public Dictionary<Point, Tile> ChangeNeighborColor(Dictionary<Point, Tile> tiles, int nNeighbors, Brush originalColor, Brush targetColor) {
+            // deep copy dict
+            Dictionary<Point, Tile> alteredTiles = new Dictionary<Point, Tile>();
+            foreach (var v in tiles) {
+                alteredTiles[v.Key] = new Tile(v.Value);
+            }
+
+            foreach (Tile t in alteredTiles.Values) {
+                if (t.Color == originalColor) {
+                    foreach (Point p in t.Neighbors) {
+                        alteredTiles[p].Color = targetColor;
+                    }
+                }
+            }
+            return alteredTiles;
         }
 
     }

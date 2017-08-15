@@ -35,8 +35,6 @@ namespace Beep {
         private List<Point> SelectedPointList = new List<Point>();
         private List<Point> ColouredPointList = new List<Point>();
 
-        //Tile Selected by user
-        List<Tile> SelectedTilesList = new List<Tile>();
 
         // random number
         Random rand = new Random();
@@ -189,7 +187,7 @@ namespace Beep {
             PixelPoint p = e.GetPosition(sender as IInputElement);
 
             Point axialPoint = MouseCoordinatesToAxialCoordinates(p.X, p.Y);
-			SelectedPointList.Add(axialPoint);								  
+			 SelectedPointList.Add(axialPoint);								  
             Polygon po = (Polygon)this.FindName(HexagonPointToName(axialPoint));
             if (po != null) {
                 po.Fill = Brushes.BlueViolet;
@@ -272,7 +270,7 @@ namespace Beep {
             int numTiles = (BEEP_SIZE.X * BEEP_SIZE.Y)/2;
             Brush randomColor = Brushes.HotPink;
 
-            
+            List<Tile> ListTiles = new List<Tile>();
 
             foreach (Tile t in bw.tiles.Values) {
                 int chooser = rnd.Next(0, 2);
@@ -290,38 +288,6 @@ namespace Beep {
             Refresh();
                     
         }
-
-        private void SpreadVirus() {
-            foreach (Tile t in bw.tiles.Values) {
-                if (SelectedPointList.Contains(t.Coordinates)) {
-                    Polygon po = (Polygon)FindName(HexagonPointToName(t.Coordinates));
-                    po.Fill = Brushes.Green;
-                    ColorVirusTiles(t);
-                    
-
-                }
-                
-            }
-            SelectedPointList.Clear();
-            UpdateVirusTiles();
-        }
-        private void ColorVirusTiles(Tile t) {
-            List<Point> Neighbors = NeighborsToList(t.Coordinates);
-            int i = rand.Next(0, 5);
-
-            Polygon z = (Polygon)FindName(HexagonPointToName(Neighbors[i]));
-            z.Fill = Brushes.DarkRed;
-            Neighbors.Clear();
-
-        }
-
-        private void UpdateVirusTiles() {
-            foreach(Tile t in bw.tiles.Values) {
-                if(t.Color != HEXAGON_FILL_COLOR && t.Color != Brushes.BlanchedAlmond) {
-                    SelectedPointList.Add(t.Coordinates);
-                }
-            }
-        }
         private Brush PickBrush() {
             Brush result = Brushes.Transparent;
             
@@ -335,13 +301,12 @@ namespace Beep {
         }
 
         private void BtnNewRuleClick(object sender, RoutedEventArgs e) {
-            rules.Add(new BeepRule() { Name = "hallo" });
+            rules.Add(new BeepRule("hallo"));
             lbRules.ItemsSource = null;
             lbRules.ItemsSource = rules;
         }
 
         private void BtnPaintClick(object sender, RoutedEventArgs e) {
-            SpreadVirus();
 
         }
     }
