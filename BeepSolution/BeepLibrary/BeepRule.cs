@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Beep {
     public class BeepRule {
@@ -7,6 +8,13 @@ namespace Beep {
 
         public BeepRule() {
 
+        }
+
+        //x buren van kleur x worden x
+        void Neighbor(List<Tile> tiles) {
+            foreach(Tile t in tiles) {
+
+            }
         }
 
     }

@@ -43,6 +43,10 @@ namespace Beep {
             this.Coordinates = p;
             this.Color = Brushes.BlanchedAlmond;
         }
+
+        private static List<Point> GetNeighbors(Point p) {
+            return null;
+        }
     }
 
     public struct Point {
