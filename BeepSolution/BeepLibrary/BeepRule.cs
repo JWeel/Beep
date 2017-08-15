@@ -17,5 +17,13 @@ namespace Beep {
             }
         }
 
+        //virus: takes parameters Contagion rate and (power)
+        void SpreadVirus(List<Tile> tiles) {
+            foreach(Tile t in tiles) {
+
+            }
+        }
+
+
     }
 }
