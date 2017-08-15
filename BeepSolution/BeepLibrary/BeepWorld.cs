@@ -25,16 +25,14 @@ namespace Beep {
 
                 int startX = 0 - (indexY / 2);
                 int endX = Size.X + startX;
-
                 if (boxed && indexY % 2 != 0) endX--; // this line makes the grid a box if SizeY is even
 
                 for (int indexX = startX; indexX < endX; indexX++) {
-                    tiles.Add(new Point(indexX, indexY), new Tile(indexX, indexY));
+                    Tile t = new Tile(indexX, indexY);
+                    t.SetNeighbors(Size, boxed);
+                    tiles.Add(new Point(indexX, indexY), t);
                 }
             }
-
-            // TEMPORARY TEST STUFF please ignore
-            //BeepRule.ChangeColor(tiles.Values.ToList(), null, null);
         }
     }
 
@@ -42,11 +40,8 @@ namespace Beep {
     public class Tile {
 
         public List<Point> Neighbors { get; set; }
-
         public Point Coordinates { get; set; }
         public Brush Color { get; set; }
-        public Point SizeBW { get; set; }
-        public bool BoxedBW { get; set; }
 
         internal Tile(int x, int y) : this(new Point(x, y)) { }
 
@@ -57,35 +52,49 @@ namespace Beep {
 
         // (deep) copy constructor
         public Tile(Tile t) {
-            //this.Neighbors = t.Neighbors;
             this.Coordinates = t.Coordinates;
             this.Color = t.Color;
-        }
-        
-        internal Tile(Point p, Point size, bool boxed) {
-            this.Coordinates = p;
-            this.BoxedBW = boxed;
-            this.SizeBW = size;
+            this.Neighbors = new List<Point>(t.Neighbors);
         }
 
-        public static List<Point> GetNeighbors(Point p) {
-            //int startX = 0 - (indexY / 2);
-            //int endX = Size.X + startX;
-            //if (boxed && indexY % 2 != 0) endX--; // this line makes the grid a box if SizeY is even
+        // returns true if point exists within dimensions of a beep world
+        private bool IsValidPoint(int x, int y, Point beepWorldSize, bool boxedBeepWorld) {
+            int startX = 0 - (y / 2);
+            int endX = beepWorldSize.X + startX;
+            if (boxedBeepWorld && y % 2 != 0) endX--;
+            return (x >= startX && x < endX && y >= 0 && y < beepWorldSize.Y);
+        }
 
-            List<Point> neighbors = new List<Point> {
-                new Point(p.X + 1, p.Y),
-                new Point(p.X + 1, p.Y - 1),
-                new Point(p.X, p.Y - 1),
-                new Point(p.X - 1, p.Y),
-                new Point(p.X - 1, p.Y + 1),
-                new Point(p.X, p.Y + 1)
-            };
-            return neighbors;
+        // painstakingly sets all valid neighbor points for a hexagonal tile
+        internal void SetNeighbors(Point bwSize, bool boxedBW) {
+            int x, y;
+            Neighbors = new List<Point>();
+
+            x = Coordinates.X + 1;
+            y = Coordinates.Y;
+            if (IsValidPoint(x, y, bwSize, boxedBW)) Neighbors.Add(new Point(x, y));
+
+            x = Coordinates.X - 1;
+            if (IsValidPoint(x, y, bwSize, boxedBW)) Neighbors.Add(new Point(x, y));
+
+            x = Coordinates.X;
+            y = Coordinates.Y + 1;
+            if (IsValidPoint(x, y, bwSize, boxedBW)) Neighbors.Add(new Point(x, y));
+
+            y = Coordinates.Y - 1;
+            if (IsValidPoint(x, y, bwSize, boxedBW)) Neighbors.Add(new Point(x, y));
+
+            x = Coordinates.X + 1;
+            y = Coordinates.Y - 1;
+            if (IsValidPoint(x, y, bwSize, boxedBW)) Neighbors.Add(new Point(x, y));
+
+            x = Coordinates.X - 1;
+            y = Coordinates.Y + 1;
+            if (IsValidPoint(x, y, bwSize, boxedBW)) Neighbors.Add(new Point(x, y));
         }
     }
 
-    public struct Point {
+   public struct Point {
         public int X { get; set; }
         public int Y { get; set; }
         public Point(int x, int y) {

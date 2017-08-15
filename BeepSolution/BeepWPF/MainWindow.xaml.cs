@@ -181,7 +181,7 @@ namespace Beep {
             //    //if (selectedHexagon != null) selectedHexagon.Fill = HEXAGON_FILL_COLOR;
             //    //selectedHexagon = po;
             //}
-            bw.tiles[axialPoint].Color = Brushes.Gainsboro;
+            if (bw.tiles.ContainsKey(axialPoint)) bw.tiles[axialPoint].Color = Brushes.Gainsboro;
             MouseTextCopy.Text = axialPoint.X + " , " + axialPoint.Y;
             Refresh();
         }
@@ -285,7 +285,7 @@ namespace Beep {
         }
         private void ColorVirusTiles(Tile t) {
 
-            List<Point> Neighbors = Tile.GetNeighbors(t.Coordinates);
+            List<Point> Neighbors = t.Neighbors;
             int i = rand.Next(0, 6);
 
             foreach (Tile m in bw.tiles.Values) {
@@ -323,9 +323,14 @@ namespace Beep {
         }
 
         private void BtnNewRuleClick(object sender, RoutedEventArgs e) {
-            rules.Add(new BeepRule(BeepRule.RULE_CHANGE_COLOR,
-                tilesDict: bw.tiles, 
-                color1: Brushes.BlanchedAlmond, 
+            //rules.Add(new BeepRule(BeepRule.RULE_CHANGE_COLOR,
+            //    tilesDict: bw.tiles,
+            //    color1: Brushes.BlanchedAlmond,
+            //    color2: Brushes.MediumAquamarine));
+            rules.Add(new BeepRule(BeepRule.RULE_CHANGE_NEIGHBOR_COLOR,
+                tilesDict: bw.tiles,
+                nNeighbors: 6,
+                color1: Brushes.Gainsboro,
                 color2: Brushes.MediumAquamarine));
             lbRules.ItemsSource = null;
             lbRules.ItemsSource = rules;

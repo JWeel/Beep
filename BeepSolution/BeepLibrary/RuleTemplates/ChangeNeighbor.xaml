@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="BeepLibrary.RuleTemplates.ChangeNeighbor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:beep="clr-namespace:Beep"
+             mc:Ignorable="d"
+             d:DesignHeight="40"
+             d:DesignWidth="363">
+    <StackPanel HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Orientation="Horizontal">
+        <Button Name="btnRuleName"
+                Content="{Binding Name}"
+                
+                FontSize="10"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center" />
+        <Border BorderBrush="Black"
+                BorderThickness="1"
+                Width="10" />
+        <TextBox Name="txtRule1" 
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Center"
+                 Width="0"
+                 Height="0"
+                 />
+        <Button Name="btnRuleArg1"
+                Content="x"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                />
+        <TextBox Name="txtRule2"
+                 Text="neighbors of color"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Center"
+                 Margin="5,0,5,0"
+                 IsReadOnly="True" />
+        <xctk:ColorPicker Name="clrRule1"
+                          Height="17"
+                          Width="36"
+                          BorderThickness="0"
+                          SelectedColor="Blue"
+                          DisplayColorAndName="False"
+                          ShowStandardColors="False"></xctk:ColorPicker>
+        <TextBox Name="txtRule3"
+                 Text="become"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Center"
+                 Margin="5,0,5,0"
+                 IsReadOnly="True" />
+        <xctk:ColorPicker Name="clrRule2"
+                          Height="17"
+                          Width="36"
+                          BorderThickness="0"
+                          SelectedColor="LightSeaGreen"
+                          DisplayColorAndName="False"
+                          ShowStandardColors="False"></xctk:ColorPicker>
+    </StackPanel>
+</UserControl>
