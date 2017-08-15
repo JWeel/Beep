@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Media;
+using System.Linq;
 //using System.Drawing; // Point structure
 
 // TODO
@@ -31,11 +32,17 @@ namespace Beep {
                     tiles.Add(new Point(indexX, indexY), new Tile(indexX, indexY));
                 }
             }
+
+            // TEMPORARY TEST STUFF please ignore
+            //BeepRule.ChangeColor(tiles.Values.ToList(), null, null);
         }
     }
 
+    // TODO change Tile to struct, would make life simpler
     public class Tile {
-        //public List<Tile> Neighbors { get; set; }
+
+        public List<Point> Neighbors { get; set; }
+
         public Point Coordinates { get; set; }
         public Brush Color { get; set; }
         public Point SizeBW { get; set; }
@@ -48,6 +55,13 @@ namespace Beep {
             this.Color = Brushes.BlanchedAlmond;
         }
 
+        // (deep) copy constructor
+        public Tile(Tile t) {
+            //this.Neighbors = t.Neighbors;
+            this.Coordinates = t.Coordinates;
+            this.Color = t.Color;
+        }
+        
         internal Tile(Point p, Point size, bool boxed) {
             this.Coordinates = p;
             this.BoxedBW = boxed;
@@ -55,34 +69,20 @@ namespace Beep {
         }
 
         public static List<Point> GetNeighbors(Point p) {
-
-            List<Point> neighbors = new List<Point>();
-           
-            
             //int startX = 0 - (indexY / 2);
             //int endX = Size.X + startX;
+            //if (boxed && indexY % 2 != 0) endX--; // this line makes the grid a box if SizeY is even
 
-           //if (boxed && indexY % 2 != 0) endX--; // this line makes the grid a box if SizeY is even
-            
-            neighbors.Add(new Point(p.X + 1, p.Y));
-            
-            neighbors.Add(new Point(p.X + 1, p.Y - 1));
-
-            neighbors.Add(new Point(p.X, p.Y - 1));
-
-            neighbors.Add(new Point(p.X - 1, p.Y));
-
-            neighbors.Add(new Point(p.X - 1, p.Y + 1));
-
-            neighbors.Add(new Point(p.X, p.Y + 1));
-
-            
+            List<Point> neighbors = new List<Point> {
+                new Point(p.X + 1, p.Y),
+                new Point(p.X + 1, p.Y - 1),
+                new Point(p.X, p.Y - 1),
+                new Point(p.X - 1, p.Y),
+                new Point(p.X - 1, p.Y + 1),
+                new Point(p.X, p.Y + 1)
+            };
             return neighbors;
-
-            
         }
-
-        
     }
 
     public struct Point {
@@ -91,6 +91,9 @@ namespace Beep {
         public Point(int x, int y) {
             X = x;
             Y = y;
+        }
+        public override string ToString() {
+            return string.Format("({0},{1})", X, Y);
         }
     }
 }

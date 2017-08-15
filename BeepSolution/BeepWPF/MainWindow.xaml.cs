@@ -35,26 +35,18 @@ namespace Beep {
         private List<Point> SelectedPointList = new List<Point>();
         private List<Point> ColouredPointList = new List<Point>();
 
-        //Tile Selected by user
-        List<Tile> SelectedTilesList = new List<Tile>();
-
         // random number
         Random rand = new Random();
 
-
-        private List<BeepRule> rules;						
-        
-
+        private List<BeepRule> rules;
 
         private BeepWorld bw;
         private Polygon selectedHexagon;
 
-        public MainWindow()
-        {
+        public MainWindow() {
             InitializeComponent();
             
             bw = new BeepWorld(BEEP_SIZE, true);
-
 
             rules = new List<BeepRule>() {
             //    new BeepRule(){ Name = "a" },
@@ -64,14 +56,10 @@ namespace Beep {
 
             lbRules.ItemsSource = rules;
 
-
-
-
             double relativeX = 0;
             double relativeY = HEXAGON_VERTICAL_EDGE;
 
-            foreach (Tile t in bw.tiles.Values)
-            {
+            foreach (Tile t in bw.tiles.Values) {
                 int xCoordinate = t.Coordinates.X;
                 int yCoordinate = t.Coordinates.Y;
 
@@ -92,8 +80,7 @@ namespace Beep {
                 canvas.Children.Add(hexPolygon);
 
                 continue;
-                Label label = new Label()
-                {
+                Label label = new Label() {
                     Foreground = new SolidColorBrush(Colors.Indigo),
                     Content = xCoordinate + "," + yCoordinate,
                     FontSize = 6,
@@ -102,8 +89,8 @@ namespace Beep {
                 canvas.Children.Add(label);
             }
         }
-        private void ColourListTiles(List<Point> listPoint)
-        {
+
+        private void ColourListTiles(List<Point> listPoint) {
             foreach (Point m in listPoint)
             {
                 Polygon temp = (Polygon)this.FindName(HexagonPointToName(m));
@@ -112,24 +99,18 @@ namespace Beep {
                  ColouredPointList.Add(m);
                 
             }
-
         }
-        
 
-	        private List<Point> NeighborsToList(Point p)
-        {
-            List<Point> neighbors = new List<Point>();
-     
-                neighbors.Add(new Point(p.X + 1, p.Y));
-                neighbors.Add(new Point(p.X + 1, p.Y - 1));
-                neighbors.Add(new Point(p.X, p.Y - 1));
-                neighbors.Add(new Point(p.X, p.Y + 1));
-                neighbors.Add(new Point(p.X - 1, p.Y));
-                neighbors.Add(new Point(p.X - 1, p.Y + 1));
-
+        private List<Point> NeighborsToList(Point p){
+            List<Point> neighbors = new List<Point> {
+                new Point(p.X + 1, p.Y),
+                new Point(p.X + 1, p.Y - 1),
+                new Point(p.X, p.Y - 1),
+                new Point(p.X, p.Y + 1),
+                new Point(p.X - 1, p.Y),
+                new Point(p.X - 1, p.Y + 1)
+            };
             return neighbors;
-
-
         }
 												
         // returns a polygon of six points representing a hexagon
@@ -189,14 +170,16 @@ namespace Beep {
             PixelPoint p = e.GetPosition(sender as IInputElement);
 
             Point axialPoint = MouseCoordinatesToAxialCoordinates(p.X, p.Y);
-			SelectedPointList.Add(axialPoint);								  
-            Polygon po = (Polygon)this.FindName(HexagonPointToName(axialPoint));
-            if (po != null) {
-                po.Fill = Brushes.BlueViolet;
-                //if (selectedHexagon != null) selectedHexagon.Fill = HEXAGON_FILL_COLOR;
-                //selectedHexagon = po;
-            }
+            //SelectedPointList.Add(axialPoint);								  
+            //Polygon po = (Polygon)this.FindName(HexagonPointToName(axialPoint));
+            //if (po != null) {
+            //    po.Fill = Brushes.BlueViolet;
+            //    //if (selectedHexagon != null) selectedHexagon.Fill = HEXAGON_FILL_COLOR;
+            //    //selectedHexagon = po;
+            //}
+            bw.tiles[axialPoint].Color = Brushes.Maroon;
             MouseTextCopy.Text = axialPoint.X + " , " + axialPoint.Y;
+            Refresh();
         }
 
         // converts coordinates of mouse to axial coordinates
@@ -252,27 +235,21 @@ namespace Beep {
             Refresh();
         }
 
-        private void BtnColourNeighboursClick(object sender, RoutedEventArgs e)
-        {
-            foreach (Point p in SelectedPointList)
-            {
+        private void BtnColourNeighboursClick(object sender, RoutedEventArgs e) {
+            foreach (Point p in SelectedPointList) {
                 List<Point> z = NeighborsToList(p);
                 ColourListTiles(z);
             }
-
-            
         }
         
-
-        private void btnRandomizeClick(object sender, RoutedEventArgs e)
-        {
+        private void btnRandomizeClick(object sender, RoutedEventArgs e) {
             Random rnd = new Random();
             Random rnd2 = new Random();
             int percentage = 50;
             int numTiles = (BEEP_SIZE.X * BEEP_SIZE.Y)/2;
             Brush randomColor = Brushes.HotPink;
 
-            
+            List<Tile> ListTiles = new List<Tile>();
 
             foreach (Tile t in bw.tiles.Values) {
                 int chooser = rnd.Next(0, 2);
@@ -284,11 +261,9 @@ namespace Beep {
                   
                     t.Color = PickBrush();
 
-                    }
-                                     
-                }
-            Refresh();
-                    
+                }                         
+            }
+            Refresh();   
         }
 
         private void SpreadVirus() {
@@ -316,7 +291,11 @@ namespace Beep {
                 }
 
             }
-            Neighbors.Clear();
+
+
+            //Neighbors.Clear();
+
+
         }
 
         private void UpdateVirusTiles() {
@@ -326,6 +305,7 @@ namespace Beep {
                 }
             }
         }
+
         private Brush PickBrush() {
             Brush result = Brushes.Transparent;
             
@@ -339,14 +319,20 @@ namespace Beep {
         }
 
         private void BtnNewRuleClick(object sender, RoutedEventArgs e) {
-            rules.Add(new BeepRule() { Name = "hallo" });
+            rules.Add(new BeepRule(BeepRule.RULE_CHANGE_COLOR,
+                tilesDict: bw.tiles, 
+                color1: Brushes.BlanchedAlmond, 
+                color2: Brushes.MediumAquamarine));
             lbRules.ItemsSource = null;
             lbRules.ItemsSource = rules;
         }
 
         private void BtnPaintClick(object sender, RoutedEventArgs e) {
-            SpreadVirus();
-
+            foreach (BeepRule rule in rules) {
+                bw.tiles = rule.Run();
+            }
+            //bw.tiles = BeepRule.ChangeColor(bw.tiles, Brushes.BlanchedAlmond, Brushes.MediumAquamarine);
+            Refresh();
         }
     }
 }
