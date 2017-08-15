@@ -9,6 +9,10 @@ namespace Beep {
     // a repository of actions
     public class BeepRule {
 
+        public const string RULE_CHANGE_COLOR = "ChangeColor";
+        public const string RULE_CHANGE_NEIGHBOR_COLOR = "ChangeNeighborColor";
+        public const string RULE_VIRUS = "Virus";
+
         public string Name { get; set; }
         
         private Brush color1, color2, color3;
@@ -32,13 +36,13 @@ namespace Beep {
             this.tilesList = tilesList;
         }
 
-        public object Run() {
+        public Dictionary<Point, Tile> Run() {
             switch (Name) {
-                case "ChangeColor":
-                    return ChangeColor(tilesList, color1, color2);
-                case "ChangeNeighborColor":
+                case RULE_CHANGE_COLOR:
+                    return ChangeColor(tilesDict, color1, color2);
+                case RULE_CHANGE_NEIGHBOR_COLOR:
                     return ChangeNeighborColor(tilesDict, nNeighbors, color1, color2);
-                case "Virus":
+                case RULE_VIRUS:
                     return null;
                 default:
                     return null;
@@ -47,9 +51,16 @@ namespace Beep {
 
         // Tiles with designated color become target color
         // TODO possible extension: percentage reliability, percentage of tiles to change
-        public static List<Tile> ChangeColor(List<Tile> tiles, Brush originalColor, Brush targetColor) {
-            List<Tile> alteredTiles = tiles.ConvertAll(tile => new Tile(tile));
-            foreach (Tile t in alteredTiles) {
+        public static Dictionary<Point, Tile> ChangeColor(Dictionary<Point, Tile> tiles, Brush originalColor, Brush targetColor) {
+            //List<Tile> alteredTiles = tiles.ConvertAll(tile => new Tile(tile));
+
+            // deep copy dict
+            Dictionary<Point, Tile> alteredTiles = new Dictionary<Point, Tile>();
+            foreach (var v in tiles) {
+                alteredTiles[v.Key] = new Tile(v.Value);
+            }
+
+            foreach (Tile t in alteredTiles.Values) {
                 if (t.Color == originalColor) t.Color = targetColor;
             }
             return alteredTiles;
