@@ -35,18 +35,53 @@ namespace Beep {
     }
 
     public class Tile {
-        public List<Tile> Neighbors { get; set; }
+        //public List<Tile> Neighbors { get; set; }
         public Point Coordinates { get; set; }
         public Brush Color { get; set; }
+        public Point SizeBW { get; set; }
+        public bool BoxedBW { get; set; }
+
         internal Tile(int x, int y) : this(new Point(x, y)) { }
+
         internal Tile(Point p) {
             this.Coordinates = p;
             this.Color = Brushes.BlanchedAlmond;
         }
 
-        private static List<Point> GetNeighbors(Point p) {
-            return null;
+        internal Tile(Point p, Point size, bool boxed) {
+            this.Coordinates = p;
+            this.BoxedBW = boxed;
+            this.SizeBW = size;
         }
+
+        public static List<Point> GetNeighbors(Point p) {
+
+            List<Point> neighbors = new List<Point>();
+           
+            //int startX = 0 - (indexY / 2);
+            //int endX = Size.X + startX;
+
+            //if (boxed && indexY % 2 != 0) endX--; // this line makes the grid a box if SizeY is even
+
+            neighbors.Add(new Point(p.X + 1, p.Y));
+
+            neighbors.Add(new Point(p.X + 1, p.Y - 1));
+
+            neighbors.Add(new Point(p.X, p.Y - 1));
+
+            neighbors.Add(new Point(p.X - 1, p.Y));
+
+            neighbors.Add(new Point(p.X - 1, p.Y + 1));
+
+            neighbors.Add(new Point(p.X, p.Y + 1));
+
+            
+            return neighbors;
+
+            
+        }
+
+        
     }
 
     public struct Point {

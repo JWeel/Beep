@@ -16,7 +16,7 @@ namespace Beep {
 
     public partial class MainWindow : Window {
 
-        private static readonly Point BEEP_SIZE = new Point(11, 13); // best with 20
+        private static readonly Point BEEP_SIZE = new Point(23, 26); // best with 20
         //private static readonly Point BEEP_SIZE = new Point(23, 26); // 10
         //private static readonly Point BEEP_SIZE = new Point(46, 53); // 5
 
@@ -306,12 +306,20 @@ namespace Beep {
             UpdateVirusTiles();
         }
         private void ColorVirusTiles(Tile t) {
-            List<Point> Neighbors = NeighborsToList(t.Coordinates);
-            int i = rand.Next(0, 5);
+            List<Point> Neighbors = Tile.GetNeighbors(t.Coordinates);
+            int i = rand.Next(0, 6);
 
-            Polygon z = (Polygon)FindName(HexagonPointToName(Neighbors[i]));
-            z.Fill = Brushes.DarkRed;
-            Neighbors.Clear();
+            foreach(Tile m in bw.tiles.Values) {
+                if(m.Coordinates.Equals(Neighbors[i])) {
+                    m.Color = Brushes.Firebrick;
+                    Refresh();
+                }
+
+            }
+
+
+            
+            //Neighbors.Clear();
 
         }
 
