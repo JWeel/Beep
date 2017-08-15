@@ -13,6 +13,8 @@
           Width="960"
           HorizontalAlignment="Left"
           VerticalAlignment="Top">
+
+
         <Canvas Name="canvas"
                 Background="#FF080F37"
                 HorizontalAlignment="Left"
@@ -26,6 +28,62 @@
                 Width="367"
                 HorizontalAlignment="Right"
                 Background="FloralWhite">
+            <Canvas.Resources>
+                <LinearGradientBrush x:Key="GrayBlueGradientBrush"
+                                     StartPoint="0,0"
+                                     EndPoint="1,1">
+                    <GradientStop Color="#8F77B5"
+                                  Offset="0" />
+                    <GradientStop Color="DarkSeaGreen"
+                                  Offset="0.5" />
+                    <GradientStop Color="DarkBlue"
+                                  Offset="1" />
+
+                </LinearGradientBrush>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Background"
+                            Value="{StaticResource GrayBlueGradientBrush}" />
+
+                    <Setter Property="Width"
+                            Value="40"></Setter>
+                    <Setter Property="Height"
+                            Value="20"></Setter>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Grid Width="{TemplateBinding Width}"
+                                      Height="{TemplateBinding Height}"
+                                      ClipToBounds="True">
+                                    <Rectangle x:Name="outerRectangle"
+                                               HorizontalAlignment="Stretch"
+                                               VerticalAlignment="Stretch"
+                                               Stroke="{TemplateBinding Background}"
+                                               RadiusX="10"
+                                               RadiusY="20"
+                                               StrokeThickness="1"
+                                               Fill="Azure" />
+                                    <Rectangle x:Name="innerRectangle"
+                                               HorizontalAlignment="Stretch"
+                                               VerticalAlignment="Stretch"
+                                               Stroke="Transparent"
+                                               RadiusX="10"
+                                               RadiusY="20"
+                                               StrokeThickness="1"
+                                               Fill="{TemplateBinding Background}" />
+                                    <DockPanel Name="myContentPresenterDockPanel">
+                                        <ContentPresenter x:Name="myContentPresenter"
+                                                          Margin="20"
+                                                          Content="{TemplateBinding Content}"
+                                                          TextBlock.Foreground="Black" />
+
+                                    </DockPanel>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+
+            </Canvas.Resources>
 
             <Label Name="lblHeader"
                    Content="Beep Rules"
@@ -36,10 +94,8 @@
                    Width="171" />
             <Button Name="btnNewRule"
                     Content="Add Rule"
-                    Canvas.Left="287"
-                    Canvas.Top="19"
-                    Width="56"
-                    Height="20"
+                    Canvas.Left="297"
+                    Canvas.Top="13"
                     Click="BtnNewRuleClick" />
 
             <ListBox Name="lbRules"
@@ -58,12 +114,47 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
+            <Button Name="Generate"
+                    Content="Generate"
+                    Canvas.Left="160"
+                    Canvas.Top="370"
+                    RenderTransformOrigin="0.64,0.98">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Ellipse Stroke="Black"
+                                     StrokeThickness="1">
+                                <Ellipse.Fill>
+                                    <RadialGradientBrush>
+                                        <GradientStop Offset="0"
+                                                      Color="#66327C" />
+                                        <GradientStop Offset="1"
+                                                      Color="#6699A1" />
+                                        <GradientStop Offset="1"
+                                                      Color="DarkBlue" />
+                                        <RadialGradientBrush.Transform>
+                                            <TransformGroup>
+                                                <ScaleTransform ScaleY="0.60" />
+
+                                            </TransformGroup>
+                                        </RadialGradientBrush.Transform>
+                                    </RadialGradientBrush>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                        </Grid>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+
             <Button Name="btnPaint"
                     Content="Paint"
                     FontSize="16"
                     HorizontalAlignment="Center"
-                    Canvas.Top="324"
-                    Click="BtnPaintClick" />
+                    Canvas.Top="325"
+                    Click="BtnPaintClick"
+                    RenderTransformOrigin="3.744,0.76"
+                    Canvas.Left="251" />
 
             <TextBox Name="MouseText"
                      Canvas.Left="297"
@@ -75,27 +166,9 @@
                      Text="TextBox"
                      Canvas.Left="297"
                      Canvas.Top="425" />
-            <Button Name="btnRefresh"
-                    Content="Refresh"
-                    Canvas.Left="126"
-                    Canvas.Top="433"
-                    Width="40"
-                    Click="BtnRefreshClick" />
-            <Button x:Name="btnColourNeighbours"
-                    Content="Colour Neighbors"
-                    Canvas.Left="126"
-                    Canvas.Top="386"
-                    Width="97"
-                    Click="BtnColourNeighboursClick"
-                    Height="26" />
-            <Button x:Name="btnRandomize"
-                    Content="Randomize"
-                    Canvas.Left="48"
-                    Canvas.Top="391"
-                    Width="73"
-                    Height="21"
-                    Click="btnRandomizeClick" />
 
         </Canvas>
     </Grid>
+
 </Window>
+    

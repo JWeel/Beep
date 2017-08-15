@@ -235,40 +235,33 @@ namespace Beep {
         }
 
 
-        private void BtnRefreshClick(object sender, RoutedEventArgs e) {
-            Refresh();
-        }
-
-        private void BtnColourNeighboursClick(object sender, RoutedEventArgs e) {
-            foreach (Point p in SelectedPointList) {
-                List<Point> z = NeighborsToList(p);
-                ColourListTiles(z);
-            }
-        }
         
-        private void btnRandomizeClick(object sender, RoutedEventArgs e) {
-            Random rnd = new Random();
-            Random rnd2 = new Random();
-            int percentage = 50;
-            int numTiles = (BEEP_SIZE.X * BEEP_SIZE.Y)/2;
-            Brush randomColor = Brushes.HotPink;
 
-            List<Tile> ListTiles = new List<Tile>();
+       
+        
+        //private void btnRandomizeClick(object sender, RoutedEventArgs e) {
+        //    Random rnd = new Random();
+        //    Random rnd2 = new Random();
+        //    int percentage = 50;
+        //    int numTiles = (BEEP_SIZE.X * BEEP_SIZE.Y)/2;
+        //    Brush randomColor = Brushes.HotPink;
 
-            foreach (Tile t in bw.tiles.Values) {
-                int chooser = rnd.Next(0, 2);
-                if(chooser == 1) {
-                    //t.Color = HEXAGON_FILL_COLOR;
+        //    List<Tile> ListTiles = new List<Tile>();
+
+        //    foreach (Tile t in bw.tiles.Values) {
+        //        int chooser = rnd.Next(0, 2);
+        //        if(chooser == 1) {
+        //            //t.Color = HEXAGON_FILL_COLOR;
                                  
-                }
-                else {
+        //        }
+        //        else {
                   
-                    t.Color = PickBrush();
+        //            t.Color = PickBrush();
 
-                }                         
-            }
-            Refresh();   
-        }
+        //        }                         
+        //    }
+        //    Refresh();   
+        //}
 
         private void SpreadVirus() {
             foreach (Tile t in bw.tiles.Values) {
