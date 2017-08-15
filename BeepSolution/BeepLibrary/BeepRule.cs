@@ -19,6 +19,7 @@ namespace Beep {
         private int nNeighbors;
         private Dictionary<Point, Tile> tilesDict;
         private List<Tile> tilesList;
+        
 
         public BeepRule(string name,
                 Brush color1 = null,
@@ -84,7 +85,22 @@ namespace Beep {
             return alteredTiles;
         }
 
-        public void Update(Dictionary<Point,Tile> updatedTiles) {
+        //virus: takes parameters Contagion rate and (power)
+        public Dictionary<Point, Tile> SpreadVirus (Dictionary<Point, Tile> tiles, int nNeighbors, Brush originalColor, Brush targetColor) {
+
+           //deep copy dict
+           Dictionary<Point, Tile> alteredTiles = new Dictionary<Point, Tile>();
+           foreach(var v in tiles) {
+                alteredTiles[v.Key] = new Tile(v.Value);
+            }
+
+
+
+            return alteredTiles;
+
+        }
+
+        public void Update(Dictionary<Point, Tile> updatedTiles) {
             tilesDict = updatedTiles;
         }
     }

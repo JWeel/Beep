@@ -273,8 +273,7 @@ namespace Beep {
         private void SpreadVirus() {
             foreach (Tile t in bw.tiles.Values) {
                 if (SelectedPointList.Contains(t.Coordinates)) {
-                    Polygon po = (Polygon)FindName(HexagonPointToName(t.Coordinates));
-                    po.Fill = Brushes.Green;
+                    
                     ColorVirusTiles(t);
                     
 
@@ -285,17 +284,21 @@ namespace Beep {
             UpdateVirusTiles();
         }
         private void ColorVirusTiles(Tile t) {
+
             List<Point> Neighbors = Tile.GetNeighbors(t.Coordinates);
             int i = rand.Next(0, 6);
 
-            foreach(Tile m in bw.tiles.Values) {
-                if(m.Coordinates.Equals(Neighbors[i])) {
+            foreach (Tile m in bw.tiles.Values) {
+                if (m.Coordinates.Equals(Neighbors[i])) {
                     m.Color = Brushes.Firebrick;
                     Refresh();
                 }
 
             }
+
+
             //Neighbors.Clear();
+
 
         }
 
