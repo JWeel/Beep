@@ -69,16 +69,18 @@ namespace Beep {
         }
 
         public static List<Point> GetNeighbors(Point p) {
-            List<Point> neighbors = new List<Point>();
             //int startX = 0 - (indexY / 2);
             //int endX = Size.X + startX;
             //if (boxed && indexY % 2 != 0) endX--; // this line makes the grid a box if SizeY is even
-            neighbors.Add(new Point(p.X + 1, p.Y));
-            neighbors.Add(new Point(p.X + 1, p.Y - 1));
-            neighbors.Add(new Point(p.X, p.Y - 1));
-            neighbors.Add(new Point(p.X - 1, p.Y));
-            neighbors.Add(new Point(p.X - 1, p.Y + 1));
-            neighbors.Add(new Point(p.X, p.Y + 1));
+
+            List<Point> neighbors = new List<Point> {
+                new Point(p.X + 1, p.Y),
+                new Point(p.X + 1, p.Y - 1),
+                new Point(p.X, p.Y - 1),
+                new Point(p.X - 1, p.Y),
+                new Point(p.X - 1, p.Y + 1),
+                new Point(p.X, p.Y + 1)
+            };
             return neighbors;
         }
     }
