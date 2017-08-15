@@ -9,8 +9,8 @@ namespace Beep {
     // a repository of actions
     public class BeepRule {
 
-        public const string RULE_CHANGE_COLOR = "ChangeColor";
-        public const string RULE_CHANGE_NEIGHBOR_COLOR = "ChangeNeighborColor";
+        public const string RULE_CHANGE_COLOR = "Change Color";
+        public const string RULE_CHANGE_NEIGHBOR_COLOR = "Change Neighbor Color";
         public const string RULE_VIRUS = "Virus";
 
         public string Name { get; set; }
@@ -18,23 +18,19 @@ namespace Beep {
         private Brush color1, color2, color3;
         private int nNeighbors;
         private Dictionary<Point, Tile> tilesDict;
-        private List<Tile> tilesList;
-        
 
         public BeepRule(string name,
                 Brush color1 = null,
                 Brush color2 = null,
                 Brush color3 = null,
                 int nNeighbors = 0,
-                Dictionary<Point, Tile> tilesDict = null,
-                List<Tile> tilesList = null) {
+                Dictionary<Point, Tile> tilesDict = null) {
             this.Name = name;
             this.color1 = color1;
             this.color2 = color2;
             this.color3 = color3;
             this.nNeighbors = nNeighbors;
             this.tilesDict = tilesDict;
-            this.tilesList = tilesList;
         }
 
         public Dictionary<Point, Tile> Run() {
@@ -75,9 +71,10 @@ namespace Beep {
                 alteredTiles[v.Key] = new Tile(v.Value);
             }
 
-            foreach (Tile t in alteredTiles.Values) {
+            foreach (Tile t in tiles.Values) {
                 if (t.Color == originalColor) {
                     foreach (Point p in t.Neighbors) {
+                        //Debug.WriteLine(p + " " + t.Neighbors.ToString());
                         alteredTiles[p].Color = targetColor;
                     }
                 }
@@ -93,8 +90,6 @@ namespace Beep {
            foreach(var v in tiles) {
                 alteredTiles[v.Key] = new Tile(v.Value);
             }
-
-
 
             return alteredTiles;
 

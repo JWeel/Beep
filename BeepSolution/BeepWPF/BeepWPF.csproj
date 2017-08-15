@@ -94,9 +94,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BeepLibrary\BeepWorld.csproj">
+    <ProjectReference Include="..\BeepLibrary\BeepLibrary.csproj">
       <Project>{28130b90-570f-4ef6-8617-a527767171e3}</Project>
-      <Name>BeepWorld</Name>
+      <Name>BeepLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
