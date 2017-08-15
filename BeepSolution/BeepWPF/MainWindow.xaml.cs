@@ -16,13 +16,16 @@ namespace Beep {
 
     public partial class MainWindow : Window {
 
-        private static readonly Point BEEP_SIZE = new Point(4, 4); // best with 20
+        //private static readonly Point BEEP_SIZE = new Point(8, 7); // best with 42.8
         //private static readonly Point BEEP_SIZE = new Point(23, 26); // best with 20
         //private static readonly Point BEEP_SIZE = new Point(23, 26); // 10
+        private static readonly Point BEEP_SIZE = new Point(49, 45);
         //private static readonly Point BEEP_SIZE = new Point(46, 53); // 5
 
+        private const bool BEEP_BOXED = true;
+
         // hexagon length values. only change HEXAGON_SIDE_LENGTH 
-        private const double HEXAGON_SIDE_LENGTH = 50;
+        private const double HEXAGON_SIDE_LENGTH = 7;
         private static readonly double HEXAGON_HORIZONTAL_LENGTH = Sqrt(3) * HEXAGON_SIDE_LENGTH;
         private static readonly double HEXAGON_HORIZONTAL_HALF = HEXAGON_HORIZONTAL_LENGTH / 2;
         private static readonly double HEXAGON_VERTICAL_EDGE = HEXAGON_SIDE_LENGTH / 2;
@@ -47,7 +50,7 @@ namespace Beep {
         public MainWindow() {
             InitializeComponent();
             
-            bw = new BeepWorld(BEEP_SIZE, true);
+            bw = new BeepWorld(BEEP_SIZE, BEEP_BOXED);
 
             rules = new List<BeepRule>() {
             //    new BeepRule(){ Name = "a" },
@@ -82,7 +85,7 @@ namespace Beep {
                 RegisterName(name, hexPolygon);
                 canvas.Children.Add(hexPolygon);
 
-                continue;
+                //continue;
                 Label label = new Label() {
                     Foreground = new SolidColorBrush(Colors.Indigo),
                     Content = xCoordinate + "," + yCoordinate,
@@ -103,18 +106,6 @@ namespace Beep {
                  ColouredPointList.Add(m);
                 
             }
-        }
-
-        private List<Point> NeighborsToList(Point p){
-            List<Point> neighbors = new List<Point> {
-                new Point(p.X + 1, p.Y),
-                new Point(p.X + 1, p.Y - 1),
-                new Point(p.X, p.Y - 1),
-                new Point(p.X, p.Y + 1),
-                new Point(p.X - 1, p.Y),
-                new Point(p.X - 1, p.Y + 1)
-            };
-            return neighbors;
         }
 												
         // returns a polygon of six points representing a hexagon
