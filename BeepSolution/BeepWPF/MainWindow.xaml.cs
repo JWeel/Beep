@@ -16,12 +16,13 @@ namespace Beep {
 
     public partial class MainWindow : Window {
 
-        private static readonly Point BEEP_SIZE = new Point(23, 26); // best with 20
+        private static readonly Point BEEP_SIZE = new Point(4, 4); // best with 20
+        //private static readonly Point BEEP_SIZE = new Point(23, 26); // best with 20
         //private static readonly Point BEEP_SIZE = new Point(23, 26); // 10
         //private static readonly Point BEEP_SIZE = new Point(46, 53); // 5
 
         // hexagon length values. only change HEXAGON_SIDE_LENGTH 
-        private const double HEXAGON_SIDE_LENGTH = 10;
+        private const double HEXAGON_SIDE_LENGTH = 50;
         private static readonly double HEXAGON_HORIZONTAL_LENGTH = Sqrt(3) * HEXAGON_SIDE_LENGTH;
         private static readonly double HEXAGON_HORIZONTAL_HALF = HEXAGON_HORIZONTAL_LENGTH / 2;
         private static readonly double HEXAGON_VERTICAL_EDGE = HEXAGON_SIDE_LENGTH / 2;
@@ -76,7 +77,9 @@ namespace Beep {
 
                 // create polygon to be placed on canvas
                 Polygon hexPolygon = MakeHexagon(posX, posY);
-                RegisterName(HexagonPointToName(t.Coordinates), hexPolygon);
+                string name = HexagonPointToName(t.Coordinates);
+                hexPolygon.Name = name;
+                RegisterName(name, hexPolygon);
                 canvas.Children.Add(hexPolygon);
 
                 continue;
@@ -88,6 +91,7 @@ namespace Beep {
                 };
                 canvas.Children.Add(label);
             }
+            Refresh();
         }
 
         private void ColourListTiles(List<Point> listPoint) {
@@ -159,7 +163,7 @@ namespace Beep {
                 }
 
 
-                if (selectedHexagon != null) selectedHexagon.Fill = HEXAGON_FILL_COLOR;
+                if (selectedHexagon != null) selectedHexagon.Fill = bw.tiles[HexagonNameToPoint(selectedHexagon.Name)].Color;
                 selectedHexagon = po;
             }
         }
@@ -177,7 +181,7 @@ namespace Beep {
             //    //if (selectedHexagon != null) selectedHexagon.Fill = HEXAGON_FILL_COLOR;
             //    //selectedHexagon = po;
             //}
-            bw.tiles[axialPoint].Color = Brushes.Maroon;
+            bw.tiles[axialPoint].Color = Brushes.Gainsboro;
             MouseTextCopy.Text = axialPoint.X + " , " + axialPoint.Y;
             Refresh();
         }
@@ -254,7 +258,7 @@ namespace Beep {
             foreach (Tile t in bw.tiles.Values) {
                 int chooser = rnd.Next(0, 2);
                 if(chooser == 1) {
-                    t.Color = HEXAGON_FILL_COLOR;
+                    //t.Color = HEXAGON_FILL_COLOR;
                                  
                 }
                 else {
@@ -330,6 +334,10 @@ namespace Beep {
             }
             //bw.tiles = BeepRule.ChangeColor(bw.tiles, Brushes.BlanchedAlmond, Brushes.MediumAquamarine);
             Refresh();
+
+            foreach(BeepRule rule in rules) {
+                rule.Update(bw.tiles);
+            }
         }
     }
 }

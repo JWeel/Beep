@@ -84,5 +84,8 @@ namespace Beep {
             return alteredTiles;
         }
 
+        public void Update(Dictionary<Point,Tile> updatedTiles) {
+            tilesDict = updatedTiles;
+        }
     }
 }
