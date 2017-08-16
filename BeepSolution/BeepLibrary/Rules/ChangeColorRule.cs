@@ -14,10 +14,10 @@ namespace Beep.Rules {
 
         // TODO possible extension: percentage reliability, percentage of tiles to change
 
-        public ChangeColorRule(Dictionary<Point, Tile> tiles, List<Brush> colorArguments = null, List<int> intArguments = null, List<bool> boolArguments = null) : base(tiles, colorArguments, intArguments, boolArguments) {
+        public ChangeColorRule(Dictionary<Point, Tile> tiles, List<Color> colorArguments = null, List<int> intArguments = null, List<bool> boolArguments = null) : base(tiles, colorArguments, intArguments, boolArguments) {
         }
 
-        public override string RuleName { get => BeepRule.RULE_CHANGE_COLOR; }
+        public override string RuleName { get => RULE_CHANGE_COLOR; }
 
         public override Dictionary<Point, Tile> Run() {
             Dictionary<Point, Tile> alteredTiles = DeepCopyDict(tiles);

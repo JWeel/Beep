@@ -12,6 +12,8 @@ using Beep.Rules;
 using Microsoft.Win32;
 using System.IO;
 using System.Xml;
+using Beep.RuleUI;
+using System.Collections.ObjectModel;
 
 namespace Beep {
     /// <summary>
@@ -35,9 +37,9 @@ namespace Beep {
         private static readonly double HEXAGON_VERTICAL_EDGE = HEXAGON_SIDE_LENGTH / 2;
 
         //
-        private static readonly Brush HEXAGON_BORDER_COLOR = Brushes.PaleGreen;
-        private static readonly Brush HEXAGON_FILL_COLOR = Brushes.NavajoWhite; // NavajoWhite LOL
-		private static readonly Brush HEXAGON_FUN_COLOR = Brushes.Gold;
+        private static readonly Color HEXAGON_BORDER_COLOR = (Color)ColorConverter.ConvertFromString("#FF98FB98");
+        private static readonly Color HEXAGON_FILL_COLOR = (Color)ColorConverter.ConvertFromString("#FFDEAD"); // NavajoWhite LOL
+        private static readonly Color HEXAGON_FUN_COLOR = (Color)ColorConverter.ConvertFromString("#FFFFD700");
 
         // point that is selected by user
         private List<Point> SelectedPointList = new List<Point>();
@@ -48,7 +50,9 @@ namespace Beep {
         // random number
         Random rand = new Random();
 
-        private List<BeepRule> rules;
+        // list containing the rules used for painting generation, and list for corresponding UI
+        private List<BeepRule> beepRules;
+        private List<UserControl> BeepRulesUIComponents;
 
         private BeepWorld bw;
         private Polygon selectedHexagon;
@@ -58,9 +62,10 @@ namespace Beep {
             
             bw = new BeepWorld(BEEP_SIZE, BEEP_BOXED);
 
-            rules = new List<BeepRule>();
+            beepRules = new List<BeepRule>();
+            BeepRulesUIComponents = new List<UserControl>();
 
-            lbRules.ItemsSource = rules;
+            //lbRules.ItemsSource = beepRules;
 
             double relativeX = 0;
             double relativeY = HEXAGON_VERTICAL_EDGE;
@@ -97,23 +102,26 @@ namespace Beep {
                 canvas.Children.Add(label);
             }
 
-            RuleMenuItems = new List<MenuItem>() {
-                new MenuItem() {
-                    Header = BeepRule.RULE_CHANGE_COLOR
-                    
-                },
-                new MenuItem() {
-                    Header = BeepRule.RULE_CHANGE_NEIGHBOR_COLOR
-                },
-                new MenuItem() {
-                    Header = BeepRule.RULE_RANDOM_CHANGE
-                },
-                new MenuItem() {
-                    Header = BeepRule.RULE_VIRUS
-                }
-            };
+            MenuItem m1 = new MenuItem() { Header = BeepRule.RULE_CHANGE_COLOR };
+            m1.Click += (sender,e) => RuleMenuItemClick(sender, e);
+
+            MenuItem m2 = new MenuItem() { Header = BeepRule.RULE_CHANGE_NEIGHBOR_COLOR };
+            m2.Click += (sender, e) => RuleMenuItemClick(sender, e);
+
+            MenuItem m3 = new MenuItem() { Header = BeepRule.RULE_RANDOM_CHANGE };
+            m3.Click += (sender, e) => RuleMenuItemClick(sender, e);
+
+            MenuItem m4 = new MenuItem() { Header = BeepRule.RULE_VIRUS };
+            m4.Click += (sender, e) => RuleMenuItemClick(sender, e);
+
+            RuleMenuItems = new List<MenuItem>() { m1, m2, m3, m4 };
+
 
             Refresh();
+        }
+
+        private void RuleMenuItemClick(object sender, RoutedEventArgs e) {
+            //throw new NotImplementedException();
         }
 
         private void ColourListTiles(List<Point> listPoint) {
@@ -121,7 +129,7 @@ namespace Beep {
             {
                 Polygon temp = (Polygon)this.FindName(HexagonPointToName(m));
                 if (temp != null)
-                    temp.Fill = HEXAGON_FUN_COLOR;
+                    temp.Fill = new SolidColorBrush(HEXAGON_FUN_COLOR);
                  ColouredPointList.Add(m);
                 
             }
@@ -138,8 +146,8 @@ namespace Beep {
                     new PixelPoint(posX + HEXAGON_HORIZONTAL_LENGTH, posY),
                     new PixelPoint(posX + HEXAGON_HORIZONTAL_HALF, posY - HEXAGON_VERTICAL_EDGE)
                 },
-                Stroke = HEXAGON_BORDER_COLOR,
-                Fill = HEXAGON_FILL_COLOR
+                Stroke = new SolidColorBrush(HEXAGON_BORDER_COLOR),
+                Fill = new SolidColorBrush(HEXAGON_FILL_COLOR)
             };
         }
 
@@ -147,7 +155,10 @@ namespace Beep {
         private void Refresh() {
             foreach (Tile t in bw.tiles.Values) {
                 Polygon po = (Polygon)FindName(HexagonPointToName(t.Coordinates));
-                po.Fill = t.Color;
+                po.Fill = new SolidColorBrush(t.Color);
+            }
+            foreach (BeepRule rule in beepRules) {
+                rule.Update(bw.tiles);
             }
         }
 
@@ -173,7 +184,7 @@ namespace Beep {
                 }
 
 
-                if (selectedHexagon != null) selectedHexagon.Fill = bw.tiles[HexagonNameToPoint(selectedHexagon.Name)].Color;
+                if (selectedHexagon != null) selectedHexagon.Fill = new SolidColorBrush(bw.tiles[HexagonNameToPoint(selectedHexagon.Name)].Color);
                 selectedHexagon = po;
             }
         }
@@ -191,9 +202,9 @@ namespace Beep {
             //    //if (selectedHexagon != null) selectedHexagon.Fill = HEXAGON_FILL_COLOR;
             //    //selectedHexagon = po;
             //}
-            if (bw.tiles.ContainsKey(axialPoint)) bw.tiles[axialPoint].Color = Brushes.Orange;
+            if (bw.tiles.ContainsKey(axialPoint)) bw.tiles[axialPoint].Color = (Color)ColorConverter.ConvertFromString("#FFFFA500");
             MouseTextCopy.Text = axialPoint.X + " , " + axialPoint.Y;
-            Refresh();
+            //Refresh();
         }
 
         // converts coordinates of mouse to axial coordinates
@@ -293,7 +304,7 @@ namespace Beep {
 
             foreach (Tile m in bw.tiles.Values) {
                 if (m.Coordinates.Equals(Neighbors[i])) {
-                    m.Color = Brushes.Firebrick;
+                    m.Color = (Color)ColorConverter.ConvertFromString("#FFB22222");
                     Refresh();
                 }
 
@@ -307,7 +318,7 @@ namespace Beep {
 
         private void UpdateVirusTiles() {
             foreach(Tile t in bw.tiles.Values) {
-                if(t.Color != HEXAGON_FILL_COLOR && t.Color != Brushes.BlanchedAlmond) {
+                if(t.Color != HEXAGON_FILL_COLOR && t.Color != (Color)ColorConverter.ConvertFromString("#FFFFEBCD")) {
                     SelectedPointList.Add(t.Coordinates);
                 }
             }
@@ -325,22 +336,40 @@ namespace Beep {
 
         }
 
+        // sets the color property of all tiles to the default color
+        private void BtnClearClick(object sender, RoutedEventArgs e) {
+            foreach (Tile t in bw.tiles.Values) t.Color = Tile.DEFAULT_COLOR;
+            Refresh();
+        }
+
         private void BtnNewRuleClick(object sender, RoutedEventArgs e) {
-            rules.Add(BeepRule.CreateBeepRule(BeepRule.RULE_CHANGE_NEIGHBOR_COLOR, bw.tiles, colorArguments: new List<Brush> { Brushes.Orange, Brushes.Azure }, intArguments: new List<int> { 6 }, boolArguments: new List<bool> { true }));
+            //rules.Add(BeepRule.CreateBeepRule(BeepRule.RULE_CHANGE_NEIGHBOR_COLOR, bw.tiles, colorArguments: new List<Brush> { Brushes.Orange, Brushes.Azure }, intArguments: new List<int> { 6 }, boolArguments: new List<bool> { true }));
+
+            BeepRule br = BeepRule.CreateBeepRule(BeepRule.RULE_CHANGE_NEIGHBOR_COLOR, bw.tiles,
+                colorArguments: new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFA500"), (Color)ColorConverter.ConvertFromString("#FFF0FFFF") },
+                intArguments: new List<int> { 6 },
+                boolArguments: new List<bool> { false }
+            );
+            beepRules.Add(br);
+
+            BeepRulesUIComponents.Add( new ChangeNeighborColorUserControl(br as ChangeNeighborColorRule) );
+            
+
             lbRules.ItemsSource = null;
-            lbRules.ItemsSource = rules;
+            lbRules.ItemsSource = BeepRulesUIComponents;
         }
 
         private void BtnPaintClick(object sender, RoutedEventArgs e) {
-            foreach (BeepRule rule in rules) {
+            foreach (BeepRule rule in beepRules) {
+                Debug.WriteLine(String.Format(
+                    "{0}", rule.RuleName
+                    ));
                 bw.tiles = rule.Run();
             }
             //bw.tiles = BeepRule.ChangeColor(bw.tiles, Brushes.BlanchedAlmond, Brushes.MediumAquamarine);
             Refresh();
 
-            foreach(BeepRule rule in rules) {
-                rule.Update(bw.tiles);
-            }
+            
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e) {
@@ -348,8 +377,9 @@ namespace Beep {
             Point y = new Point(1, 1);
             Tile x = new Tile(y);
 
-            x.Color = Brushes.Black;
-           
+            x.Color = (Color)ColorConverter.ConvertFromString("#FF000000");
+
+
 
             x.Coordinates = y;
             

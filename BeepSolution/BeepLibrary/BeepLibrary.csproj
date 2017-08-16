@@ -55,15 +55,6 @@
     <Compile Include="Rules\VirusRule.cs" />
     <Compile Include="Rules\ChangeNeighborColorRule.cs" />
     <Compile Include="Rules\ChangeColorRule.cs" />
-    <Compile Include="RuleTemplates\ChangeNeighbor.xaml.cs">
-      <DependentUpon>ChangeNeighbor.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="RuleTemplates\ChangeNeighbor.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

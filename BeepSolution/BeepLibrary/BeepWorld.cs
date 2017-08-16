@@ -39,15 +39,17 @@ namespace Beep {
     // TODO change Tile to struct, would make life simpler
     public class Tile {
 
+        public static readonly Color DEFAULT_COLOR = (Color) ColorConverter.ConvertFromString("#FF98FB98");
+
         public List<Point> Neighbors { get; set; }
         public Point Coordinates { get; set; }
-        public Brush Color { get; set; }
+        public Color Color { get; set; }
 
         internal Tile(int x, int y) : this(new Point(x, y)) { }
 
         public Tile(Point p) {
             this.Coordinates = p;
-            this.Color = Brushes.PaleGreen;
+            this.Color = DEFAULT_COLOR;
         }
 
         // (deep) copy constructor
