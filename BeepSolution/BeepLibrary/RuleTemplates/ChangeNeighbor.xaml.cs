@@ -13,13 +13,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BeepLibrary.RuleTemplates {
+namespace Beep.RuleTemplates {
     /// <summary>
     /// Interaction logic for ChangeNeighbor.xaml
     /// </summary>
     public partial class ChangeNeighbor : UserControl {
         public ChangeNeighbor() {
             InitializeComponent();
+        }
+
+        private void BtnDeleteRuleClick(object sender, RoutedEventArgs e) {
+
         }
     }
 }
