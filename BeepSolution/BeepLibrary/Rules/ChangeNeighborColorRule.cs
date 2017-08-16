@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,31 +16,32 @@ namespace Beep.Rules {
         //      -second color is given to tiles that neighbor the matching tile
         //  -one int [0 < i < 6] in intArguments specifying number of tiles to change TODO
         //  -one bool argument specifying whether to not affect neigbhors that are also matchers
+        // TODO change neighbors of COLOR1 that are not COLOR3 to COLOR2
 
-        private Brush matchColor;
-        private Brush targetColor;
-        private int amountAffectedNeighbors;
-        private bool colorNeighboringMatchers;
-
-        public ChangeNeighborColorRule(Dictionary<Point, Tile> tiles, List<Brush> colorArguments = null, List<int> intArguments = null, List<bool> boolArguments = null) : base(tiles, colorArguments, intArguments, boolArguments) {
-            matchColor = colorArguments[0];
-            targetColor = colorArguments[1];
-            amountAffectedNeighbors = intArguments[0];
-            colorNeighboringMatchers = boolArguments[0];
+        public ChangeNeighborColorRule(Dictionary<Point, Tile> tiles, List<Color> colorArguments = null, List<int> intArguments = null, List<bool> boolArguments = null) : base(tiles, colorArguments, intArguments, boolArguments) {
+            MatchColor = colorArguments[0];
+            TargetColor = colorArguments[1];
+            AmountAffectedNeighbors = intArguments[0];
+            ColorNeighboringMatchers = boolArguments[0];
         }
 
-        public override string RuleName { get => BeepRule.RULE_CHANGE_NEIGHBOR_COLOR; }
+        public override string RuleName { get => RULE_CHANGE_NEIGHBOR_COLOR; }
+
+        public Color MatchColor { get; set; }
+        public Color TargetColor { get; set; }
+        public int AmountAffectedNeighbors { get; set; }
+        public bool ColorNeighboringMatchers { get; set; }
 
         public override Dictionary<Point, Tile> Run() {
             Dictionary<Point, Tile> alteredTiles = DeepCopyDict(tiles);
 
             foreach (Tile t in tiles.Values) {
-                if (t.Color == matchColor) {
+                if (t.Color == MatchColor) {
                     foreach (Point p in t.Neighbors) {
 
-                        if (colorNeighboringMatchers && tiles[p].Color == matchColor) continue;
+                        if (ColorNeighboringMatchers && tiles[p].Color == MatchColor) continue;
 
-                        alteredTiles[p].Color = targetColor;
+                        alteredTiles[p].Color = TargetColor;
                     }
                 }
             }

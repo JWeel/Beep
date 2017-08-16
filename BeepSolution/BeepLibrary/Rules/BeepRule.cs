@@ -17,12 +17,12 @@ namespace Beep.Rules {
         public abstract string RuleName { get; }
 
         protected Dictionary<Point, Tile> tiles;
-        protected List<Brush> colorArguments;
+        protected List<Color> colorArguments;
         protected List<int> intArguments;
         protected List<bool> boolArguments;
 
         public BeepRule(Dictionary<Point, Tile> tiles,
-                List<Brush> colorArguments = null,
+                List<Color> colorArguments = null,
                 List<int> intArguments = null,
                 List<bool> boolArguments = null) {
             this.tiles = tiles;
@@ -33,7 +33,7 @@ namespace Beep.Rules {
 
         //
         public static BeepRule CreateBeepRule(string type, Dictionary<Point,Tile> bwTiles,
-            List<Brush> colorArguments = null,
+            List<Color> colorArguments = null,
             List<int> intArguments = null,
             List<bool> boolArguments = null) {
             switch (type) {

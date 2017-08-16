@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:beep="clr-namespace:Beep.RuleTemplates;assembly=BeepLibrary"
+        xmlns:beepRuleUI="clr-namespace:Beep.RuleUI"
         mc:Ignorable="d"
         SizeToContent="WidthAndHeight"
         Title="Beep">
@@ -14,9 +14,8 @@
           HorizontalAlignment="Left"
           VerticalAlignment="Top">
 
-
         <Canvas Name="canvas"
-                Background="PaleGreen"
+                Background="LightGreen"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Height="480"
@@ -50,14 +49,16 @@
                      Canvas.Top="58"
                      Width="363"
                      Background="WhiteSmoke"
-                     ItemsSource="{Binding}">
-
+                     ItemsSource="{Binding BeepRulesUIComponents}"
+                     >
+                <!-- ItemsSource="{Binding}"> -->
+                
+                <!--
                 <ListBox.ItemTemplate>
-                    <DataTemplate DataType="{x:Type beep:ChangeNeighbor}" >
-                        <beep:ChangeNeighbor>
-                        </beep:ChangeNeighbor>
+                    <DataTemplate>
+                        <beepRuleUI:ChangeNeighborColorUserControl /> 
                     </DataTemplate>
-                </ListBox.ItemTemplate>
+                </ListBox.ItemTemplate> -->
             </ListBox>
 
             <Button Name="BtnSave"
@@ -80,7 +81,9 @@
                     HorizontalAlignment="Center"
                     Canvas.Left="142"
                     Margin="0"
-                    Canvas.Top="405">
+                    Canvas.Top="405"
+                    Click="BtnClearClick"
+                    >
                 
             </Button>
 
