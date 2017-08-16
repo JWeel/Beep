@@ -307,15 +307,7 @@ namespace Beep {
         }
 
         private void BtnNewRuleClick(object sender, RoutedEventArgs e) {
-            //rules.Add(new BeepRule(BeepRule.RULE_CHANGE_COLOR,
-            //    tilesDict: bw.tiles,
-            //    color1: Brushes.BlanchedAlmond,
-            //    color2: Brushes.MediumAquamarine));
-            rules.Add(new BeepRule(BeepRule.RULE_CHANGE_NEIGHBOR_COLOR,
-                tilesDict: bw.tiles,
-                nNeighbors: 6,
-                color1: Brushes.Gainsboro,
-                color2: Brushes.MediumAquamarine));
+            rules.Add(new ChangeColorRule(bw.tiles, colorArguments: new List<Brush> { Brushes.Gainsboro, Brushes.MediumAquamarine }));
             lbRules.ItemsSource = null;
             lbRules.ItemsSource = rules;
         }

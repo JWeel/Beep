@@ -107,7 +107,7 @@
                      ItemsSource="{Binding}">
 
                 <ListBox.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate DataType="{x:Type beep:ChangeNeighbor}" >
                         <beep:ChangeNeighbor>
                         </beep:ChangeNeighbor>
                     </DataTemplate>
