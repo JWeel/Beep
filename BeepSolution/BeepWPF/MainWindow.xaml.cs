@@ -11,9 +11,7 @@ using System.Reflection;
 using Beep.Rules;
 using Microsoft.Win32;
 using System.IO;
-using System.Xml;
 using Beep.RuleUI;
-using System.Collections.ObjectModel;
 
 namespace Beep {
     /// <summary>
@@ -22,10 +20,10 @@ namespace Beep {
 
     public partial class MainWindow : Window {
 
-        //private static readonly Point BEEP_SIZE = new Point(8, 7); // best with 42.8
+        private static readonly Point BEEP_SIZE = new Point(8, 7); // best with 42.8
         //private static readonly Point BEEP_SIZE = new Point(23, 26); // best with 20
         //private static readonly Point BEEP_SIZE = new Point(23, 26); // 10
-        private static readonly Point BEEP_SIZE = new Point(49, 45);
+        //private static readonly Point BEEP_SIZE = new Point(49, 45);
         //private static readonly Point BEEP_SIZE = new Point(46, 53); // 5
 
         private const bool BEEP_BOXED = true;
@@ -373,56 +371,71 @@ namespace Beep {
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e) {
-            List<Tile> temp = new List<Tile>();
-            Point y = new Point(1, 1);
-            Tile x = new Tile(y);
-
-            x.Color = (Color)ColorConverter.ConvertFromString("#FF000000");
-
-
-
-            x.Coordinates = y;
             
-            temp.Add(x);
-            try {
-                SaveFileDialog sfd = new SaveFileDialog();
-                sfd.Filter = "XML documents|*.xml";
-                sfd.FileName = "Painting";
-                sfd.DefaultExt = ".xml";
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "Text Document|*.txt";
+            sfd.FileName = "Painting.txt";
+            sfd.DefaultExt = ".txt";
+            Nullable<bool> result = sfd.ShowDialog();
 
-                Nullable<bool> result = sfd.ShowDialog();
+            if (result.HasValue && result.Value) {
+                string createText = "";
+                foreach (Point Key in bw.tiles.Keys) {
 
-                if(result.HasValue && result.Value) {
-
-                    MemoryStream ms = FormatAsXMLStream(temp);
-                    
+                    createText = createText + String.Format("{0}:{1}", Key, bw.tiles[Key].Color) + Environment.NewLine;
                 }
-            }
-            catch(Exception ex) {
-                MessageBox.Show(ex.Message, "Error generating painting", MessageBoxButton.OK, MessageBoxImage.Error);
+                string path = sfd.FileName;
+
+                File.WriteAllText(path, createText);
             }
 
         }
-        private MemoryStream FormatAsXMLStream(List<Tile> p) {
-            MemoryStream ms = new MemoryStream();
-            XmlWriter writer = XmlWriter.Create(ms);
+
+        private void BtnLoad_Click(object sender, RoutedEventArgs e) {
+            OpenFileDialog open = new OpenFileDialog();
+            open.Filter = "Text Document|*.txt";
+            string line;
+            Nullable<bool> result = open.ShowDialog();
+
+            if(result == true) {
+                BeepWorld loadbw = new BeepWorld(BEEP_SIZE, BEEP_BOXED);
+
+                StreamReader file = new StreamReader(open.FileName);
+                while((line = file.ReadLine()) != null) {
+
+                    foreach (Point Key in loadbw.tiles.Keys) {
+                        line = file.ReadLine();
+                        Debug.WriteLine(line);
 
 
-            writer.WriteStartDocument();
-            //writer.WriteStartElement(p[0].Coordinates.ToString());
-           // writer.WriteAttributeString("BeepWorld", String.Format("{0}", B));
 
-        foreach(Tile t in p) {
-                writer.WriteStartElement(t.Coordinates.ToString());
-                writer.WriteEndElement();
+
+                        string col = "";
+                        char colon = ':';
+                        if(line[7] == colon) {
+                            for(int i = 7; i<16; i++) {
+                                col = col + line[i];
+                            }
+                        }
+                        else {
+                            for (int i = 6; i < 15; i++) {
+                                col = col + line[i];
+                            }
+                        }
+                        
+                        //string col = String.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}",  line[i], line[i] , line[i] , line[i], line[i], line[i] , line[i] , line[i] , line[i]);
+                        SolidColorBrush b = (SolidColorBrush)(new BrushConverter().ConvertFrom(col));
+                        loadbw.tiles[Key].Color = b.Color;
+
+                    }
+                       
+
+                }
+                    Refresh();
+                file.Close();
             }
-            writer.WriteEndElement();
-            writer.WriteEndDocument();
-            writer.Flush();
-            writer.Close();
-            ms.Seek(0, SeekOrigin.Begin);
-            return ms;
-
+               
+            
         }
     }
 }
