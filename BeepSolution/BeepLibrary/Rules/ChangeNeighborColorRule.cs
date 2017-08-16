@@ -18,11 +18,13 @@ namespace Beep.Rules {
 
         private Brush matchColor;
         private Brush targetColor;
+        private int amountAffectedNeighbors;
         private bool colorNeighboringMatchers;
 
         public ChangeNeighborColorRule(Dictionary<Point, Tile> tiles, List<Brush> colorArguments = null, List<int> intArguments = null, List<bool> boolArguments = null) : base(tiles, colorArguments, intArguments, boolArguments) {
             matchColor = colorArguments[0];
             targetColor = colorArguments[1];
+            amountAffectedNeighbors = intArguments[0];
             colorNeighboringMatchers = boolArguments[0];
         }
 

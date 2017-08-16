@@ -35,7 +35,7 @@ namespace Beep {
         private static readonly double HEXAGON_VERTICAL_EDGE = HEXAGON_SIDE_LENGTH / 2;
 
         //
-        private static readonly Brush HEXAGON_BORDER_COLOR = Brushes.LightGray;
+        private static readonly Brush HEXAGON_BORDER_COLOR = Brushes.PaleGreen;
         private static readonly Brush HEXAGON_FILL_COLOR = Brushes.NavajoWhite; // NavajoWhite LOL
 		private static readonly Brush HEXAGON_FUN_COLOR = Brushes.Gold;
 
@@ -43,7 +43,7 @@ namespace Beep {
         private List<Point> SelectedPointList = new List<Point>();
         private List<Point> ColouredPointList = new List<Point>();
 
-        private List<MenuItem> RuleMenuItems;
+        public List<MenuItem> RuleMenuItems { get; set; }
 
         // random number
         Random rand = new Random();
@@ -100,6 +100,7 @@ namespace Beep {
             RuleMenuItems = new List<MenuItem>() {
                 new MenuItem() {
                     Header = BeepRule.RULE_CHANGE_COLOR
+                    
                 },
                 new MenuItem() {
                     Header = BeepRule.RULE_CHANGE_NEIGHBOR_COLOR
@@ -111,7 +112,6 @@ namespace Beep {
                     Header = BeepRule.RULE_VIRUS
                 }
             };
-
 
             Refresh();
         }
@@ -326,7 +326,7 @@ namespace Beep {
         }
 
         private void BtnNewRuleClick(object sender, RoutedEventArgs e) {
-            rules.Add(BeepRule.CreateBeepRule(BeepRule.RULE_CHANGE_NEIGHBOR_COLOR, bw.tiles, colorArguments: new List<Brush> { Brushes.Orange, Brushes.Azure }, boolArguments: new List<bool> { true }));
+            rules.Add(BeepRule.CreateBeepRule(BeepRule.RULE_CHANGE_NEIGHBOR_COLOR, bw.tiles, colorArguments: new List<Brush> { Brushes.Orange, Brushes.Azure }, intArguments: new List<int> { 6 }, boolArguments: new List<bool> { true }));
             lbRules.ItemsSource = null;
             lbRules.ItemsSource = rules;
         }

@@ -16,7 +16,7 @@
 
 
         <Canvas Name="canvas"
-                Background="#FF080F37"
+                Background="PaleGreen"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Height="480"
