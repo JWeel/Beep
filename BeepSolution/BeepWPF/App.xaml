@@ -22,10 +22,18 @@
             <GradientStop Color="#F05E1C"
                           Offset="0.75" />
 
+        </LinearGradientBrush>
 
+        <LinearGradientBrush x:Key="ClickGradientBrush"
+                             StartPoint="1,1"
+                             EndPoint="0,0">
+            <GradientStop Color="#FB966E"
+                          Offset="0.0" />
+            <GradientStop Color="#F05E1C"
+                          Offset="0.25" />
 
         </LinearGradientBrush>
-        
+
         <Style TargetType="{x:Type Button}">
             
             <Setter Property="Background" 
@@ -46,18 +54,39 @@
                         <Border Name="border"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 Background="{TemplateBinding Background}"
+                                
                                >
-                            
-                            
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              ContentSource="Content" />
+
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver"
                                      Value="True">
                                 <Setter Property="Background"
                                         Value="{StaticResource HoverGradientBrush}" />
-                                <Setter Property="Foreground"
-                                        Value="Black" />
+                                <Setter TargetName="border"
+                                        Property="BorderBrush"
+                                        Value="DarkGray" />
+                                <Setter Property="Button.Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect Color="Black"
+                                                          Direction="320"
+                                                          ShadowDepth="5"
+                                                          BlurRadius="4"
+                                                          Opacity="0.3" />
+                                    </Setter.Value>
+                                </Setter>
+                                
                             </Trigger>
+                            <Trigger Property="IsPressed"
+                                     Value="True">
+                                <Setter Property="Background"
+                                        Value="{StaticResource ClickGradientBrush}" />
+                                
+                            </Trigger>
+                            
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
