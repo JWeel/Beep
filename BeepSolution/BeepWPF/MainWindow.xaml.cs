@@ -40,7 +40,7 @@ namespace Beep {
         private List<Point> SelectedPointList = new List<Point>();
         private List<Point> ColouredPointList = new List<Point>();
 
-        private List<MenuItem> RuleMenuItems;
+        public List<MenuItem> RuleMenuItems { get; set; }
 
         // random number
         Random rand = new Random();

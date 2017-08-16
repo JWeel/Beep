@@ -11,17 +11,20 @@
     <StackPanel HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                 Orientation="Horizontal">
+        <!--
         <TextBox Name="btnRuleName"
                 Text="{Binding RuleName, Mode=OneWay}"
                 
                 FontSize="10"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center" />
-        <Menu Name="mnuRulePick"
-              ItemsSource="{Binding RuleMenuItems, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
+        -->
+        <ComboBox Name="mnuRulePick"
+                  ItemsSource="{Binding RuleMenuItems, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
+                  Height="12"
               >
 
-        </Menu>
+        </ComboBox>
         <Border BorderBrush="Black"
                 BorderThickness="1"
                 Width="10" />
