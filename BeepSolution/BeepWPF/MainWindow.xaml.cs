@@ -40,6 +40,8 @@ namespace Beep {
         private List<Point> SelectedPointList = new List<Point>();
         private List<Point> ColouredPointList = new List<Point>();
 
+        private List<MenuItem> RuleMenuItems;
+
         // random number
         Random rand = new Random();
 
@@ -53,11 +55,7 @@ namespace Beep {
             
             bw = new BeepWorld(BEEP_SIZE, BEEP_BOXED);
 
-            rules = new List<BeepRule>() {
-            //    new BeepRule(){ Name = "a" },
-             //   new BeepRule(){ Name = "b" },
-              //  new BeepRule(){ Name = "c" }
-            };
+            rules = new List<BeepRule>();
 
             lbRules.ItemsSource = rules;
 
@@ -86,7 +84,7 @@ namespace Beep {
                 RegisterName(name, hexPolygon);
                 canvas.Children.Add(hexPolygon);
 
-                //continue;
+                continue;
                 Label label = new Label() {
                     Foreground = new SolidColorBrush(Colors.Indigo),
                     Content = xCoordinate + "," + yCoordinate,
@@ -95,6 +93,23 @@ namespace Beep {
                 };
                 canvas.Children.Add(label);
             }
+
+            RuleMenuItems = new List<MenuItem>() {
+                new MenuItem() {
+                    Header = BeepRule.RULE_CHANGE_COLOR
+                },
+                new MenuItem() {
+                    Header = BeepRule.RULE_CHANGE_NEIGHBOR_COLOR
+                },
+                new MenuItem() {
+                    Header = BeepRule.RULE_RANDOM_CHANGE
+                },
+                new MenuItem() {
+                    Header = BeepRule.RULE_VIRUS
+                }
+            };
+
+
             Refresh();
         }
 
@@ -173,7 +188,7 @@ namespace Beep {
             //    //if (selectedHexagon != null) selectedHexagon.Fill = HEXAGON_FILL_COLOR;
             //    //selectedHexagon = po;
             //}
-            if (bw.tiles.ContainsKey(axialPoint)) bw.tiles[axialPoint].Color = Brushes.Gainsboro;
+            if (bw.tiles.ContainsKey(axialPoint)) bw.tiles[axialPoint].Color = Brushes.Orange;
             MouseTextCopy.Text = axialPoint.X + " , " + axialPoint.Y;
             Refresh();
         }
@@ -308,7 +323,7 @@ namespace Beep {
         }
 
         private void BtnNewRuleClick(object sender, RoutedEventArgs e) {
-            rules.Add(new ChangeColorRule(bw.tiles, colorArguments: new List<Brush> { Brushes.Gainsboro, Brushes.MediumAquamarine }));
+            rules.Add(BeepRule.CreateBeepRule(BeepRule.RULE_CHANGE_NEIGHBOR_COLOR, bw.tiles, colorArguments: new List<Brush> { Brushes.Orange, Brushes.Azure }, boolArguments: new List<bool> { true }));
             lbRules.ItemsSource = null;
             lbRules.ItemsSource = rules;
         }
