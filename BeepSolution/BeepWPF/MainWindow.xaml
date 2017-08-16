@@ -28,62 +28,7 @@
                 Width="367"
                 HorizontalAlignment="Right"
                 Background="FloralWhite">
-            <Canvas.Resources>
-                <LinearGradientBrush x:Key="GrayBlueGradientBrush"
-                                     StartPoint="0,0"
-                                     EndPoint="1,1">
-                    <GradientStop Color="#8F77B5"
-                                  Offset="0" />
-                    <GradientStop Color="DarkSeaGreen"
-                                  Offset="0.5" />
-                    <GradientStop Color="DarkBlue"
-                                  Offset="1" />
 
-                </LinearGradientBrush>
-                <Style TargetType="{x:Type Button}">
-                    <Setter Property="Background"
-                            Value="{StaticResource GrayBlueGradientBrush}" />
-
-                    <Setter Property="Width"
-                            Value="40"></Setter>
-                    <Setter Property="Height"
-                            Value="20"></Setter>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="Button">
-                                <Grid Width="{TemplateBinding Width}"
-                                      Height="{TemplateBinding Height}"
-                                      ClipToBounds="True">
-                                    <Rectangle x:Name="outerRectangle"
-                                               HorizontalAlignment="Stretch"
-                                               VerticalAlignment="Stretch"
-                                               Stroke="{TemplateBinding Background}"
-                                               RadiusX="10"
-                                               RadiusY="20"
-                                               StrokeThickness="1"
-                                               Fill="Azure" />
-                                    <Rectangle x:Name="innerRectangle"
-                                               HorizontalAlignment="Stretch"
-                                               VerticalAlignment="Stretch"
-                                               Stroke="Transparent"
-                                               RadiusX="10"
-                                               RadiusY="20"
-                                               StrokeThickness="1"
-                                               Fill="{TemplateBinding Background}" />
-                                    <DockPanel Name="myContentPresenterDockPanel">
-                                        <ContentPresenter x:Name="myContentPresenter"
-                                                          Margin="20"
-                                                          Content="{TemplateBinding Content}"
-                                                          TextBlock.Foreground="Black" />
-
-                                    </DockPanel>
-                                </Grid>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-
-            </Canvas.Resources>
 
             <Label Name="lblHeader"
                    Content="Beep Rules"
@@ -94,9 +39,10 @@
                    Width="171" />
             <Button Name="btnNewRule"
                     Content="Add Rule"
-                    Canvas.Left="297"
+                    Canvas.Left="226"
                     Canvas.Top="13"
-                    Click="BtnNewRuleClick" />
+                    Click="BtnNewRuleClick"
+                    Margin="0" />
 
             <ListBox Name="lbRules"
                      Height="240"
@@ -114,36 +60,18 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <Button Name="Generate"
-                    Content="Generate"
-                    Canvas.Left="160"
-                    Canvas.Top="370"
-                    RenderTransformOrigin="0.64,0.98">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Grid>
-                            <Ellipse Stroke="Black"
-                                     StrokeThickness="1">
-                                <Ellipse.Fill>
-                                    <RadialGradientBrush>
-                                        <GradientStop Offset="0"
-                                                      Color="#66327C" />
-                                        <GradientStop Offset="1"
-                                                      Color="#6699A1" />
-                                        <GradientStop Offset="1"
-                                                      Color="DarkBlue" />
-                                        <RadialGradientBrush.Transform>
-                                            <TransformGroup>
-                                                <ScaleTransform ScaleY="0.60" />
-
-                                            </TransformGroup>
-                                        </RadialGradientBrush.Transform>
-                                    </RadialGradientBrush>
-                                </Ellipse.Fill>
-                            </Ellipse>
-                        </Grid>
-                    </ControlTemplate>
-                </Button.Template>
+            <Button Name="BtnSave"
+                    Content="Save Painting"
+                    HorizontalAlignment="Center"
+                    Canvas.Left="30"
+                    Canvas.Top="446"
+                    Margin="0"></Button>
+            <Button Name="BtnLoad"
+                    Content="Load Painting"
+                    HorizontalAlignment="Center"
+                    Canvas.Left="30"
+                    Canvas.Top="413"
+                    Margin="0">
             </Button>
 
 
@@ -151,21 +79,17 @@
                     Content="Paint"
                     FontSize="16"
                     HorizontalAlignment="Center"
-                    Canvas.Top="325"
+                    Canvas.Top="364"
                     Click="BtnPaintClick"
                     RenderTransformOrigin="3.744,0.76"
-                    Canvas.Left="251" />
 
-            <Button Name="btnSave"
-                    Content="Save"
-                    Canvas.Left="48"
-                    Canvas.Top="448"
-                     />
-            <Button Name="btnLoad"
-                    Content="Load"
-                    Canvas.Left="124"
-                    Canvas.Top="450"
-                    />
+                    Canvas.Left="142"
+                    Margin="0" />
+            <TextBox Name="IterationText"
+                     Text="Iteration"
+                     TextWrapping="NoWrap"
+                     Canvas.Left="226"
+                     Canvas.Top="376"></TextBox>
 
             <TextBox Name="MouseText"
                      Canvas.Left="297"
