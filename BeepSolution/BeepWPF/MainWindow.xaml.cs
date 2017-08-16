@@ -381,24 +381,16 @@ namespace Beep {
                         line = file.ReadLine();
                         Debug.WriteLine(line);
 
+                        string[] lines = line.Split(':');
 
 
 
-                        string col = "";
-                        char colon = ':';
-                        if(line[7] == colon) {
-                            for(int i = 7; i<16; i++) {
-                                col = col + line[i];
-                            }
-                        }
-                        else {
-                            for (int i = 6; i < 15; i++) {
-                                col = col + line[i];
-                            }
-                        }
+
+
+                        
                         
                         //string col = String.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}",  line[i], line[i] , line[i] , line[i], line[i], line[i] , line[i] , line[i] , line[i]);
-                        Brush b = (SolidColorBrush)(new BrushConverter().ConvertFrom(col));
+                        Brush b = (SolidColorBrush)(new BrushConverter().ConvertFrom(lines[1]));
                         loadbw.tiles[Key].Color = b;
 
                     }
