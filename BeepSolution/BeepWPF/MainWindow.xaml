@@ -72,7 +72,8 @@
                     HorizontalAlignment="Center"
                     Canvas.Left="30"
                     Canvas.Top="413"
-                    Margin="0">
+                    Margin="0"
+                    Click="BtnLoad_Click">
             </Button>
             <Button Name="BtnClear"
                     Content="Clear"
