@@ -8,9 +8,11 @@
              mc:Ignorable="d"
              d:DesignHeight="40"
              d:DesignWidth="363">
+    
     <StackPanel HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
-                Orientation="Horizontal">
+                Orientation="Horizontal"
+                >
         <!--
         <TextBox Name="btnRuleName"
                 Text="{Binding RuleName, Mode=OneWay}"
@@ -20,56 +22,67 @@
                 VerticalAlignment="Center" />
         -->
         <ComboBox Name="mnuRulePick"
-                  ItemsSource="{Binding RuleMenuItems, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
-                  Height="12"
-              >
+                  ItemsSource="{Binding RuleMenuItems, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Mode=OneWay}"
+                  Height="20"
+                  Width="100"
+                  Text="{Binding RuleName, Mode=OneWay}"
+                  IsEditable="True"
+                  Margin="0,0,1,0">
+
 
         </ComboBox>
-        <Border BorderBrush="Black"
-                BorderThickness="1"
-                Width="10" />
-        <TextBox Name="txtRule1" 
+        <xctk:IntegerUpDown Name="iudAmountPicker1"
+                            Height="20"
+                            Width="32"
+                            Value="6"
+                            Maximum="6"
+                            Minimum="1"
+                            Padding="0,0,9,0"
+                            VerticalAlignment="Center" />
+
+        <TextBox Name="txtRule1"
+                 Text="neighbors of"
+                 Height="20"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Center"
-                 Width="0"
-                 Height="0"
+                 Margin="1,0,1,0"
+                 IsReadOnly="True"
+                 IsHitTestVisible="false"
                  />
-        <Button Name="btnRuleArg1"
-                Content="x"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                />
-        <TextBox Name="txtRule2"
-                 Text="neighbors of color"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Center"
-                 Margin="5,0,5,0"
-                 IsReadOnly="True" />
+        <!-- TODO only select colors that are used in beepworld -->
         <xctk:ColorPicker Name="clrRule1"
-                          Height="17"
+                          Height="20"
                           Width="36"
+                          Padding="0,0,0,1"
                           BorderThickness="0"
-                          SelectedColor="Blue"
+                          SelectedColor="PaleGreen"
                           DisplayColorAndName="False"
-                          ShowStandardColors="False"></xctk:ColorPicker>
+                          ShowStandardColors="False" />
         <TextBox Name="txtRule3"
                  Text="become"
+                 Height="20"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Center"
-                 Margin="5,0,5,0"
-                 IsReadOnly="True" />
+                 Margin="1,0,1,0"
+                 IsReadOnly="True"
+                 IsHitTestVisible="false"
+                 />
         <xctk:ColorPicker Name="clrRule2"
-                          Height="17"
+                          Height="20"
                           Width="36"
-                          BorderThickness="0"
-                          SelectedColor="LightSeaGreen"
+                          Padding="0,0,0,1"
+                          BorderThickness="0.5"
+                          SelectedColor="LimeGreen"
                           DisplayColorAndName="False"
-                          ShowStandardColors="False"></xctk:ColorPicker>
+                          ShowStandardColors="False" />
         <Button Name="btnDeleteRule"
                 Content="X"
                 FontSize="12"
                 FontWeight="Bold"
                 Foreground="Red"
+                Height="20"
+                Width="16"
+                Margin="1,0,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Click="BtnDeleteRuleClick" />

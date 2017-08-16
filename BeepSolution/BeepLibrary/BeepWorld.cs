@@ -47,7 +47,7 @@ namespace Beep {
 
         internal Tile(Point p) {
             this.Coordinates = p;
-            this.Color = Brushes.BlanchedAlmond;
+            this.Color = Brushes.PaleGreen;
         }
 
         // (deep) copy constructor
