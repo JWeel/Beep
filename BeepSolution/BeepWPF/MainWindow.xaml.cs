@@ -40,12 +40,7 @@ namespace Beep {
         private List<Point> SelectedPointList = new List<Point>();
         private List<Point> ColouredPointList = new List<Point>();
 
-        private readonly List<string> RuleTypes = new List<string> {
-            BeepRule.RULE_CHANGE_COLOR,
-            BeepRule.RULE_CHANGE_NEIGHBOR_COLOR,
-            BeepRule.RULE_RANDOM_CHANGE,
-            BeepRule.RULE_VIRUS
-        };
+        private List<MenuItem> RuleMenuItems;
 
         // random number
         Random rand = new Random();
@@ -98,6 +93,23 @@ namespace Beep {
                 };
                 canvas.Children.Add(label);
             }
+
+            RuleMenuItems = new List<MenuItem>() {
+                new MenuItem() {
+                    Header = BeepRule.RULE_CHANGE_COLOR
+                },
+                new MenuItem() {
+                    Header = BeepRule.RULE_CHANGE_NEIGHBOR_COLOR
+                },
+                new MenuItem() {
+                    Header = BeepRule.RULE_RANDOM_CHANGE
+                },
+                new MenuItem() {
+                    Header = BeepRule.RULE_VIRUS
+                }
+            };
+
+
             Refresh();
         }
 
