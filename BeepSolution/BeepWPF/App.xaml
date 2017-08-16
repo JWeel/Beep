@@ -13,12 +13,25 @@
                           Offset="0.25" />
 
         </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="HoverGradientBrush"
+                             StartPoint="0,0"
+                             EndPoint="1,1">
+            <GradientStop Color="#FB966E"
+                          Offset="0.25" />
+            <GradientStop Color="#F05E1C"
+                          Offset="0.75" />
+
+
+
+        </LinearGradientBrush>
         
         <Style TargetType="{x:Type Button}">
             
             <Setter Property="Background" 
                     Value="{StaticResource GradientBrush}"/>
-            
+            <Setter Property="Foreground"
+                    Value="Black" />
             <Setter Property="Width"
                     Value="80" />
             <Setter Property="Height"
@@ -26,14 +39,32 @@
             <Setter Property="Margin"
                     Value="5" />
             <Setter Property="BorderBrush" Value="Black"/>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver"
-                         Value="True">
-                    <Setter Property="Background"
-                            Value="Green" />
-                </Trigger>
-               
-            </Style.Triggers>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="border"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                Background="{TemplateBinding Background}"
+                               >
+                            
+                            
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter Property="Background"
+                                        Value="{StaticResource HoverGradientBrush}" />
+                                <Setter Property="Foreground"
+                                        Value="Black" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+                
+            </Setter>
+            
+           
            
         </Style>
        
