@@ -45,7 +45,7 @@ namespace Beep {
 
         internal Tile(int x, int y) : this(new Point(x, y)) { }
 
-        internal Tile(Point p) {
+        public Tile(Point p) {
             this.Coordinates = p;
             this.Color = Brushes.BlanchedAlmond;
         }

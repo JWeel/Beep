@@ -9,6 +9,9 @@ using System.Collections.Generic;
 using System;
 using System.Reflection;
 using Beep.Rules;
+using Microsoft.Win32;
+using System.IO;
+using System.Xml;
 
 namespace Beep {
     /// <summary>
@@ -338,6 +341,58 @@ namespace Beep {
             foreach(BeepRule rule in rules) {
                 rule.Update(bw.tiles);
             }
+        }
+
+        private void BtnSave_Click(object sender, RoutedEventArgs e) {
+            List<Tile> temp = new List<Tile>();
+            Point y = new Point(1, 1);
+            Tile x = new Tile(y);
+
+            x.Color = Brushes.Black;
+           
+
+            x.Coordinates = y;
+            
+            temp.Add(x);
+            try {
+                SaveFileDialog sfd = new SaveFileDialog();
+                sfd.Filter = "XML documents|*.xml";
+                sfd.FileName = "Painting";
+                sfd.DefaultExt = ".xml";
+
+                Nullable<bool> result = sfd.ShowDialog();
+
+                if(result.HasValue && result.Value) {
+
+                    MemoryStream ms = FormatAsXMLStream(temp);
+                    
+                }
+            }
+            catch(Exception ex) {
+                MessageBox.Show(ex.Message, "Error generating painting", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+        }
+        private MemoryStream FormatAsXMLStream(List<Tile> p) {
+            MemoryStream ms = new MemoryStream();
+            XmlWriter writer = XmlWriter.Create(ms);
+
+
+            writer.WriteStartDocument();
+            //writer.WriteStartElement(p[0].Coordinates.ToString());
+           // writer.WriteAttributeString("BeepWorld", String.Format("{0}", B));
+
+        foreach(Tile t in p) {
+                writer.WriteStartElement(t.Coordinates.ToString());
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+            writer.WriteEndDocument();
+            writer.Flush();
+            writer.Close();
+            ms.Seek(0, SeekOrigin.Begin);
+            return ms;
+
         }
     }
 }

@@ -65,7 +65,8 @@
                     HorizontalAlignment="Center"
                     Canvas.Left="30"
                     Canvas.Top="446"
-                    Margin="0"></Button>
+                    Margin="0"
+                    Click="BtnSave_Click"></Button>
             <Button Name="BtnLoad"
                     Content="Load Painting"
                     HorizontalAlignment="Center"
@@ -73,11 +74,18 @@
                     Canvas.Top="413"
                     Margin="0">
             </Button>
-
+            <Button Name="BtnClear"
+                    Content="Clear"
+                    HorizontalAlignment="Center"
+                    Canvas.Left="142"
+                    Margin="0"
+                    Canvas.Top="405">
+                
+            </Button>
 
             <Button Name="btnPaint"
                     Content="Paint"
-                    FontSize="16"
+                    
                     HorizontalAlignment="Center"
                     Canvas.Top="364"
                     Click="BtnPaintClick"
