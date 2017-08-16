@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace Beep {
+namespace Beep.Rules {
     public class VirusRule : BeepRule {
 
         // this rule changes tiles matching first color in colorArguments to second color in colorArguments

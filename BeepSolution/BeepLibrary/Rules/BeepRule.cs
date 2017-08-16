@@ -4,7 +4,7 @@ using System.Windows.Media;
 using System.Diagnostics;
 using System.Linq;
 
-namespace Beep {
+namespace Beep.Rules {
 
     // a repository of actions
     public abstract class BeepRule {

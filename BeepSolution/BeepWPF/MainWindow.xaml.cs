@@ -8,6 +8,7 @@ using static System.Math;
 using System.Collections.Generic;
 using System;
 using System.Reflection;
+using Beep.Rules;
 
 namespace Beep {
     /// <summary>
