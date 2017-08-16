@@ -9,22 +9,45 @@ namespace Beep.Rules {
     // a repository of actions
     public abstract class BeepRule {
 
+        public const string RULE_CHANGE_COLOR = "Change Color";
+        public const string RULE_CHANGE_NEIGHBOR_COLOR = "Change Neighbor Color";
+        public const string RULE_RANDOM_CHANGE = "Random Change";
+        public const string RULE_VIRUS = "Virus";
+
         public abstract string RuleName { get; }
 
         protected Dictionary<Point, Tile> tiles;
         protected List<Brush> colorArguments;
         protected List<int> intArguments;
+        protected List<bool> boolArguments;
 
         public BeepRule(Dictionary<Point, Tile> tiles,
                 List<Brush> colorArguments = null,
-                List<int> intArguments = null) {
+                List<int> intArguments = null,
+                List<bool> boolArguments = null) {
             this.tiles = tiles;
             this.colorArguments = colorArguments;
             this.intArguments = intArguments;
+            this.boolArguments = boolArguments;
         }
 
-        public static BeepRule CreateBeepRule(string type) {
-            throw new NotImplementedException();
+        //
+        public static BeepRule CreateBeepRule(string type, Dictionary<Point,Tile> bwTiles,
+            List<Brush> colorArguments = null,
+            List<int> intArguments = null,
+            List<bool> boolArguments = null) {
+            switch (type) {
+                case RULE_CHANGE_COLOR:
+                    return new ChangeColorRule(bwTiles, colorArguments, intArguments, boolArguments);
+                case RULE_CHANGE_NEIGHBOR_COLOR:
+                    return new ChangeNeighborColorRule(bwTiles, colorArguments, intArguments, boolArguments);
+                case RULE_RANDOM_CHANGE:
+                    return new RandomChangeRule(bwTiles, colorArguments, intArguments, boolArguments);
+                case RULE_VIRUS:
+                    return new VirusRule(bwTiles, colorArguments, intArguments, boolArguments);
+                default:
+                    return null;
+            }
         }
 
         public abstract Dictionary<Point, Tile> Run();
