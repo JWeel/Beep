@@ -168,12 +168,10 @@ namespace Beep {
             if (po != null && po != selectedHexagon) {
                 po.Fill = Brushes.SlateGray;
 
-
                 if (selectedHexagon != null && (selectedHexagon.Fill as SolidColorBrush).Color == (Brushes.BlueViolet as SolidColorBrush).Color) {
                     selectedHexagon = null;
                     //return;
                 }
-
 
                 if (selectedHexagon != null) selectedHexagon.Fill = new SolidColorBrush(bw.tiles[HexagonNameToPoint(selectedHexagon.Name)].Color);
                 selectedHexagon = po;
@@ -248,11 +246,6 @@ namespace Beep {
             else y = int.Parse(s[1]);
             return new Point(x, y);
         }
-
-
-        
-
-       
         
         //private void btnRandomizeClick(object sender, RoutedEventArgs e) {
         //    Random rnd = new Random();
@@ -278,8 +271,7 @@ namespace Beep {
         //    Refresh();   
         //}
 
-        
-
+        //
         private Brush PickBrush() {
             Brush result = Brushes.Transparent;
             
@@ -302,14 +294,15 @@ namespace Beep {
             BeepRule br = BeepRule.CreateBeepRule(BeepRule.RULE_CHANGE_NEIGHBOR_COLOR, bw.tiles);
             beepRules.Add(br);
 
+            // TODO dropdown menu for a specific rule ?
             BeepRuleUserControl bruc = new ChangeNeighborColorRuleUserControl(br as ChangeNeighborColorRule); // { Tag = br.RuleName };
             bruc.SelectedRule += RuleUserControlRuleSelection;
+            bruc.Deleting += DeleteRuleUserControl;
             BeepRulesUIComponents.Add(bruc);
-             
         }
         
+        //
         private void RuleUserControlRuleSelection(object sender, EventArgs e) {
-
             BeepRuleUserControl bruc = sender as BeepRuleUserControl;
 
             // selected rule must be different
@@ -326,30 +319,28 @@ namespace Beep {
             //bruc.SelectedRule += RuleUserControlRuleSelection;
             //BeepRulesUIComponents.Add(bruc);
 
-
             //BeepRule virus = BeepRule.CreateBeepRule(BeepRule.RULE_VIRUS, bw.tiles,
             //    colorArguments: new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFA500"), (Color)ColorConverter.ConvertFromString("#FFF0FFFF"), (Color)ColorConverter.ConvertFromString("#FFF05E1C") },
             //    intArguments: new List<int> { 1 },
             //    boolArguments: new List<bool> { true, false }
             //);
-
             //beepRules.Add(virus);
-            
-
         }
 
+        // deletes a rule
+        private void DeleteRuleUserControl(object sender, EventArgs e) {
+            BeepRuleUserControl bruc = sender as BeepRuleUserControl;
+            beepRules.Remove(bruc.Rule);
+            BeepRulesUIComponents.Remove(bruc);
+        }
+
+        // paints according to defined rules
         private void BtnPaintClick(object sender, RoutedEventArgs e) {
-            foreach (BeepRule rule in beepRules) {
-                Debug.WriteLine(String.Format(
-                    "{0}", rule.RuleName
-                    ));
-                
+            foreach (BeepRule rule in beepRules) {                
                 bw.tiles = rule.Run();
                 UpdateRules();
             }
-            //bw.tiles = BeepRule.ChangeColor(bw.tiles, Brushes.BlanchedAlmond, Brushes.MediumAquamarine);
             Refresh();
-
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e) {

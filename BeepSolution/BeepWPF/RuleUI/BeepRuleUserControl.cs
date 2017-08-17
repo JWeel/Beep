@@ -7,6 +7,7 @@ namespace Beep.RuleUI {
     public class BeepRuleUserControl : UserControl {
 
         public event EventHandler SelectedRule;
+        public event EventHandler Deleting;
 
         protected string ruleName;
         public string RuleName { get => ruleName; }
@@ -17,9 +18,11 @@ namespace Beep.RuleUI {
 
         public BeepRuleUserControl() { }
 
-        protected void MnuRulePick_Selected(object sender, RoutedEventArgs e) {
+        protected void ComboBoxRuleSelected(object sender, RoutedEventArgs e) {
             SelectedRule(this, e);
         }
-
+        protected void DeleteButtonClick(object sender, RoutedEventArgs e) {
+            Deleting(this, e);
+        }
     }
 }
