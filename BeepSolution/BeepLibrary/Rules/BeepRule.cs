@@ -20,19 +20,22 @@ namespace Beep.Rules {
         protected List<Color> colorArguments;
         protected List<int> intArguments;
         protected List<bool> boolArguments;
+       // protected List<double> doubleArguments;
 
         public BeepRule(Dictionary<Point, Tile> tiles,
                 List<Color> colorArguments = null,
                 List<int> intArguments = null,
-                List<bool> boolArguments = null) {
+                List<bool> boolArguments = null,
+                List<double> doubleArguments = null) {
             this.tiles = tiles;
             this.colorArguments = colorArguments;
             this.intArguments = intArguments;
             this.boolArguments = boolArguments;
+           // this.doubleArguments = doubleArguments;
         }
 
-        //
-        public static BeepRule CreateBeepRule(string type, Dictionary<Point,Tile> bwTiles,
+
+        public static BeepRule CreateBeepRule(string type, Dictionary<Point, Tile> bwTiles,
             List<Color> colorArguments = null,
             List<int> intArguments = null,
             List<bool> boolArguments = null) {
@@ -53,7 +56,7 @@ namespace Beep.Rules {
         public abstract Dictionary<Point, Tile> Run();
 
         // returns a deep copy of a tiles dictionary
-        protected Dictionary<Point,Tile> DeepCopyDict(Dictionary<Point,Tile> sourceDict) {
+        protected Dictionary<Point, Tile> DeepCopyDict(Dictionary<Point, Tile> sourceDict) {
             Dictionary<Point, Tile> copyDict = new Dictionary<Point, Tile>();
             foreach (var v in tiles) copyDict[v.Key] = new Tile(v.Value);
             return copyDict;
