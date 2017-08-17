@@ -398,14 +398,14 @@ namespace Beep {
             Nullable<bool> result = open.ShowDialog();
 
             if(result == true) {
-                BeepWorld loadbw = new BeepWorld(BEEP_SIZE, BEEP_BOXED);
+               
 
                 StreamReader file = new StreamReader(open.FileName);
                 while((line = file.ReadLine()) != null) {
 
-                    foreach (Point Key in loadbw.tiles.Keys) {
+                    foreach (Point Key in bw.tiles.Keys) {
                         line = file.ReadLine();
-                        if (string.IsNullOrWhiteSpace(line)) {
+                        if (!string.IsNullOrWhiteSpace(line)) {
 
 
                             Debug.WriteLine(line);
@@ -413,7 +413,7 @@ namespace Beep {
                             string[] lines = line.Split(':');
 
 
-                            loadbw.tiles[Key].Color = (Color)ColorConverter.ConvertFromString(lines[1]); 
+                            bw.tiles[Key].Color = (Color)ColorConverter.ConvertFromString(lines[1]); 
                         }
 
                     }
