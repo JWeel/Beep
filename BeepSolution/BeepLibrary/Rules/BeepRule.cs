@@ -53,6 +53,13 @@ namespace Beep.Rules {
             }
         }
 
+        //BeepRule virus = BeepRule.CreateBeepRule(BeepRule.RULE_VIRUS, bw.tiles,
+        //    colorArguments: new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFA500"), (Color)ColorConverter.ConvertFromString("#FFF0FFFF"), (Color)ColorConverter.ConvertFromString("#FFF05E1C") },
+        //    intArguments: new List<int> { 1 },
+        //    boolArguments: new List<bool> { true, false }
+        //);
+
+        //beepRules.Add(virus);
         //
         public static BeepRule CreateBeepRule(string type, Dictionary<Point, Tile> bwTiles) {
             List<Color> colorArguments = new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFA500"), (Color)ColorConverter.ConvertFromString("#FFF0FFFF") };
@@ -66,7 +73,9 @@ namespace Beep.Rules {
                 case RULE_RANDOM_CHANGE:
                     return new RandomChangeRule(bwTiles, colorArguments, intArguments, boolArguments);
                 case RULE_VIRUS:
-                    return new VirusRule(bwTiles, colorArguments, intArguments, boolArguments);
+                    return new VirusRule(bwTiles, 
+                        colorArguments: new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFA500"), (Color)ColorConverter.ConvertFromString("#FFF0FFFF"), (Color)ColorConverter.ConvertFromString("#FFF05E1C") },
+                        intArguments: new List<int> { 1 }, boolArguments: new List<bool> { true, false });
                 default:
                     return null;
             }

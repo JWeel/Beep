@@ -62,6 +62,9 @@
     <Compile Include="RuleUI\ChangeNeighborColorRuleUserControl.xaml.cs">
       <DependentUpon>ChangeNeighborColorRuleUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RuleUI\VirusRuleUserControl.xaml.cs">
+      <DependentUpon>VirusRuleUserControl.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -77,6 +80,10 @@
     <Page Include="RuleUI\ChangeNeighborColorRuleUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="RuleUI\VirusRuleUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
