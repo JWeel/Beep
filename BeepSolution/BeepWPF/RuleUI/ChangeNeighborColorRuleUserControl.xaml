@@ -14,7 +14,7 @@
                 VerticalAlignment="Stretch"
                 Orientation="Horizontal">
         
-        <ComboBox Name="mnuRulePick"
+        <ComboBox Name="comboBoxRulePicker"
                   ItemsSource="{Binding RuleMenuItems, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Mode=OneWay}"
                   Height="20"
                   Width="100"
@@ -22,7 +22,7 @@
                   Margin="0,0,1,0"
                   IsReadOnly="True"
                   Cursor="None"
-                  SelectionChanged="MnuRulePick_Selected">
+                  SelectionChanged="ComboBoxRuleSelected">
 
             <!--
             xmlns:sys="clr-namespace:System;assembly=mscorlib">
@@ -88,6 +88,6 @@
                 Margin="1,0,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                Click="BtnDeleteRuleClick" />
+                Click="DeleteButtonClick" />
     </StackPanel>
 </local:BeepRuleUserControl>
