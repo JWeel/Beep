@@ -278,45 +278,7 @@ namespace Beep {
         //    Refresh();   
         //}
 
-        private void SpreadVirus() {
-            foreach (Tile t in bw.tiles.Values) {
-                if (SelectedPointList.Contains(t.Coordinates)) {
-                    
-                    ColorVirusTiles(t);
-                    
-
-                }
-                
-            }
-            SelectedPointList.Clear();
-            UpdateVirusTiles();
-        }
-        private void ColorVirusTiles(Tile t) {
-
-            List<Point> Neighbors = t.Neighbors;
-            int i = rand.Next(0, 6);
-
-            foreach (Tile m in bw.tiles.Values) {
-                if (m.Coordinates.Equals(Neighbors[i])) {
-                    m.Color = (Color)ColorConverter.ConvertFromString("#FFB22222");
-                    Refresh();
-                }
-
-            }
-
-
-            //Neighbors.Clear();
-
-
-        }
-
-        private void UpdateVirusTiles() {
-            foreach(Tile t in bw.tiles.Values) {
-                if(t.Color != HEXAGON_FILL_COLOR && t.Color != (Color)ColorConverter.ConvertFromString("#FFFFEBCD")) {
-                    SelectedPointList.Add(t.Coordinates);
-                }
-            }
-        }
+        
 
         private Brush PickBrush() {
             Brush result = Brushes.Transparent;
@@ -364,6 +326,16 @@ namespace Beep {
             //bruc.SelectedRule += RuleUserControlRuleSelection;
             //BeepRulesUIComponents.Add(bruc);
 
+
+            //BeepRule virus = BeepRule.CreateBeepRule(BeepRule.RULE_VIRUS, bw.tiles,
+            //    colorArguments: new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFA500"), (Color)ColorConverter.ConvertFromString("#FFF0FFFF"), (Color)ColorConverter.ConvertFromString("#FFF05E1C") },
+            //    intArguments: new List<int> { 1 },
+            //    boolArguments: new List<bool> { true, false }
+            //);
+
+            //beepRules.Add(virus);
+            
+
         }
 
         private void BtnPaintClick(object sender, RoutedEventArgs e) {
@@ -371,6 +343,7 @@ namespace Beep {
                 Debug.WriteLine(String.Format(
                     "{0}", rule.RuleName
                     ));
+                
                 bw.tiles = rule.Run();
                 UpdateRules();
             }
