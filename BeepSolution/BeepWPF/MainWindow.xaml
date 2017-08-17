@@ -42,6 +42,12 @@
                     Canvas.Top="13"
                     Click="BtnNewRuleClick"
                     Margin="0" />
+            <Button Name="btnBeepSize"
+                    Content="Size"
+                    Canvas.Left="320"
+                    Canvas.Top="13"
+                    Width="36"
+                    Margin="0" />
 
             <ListBox Name="lbRules"
                      Height="240"

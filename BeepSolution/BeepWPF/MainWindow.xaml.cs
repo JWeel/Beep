@@ -12,6 +12,7 @@ using Beep.Rules;
 using Microsoft.Win32;
 using System.IO;
 using Beep.RuleUI;
+using System.Collections.ObjectModel;
 
 namespace Beep {
     /// <summary>
@@ -43,14 +44,14 @@ namespace Beep {
         private List<Point> SelectedPointList = new List<Point>();
         private List<Point> ColouredPointList = new List<Point>();
 
-        public List<MenuItem> RuleMenuItems { get; set; }
+        public List<string> RuleMenuItems { get; set; }
         
         // random number
         Random rand = new Random();
 
         // list containing the rules used for painting generation, and list for corresponding UI
         private List<BeepRule> beepRules;
-        private List<UserControl> BeepRulesUIComponents;
+        private ObservableCollection<UserControl> BeepRulesUIComponents;
 
         private BeepWorld bw;
         private Polygon selectedHexagon;
@@ -61,9 +62,9 @@ namespace Beep {
             bw = new BeepWorld(BEEP_SIZE, BEEP_BOXED);
 
             beepRules = new List<BeepRule>();
-            BeepRulesUIComponents = new List<UserControl>();
+            BeepRulesUIComponents = new ObservableCollection<UserControl>();
 
-            //lbRules.ItemsSource = beepRules;
+            lbRules.ItemsSource = BeepRulesUIComponents;
 
             double relativeX = 0;
             double relativeY = HEXAGON_VERTICAL_EDGE;
@@ -100,26 +101,15 @@ namespace Beep {
                 canvas.Children.Add(label);
             }
 
-            MenuItem m1 = new MenuItem() { Header = BeepRule.RULE_CHANGE_COLOR };
-            m1.Click += (sender,e) => RuleMenuItemClick(sender, e);
-
-            MenuItem m2 = new MenuItem() { Header = BeepRule.RULE_CHANGE_NEIGHBOR_COLOR };
-            m2.Click += (sender, e) => RuleMenuItemClick(sender, e);
-
-            MenuItem m3 = new MenuItem() { Header = BeepRule.RULE_RANDOM_CHANGE };
-            m3.Click += (sender, e) => RuleMenuItemClick(sender, e);
-
-            MenuItem m4 = new MenuItem() { Header = BeepRule.RULE_VIRUS };
-            m4.Click += (sender, e) => RuleMenuItemClick(sender, e);
-
-            RuleMenuItems = new List<MenuItem>() { m1, m2, m3, m4 };
-
+            RuleMenuItems = new List<String> 
+                {
+                    BeepRule.RULE_CHANGE_COLOR, 
+                    BeepRule.RULE_CHANGE_NEIGHBOR_COLOR,
+                    BeepRule.RULE_RANDOM_CHANGE,
+                    BeepRule.RULE_VIRUS
+                };
 
             Refresh();
-        }
-
-        private void RuleMenuItemClick(object sender, RoutedEventArgs e) {
-            //throw new NotImplementedException();
         }
 
         private void ColourListTiles(List<Point> listPoint) {
@@ -347,20 +337,33 @@ namespace Beep {
         }
 
         private void BtnNewRuleClick(object sender, RoutedEventArgs e) {
-            //rules.Add(BeepRule.CreateBeepRule(BeepRule.RULE_CHANGE_NEIGHBOR_COLOR, bw.tiles, colorArguments: new List<Brush> { Brushes.Orange, Brushes.Azure }, intArguments: new List<int> { 6 }, boolArguments: new List<bool> { true }));
-
-            BeepRule br = BeepRule.CreateBeepRule(BeepRule.RULE_CHANGE_NEIGHBOR_COLOR, bw.tiles,
-                colorArguments: new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFA500"), (Color)ColorConverter.ConvertFromString("#FFF0FFFF") },
-                intArguments: new List<int> { 6 },
-                boolArguments: new List<bool> { true }
-            );
+            BeepRule br = BeepRule.CreateBeepRule(BeepRule.RULE_CHANGE_NEIGHBOR_COLOR, bw.tiles);
             beepRules.Add(br);
 
-            BeepRulesUIComponents.Add( new ChangeNeighborColorUserControl(br as ChangeNeighborColorRule) );
-            
+            BeepRuleUserControl bruc = new ChangeNeighborColorRuleUserControl(br as ChangeNeighborColorRule); // { Tag = br.RuleName };
+            bruc.SelectedRule += RuleUserControlRuleSelection;
+            BeepRulesUIComponents.Add(bruc);
+             
+        }
+        
+        private void RuleUserControlRuleSelection(object sender, EventArgs e) {
 
-            lbRules.ItemsSource = null;
-            lbRules.ItemsSource = BeepRulesUIComponents;
+            BeepRuleUserControl bruc = sender as BeepRuleUserControl;
+
+            // selected rule must be different
+            if (bruc.SelectedRuleName == bruc.RuleName) return;
+
+            beepRules.Remove(bruc.Rule);
+            BeepRulesUIComponents.Remove(bruc);
+
+            BeepRule br = BeepRule.CreateBeepRule(bruc.SelectedRuleName, bw.tiles);
+            beepRules.Add(br);
+
+            // BeepRuleUserControl bruc = BeepRuleUserControl.CreateBeepRuleUserControl(....);
+            //bruc = new ChangeNeighborColorUserControl(br as ChangeNeighborColorRule);
+            //bruc.SelectedRule += RuleUserControlRuleSelection;
+            //BeepRulesUIComponents.Add(bruc);
+
         }
 
         private void BtnPaintClick(object sender, RoutedEventArgs e) {

@@ -58,8 +58,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="RuleUI\ChangeNeighborColorUserControl.xaml.cs">
-      <DependentUpon>ChangeNeighborColorUserControl.xaml</DependentUpon>
+    <Compile Include="RuleUI\BeepRuleUserControl.cs" />
+    <Compile Include="RuleUI\ChangeNeighborColorRuleUserControl.xaml.cs">
+      <DependentUpon>ChangeNeighborColorRuleUserControl.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -73,7 +74,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="RuleUI\ChangeNeighborColorUserControl.xaml">
+    <Page Include="RuleUI\ChangeNeighborColorRuleUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

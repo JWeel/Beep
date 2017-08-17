@@ -50,6 +50,25 @@ namespace Beep.Rules {
             }
         }
 
+        //
+        public static BeepRule CreateBeepRule(string type, Dictionary<Point, Tile> bwTiles) {
+            List<Color> colorArguments = new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFA500"), (Color)ColorConverter.ConvertFromString("#FFF0FFFF") };
+            List<int> intArguments = new List<int> { 6 };
+            List<bool> boolArguments = new List<bool> { true };
+            switch (type) {
+                case RULE_CHANGE_COLOR:
+                    return new ChangeColorRule(bwTiles, colorArguments, intArguments, boolArguments);
+                case RULE_CHANGE_NEIGHBOR_COLOR:
+                    return new ChangeNeighborColorRule(bwTiles, colorArguments, intArguments, boolArguments);
+                case RULE_RANDOM_CHANGE:
+                    return new RandomChangeRule(bwTiles, colorArguments, intArguments, boolArguments);
+                case RULE_VIRUS:
+                    return new VirusRule(bwTiles, colorArguments, intArguments, boolArguments);
+                default:
+                    return null;
+            }
+        }
+
         public abstract Dictionary<Point, Tile> Run();
 
         // returns a deep copy of a tiles dictionary

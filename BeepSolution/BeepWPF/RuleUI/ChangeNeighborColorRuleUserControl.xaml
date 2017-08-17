@@ -1,38 +1,29 @@
-﻿<UserControl x:Class="Beep.RuleUI.ChangeNeighborColorUserControl"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-             xmlns:beep="clr-namespace:Beep"
-             mc:Ignorable="d"
-             d:DesignHeight="40"
-             d:DesignWidth="363">
-    
+﻿<local:BeepRuleUserControl x:Class="Beep.RuleUI.ChangeNeighborColorRuleUserControl"
+                           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                           xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+                           xmlns:beep="clr-namespace:Beep"
+                           xmlns:local="clr-namespace:Beep.RuleUI"
+                           mc:Ignorable="d"
+                           d:DesignHeight="40"
+                           d:DesignWidth="363">
+
     <StackPanel HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
-                Orientation="Horizontal"
-                >
-        <!--
-        <TextBox Name="btnRuleName"
-                Text="{Binding RuleName, Mode=OneWay}"
-                
-                FontSize="10"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center" />
-        -->
+                Orientation="Horizontal">
+        
         <ComboBox Name="mnuRulePick"
                   ItemsSource="{Binding RuleMenuItems, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Mode=OneWay}"
                   Height="20"
                   Width="100"
                   Text="{Binding RuleName, Mode=OneWay}"
-                  IsEditable="True"
                   Margin="0,0,1,0"
                   IsReadOnly="True"
                   Cursor="None"
-                  
-            >
-            
+                  SelectionChanged="MnuRulePick_Selected">
+
             <!--
             xmlns:sys="clr-namespace:System;assembly=mscorlib">
             <ComboBox.Resources>
@@ -99,4 +90,4 @@
                 VerticalAlignment="Center"
                 Click="BtnDeleteRuleClick" />
     </StackPanel>
-</UserControl>
+</local:BeepRuleUserControl>
