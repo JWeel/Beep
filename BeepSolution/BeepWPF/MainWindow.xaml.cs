@@ -20,10 +20,10 @@ namespace Beep {
 
     public partial class MainWindow : Window {
 
-        private static readonly Point BEEP_SIZE = new Point(8, 7); // best with 42.8
+        //private static readonly Point BEEP_SIZE = new Point(8, 7); // best with 42.8
         //private static readonly Point BEEP_SIZE = new Point(23, 26); // best with 20
         //private static readonly Point BEEP_SIZE = new Point(23, 26); // 10
-        //private static readonly Point BEEP_SIZE = new Point(49, 45);
+        private static readonly Point BEEP_SIZE = new Point(49, 45); // 7
         //private static readonly Point BEEP_SIZE = new Point(46, 53); // 5
 
         private const bool BEEP_BOXED = true;
@@ -33,9 +33,9 @@ namespace Beep {
         private static readonly double HEXAGON_HORIZONTAL_LENGTH = Sqrt(3) * HEXAGON_SIDE_LENGTH;
         private static readonly double HEXAGON_HORIZONTAL_HALF = HEXAGON_HORIZONTAL_LENGTH / 2;
         private static readonly double HEXAGON_VERTICAL_EDGE = HEXAGON_SIDE_LENGTH / 2;
-
+        
         //
-        private static readonly Color HEXAGON_BORDER_COLOR = (Color)ColorConverter.ConvertFromString("#FF98FB98");
+        private static readonly Color HEXAGON_BORDER_COLOR = (Color)ColorConverter.ConvertFromString("#FF89FB89");
         private static readonly Color HEXAGON_FILL_COLOR = (Color)ColorConverter.ConvertFromString("#FFDEAD"); // NavajoWhite LOL
         private static readonly Color HEXAGON_FUN_COLOR = (Color)ColorConverter.ConvertFromString("#FFFFD700");
 
@@ -44,7 +44,7 @@ namespace Beep {
         private List<Point> ColouredPointList = new List<Point>();
 
         public List<MenuItem> RuleMenuItems { get; set; }
-
+        
         // random number
         Random rand = new Random();
 
@@ -155,9 +155,12 @@ namespace Beep {
                 Polygon po = (Polygon)FindName(HexagonPointToName(t.Coordinates));
                 po.Fill = new SolidColorBrush(t.Color);
             }
-            foreach (BeepRule rule in beepRules) {
-                rule.Update(bw.tiles);
-            }
+            //UpdateRules();
+        }
+
+        //
+        private void UpdateRules() {
+            foreach (BeepRule rule in beepRules) rule.Update(bw.tiles);
         }
 
         //
@@ -200,7 +203,10 @@ namespace Beep {
             //    //if (selectedHexagon != null) selectedHexagon.Fill = HEXAGON_FILL_COLOR;
             //    //selectedHexagon = po;
             //}
-            if (bw.tiles.ContainsKey(axialPoint)) bw.tiles[axialPoint].Color = (Color)ColorConverter.ConvertFromString("#FFFFA500");
+            if (bw.tiles.ContainsKey(axialPoint)) {
+                bw.tiles[axialPoint].Color = (Color)ColorConverter.ConvertFromString("#FFFFA500");
+                UpdateRules();
+            }
             MouseTextCopy.Text = axialPoint.X + " , " + axialPoint.Y;
             //Refresh();
         }
@@ -346,7 +352,7 @@ namespace Beep {
             BeepRule br = BeepRule.CreateBeepRule(BeepRule.RULE_CHANGE_NEIGHBOR_COLOR, bw.tiles,
                 colorArguments: new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFA500"), (Color)ColorConverter.ConvertFromString("#FFF0FFFF") },
                 intArguments: new List<int> { 6 },
-                boolArguments: new List<bool> { false }
+                boolArguments: new List<bool> { true }
             );
             beepRules.Add(br);
 
@@ -363,20 +369,21 @@ namespace Beep {
                     "{0}", rule.RuleName
                     ));
                 bw.tiles = rule.Run();
+                UpdateRules();
             }
             //bw.tiles = BeepRule.ChangeColor(bw.tiles, Brushes.BlanchedAlmond, Brushes.MediumAquamarine);
             Refresh();
 
-            
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e) {
-            
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Filter = "Text Document|*.txt";
-            sfd.FileName = "Painting.txt";
-            sfd.DefaultExt = ".txt";
-            Nullable<bool> result = sfd.ShowDialog();
+
+            SaveFileDialog sfd = new SaveFileDialog() {
+                Filter = "Text Document|*.txt",
+                FileName = "Painting.txt",
+                DefaultExt = ".txt"
+            };
+            bool? result = sfd.ShowDialog();
 
             if (result.HasValue && result.Value) {
                 string createText = "";
@@ -395,7 +402,7 @@ namespace Beep {
             OpenFileDialog open = new OpenFileDialog();
             open.Filter = "Text Document|*.txt";
             string line;
-            Nullable<bool> result = open.ShowDialog();
+            bool? result = open.ShowDialog();
 
             if(result == true) {
                
