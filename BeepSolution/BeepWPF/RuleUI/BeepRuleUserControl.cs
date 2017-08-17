@@ -18,11 +18,27 @@ namespace Beep.RuleUI {
 
         public BeepRuleUserControl() { }
 
+        //
+        public static BeepRuleUserControl CreateBeepRuleUserControl(BeepRule rule) {
+            switch (rule.RuleName) {
+                case BeepRule.RULE_CHANGE_COLOR:
+                    return null;
+                case BeepRule.RULE_CHANGE_NEIGHBOR_COLOR:
+                    return new ChangeNeighborColorRuleUserControl(rule as ChangeNeighborColorRule);
+                case BeepRule.RULE_RANDOM_CHANGE:
+                    return new RandomChangeRuleUserControl(rule as RandomChangeRule);
+                case BeepRule.RULE_VIRUS:
+                    return null;
+                default:
+                    return null;
+            }
+        }
+
         protected void ComboBoxRuleSelected(object sender, RoutedEventArgs e) {
-            SelectedRule(this, e);
+            SelectedRule?.Invoke(this, e);
         }
         protected void DeleteButtonClick(object sender, RoutedEventArgs e) {
-            Deleting(this, e);
+            Deleting?.Invoke(this, e);
         }
     }
 }

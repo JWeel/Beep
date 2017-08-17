@@ -1,25 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Beep.Rules;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Beep.RuleUI {
     /// <summary>
     /// Interaction logic for RandomChangeRuleUserControl.xaml
     /// </summary>
     public partial class RandomChangeRuleUserControl : BeepRuleUserControl {
-        public RandomChangeRuleUserControl() {
+
+        public RandomChangeRuleUserControl(RandomChangeRule rule) {
+            this.Rule = rule;
+            this.ruleName = Rule.RuleName;
             InitializeComponent();
+            clrPickTarget.SelectedColor = rule.TargetColor;
+        }
+
+        private void AmountChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {
+            (Rule as RandomChangeRule).PercentageAffected = (int)e.NewValue;
+        }
+
+        private void ClrPickTargetChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
+            (Rule as RandomChangeRule).TargetColor = (Color)e.NewValue;
         }
     }
 }

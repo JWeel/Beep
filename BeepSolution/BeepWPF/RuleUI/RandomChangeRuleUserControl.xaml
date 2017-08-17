@@ -43,14 +43,14 @@
                  IsReadOnly="True"
                  IsHitTestVisible="false" />
         <!-- TODO only select colors that are used in beepworld -->
-        <xctk:ColorPicker Name="clrPickMatch"
+        <xctk:ColorPicker Name="clrPickTarget"
                           Height="20"
                           Width="36"
                           Padding="0,0,0,1"
                           BorderThickness="0"
                           DisplayColorAndName="False"
                           ShowStandardColors="False"
-                          SelectedColorChanged="ClrPickMatchChanged" />
+                          SelectedColorChanged="ClrPickTargetChanged" />
         <Button Name="btnDeleteRule"
                 Content="X"
                 FontSize="12"

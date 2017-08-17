@@ -18,7 +18,7 @@ namespace Beep.Rules {
             random = new Random();
         }
 
-        public override string RuleName { get => RULE_CHANGE_NEIGHBOR_COLOR; }
+        public override string RuleName { get => RULE_RANDOM_CHANGE; }
 
         public Color TargetColor { get; set; }
         public int PercentageAffected { get; set; }
