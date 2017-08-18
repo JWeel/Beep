@@ -283,17 +283,37 @@ namespace Beep {
 
         private void BtnNewRuleClick(object sender, RoutedEventArgs e) {
 
-            //// TODO dropdown menu for a specific rule ?
-            BeepRule virus = BeepRule.CreateBeepRule(BeepRule.RULE_VIRUS, bw.tiles);
-            beepRules.Add(virus);
+            (sender as Button).ContextMenu.IsEnabled = true;
+            (sender as Button).ContextMenu.PlacementTarget = (sender as Button);
+            (sender as Button).ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
+            (sender as Button).ContextMenu.IsOpen = true;
 
-            BeepRuleUserControl bruc = new VirusRuleUserControl(virus as VirusRule);
+           
 
+
+            //BeepRule virus = BeepRule.CreateBeepRule(BeepRule.RULE_VIRUS, bw.tiles);
+            //beepRules.Add(virus);
+
+            //BeepRuleUserControl bruc = new VirusRuleUserControl(virus as VirusRule);
+
+            //bruc.SelectedRule += RuleUserControlRuleSelection;
+            //bruc.Deleting += DeleteRuleUserControl;
+            //BeepRulesUIComponents.Add(bruc);
+        }
+        
+        private void AddRuleClick(object sender, RoutedEventArgs e) {
+
+            MenuItem mi = sender as MenuItem;
+            BeepRule br = BeepRule.CreateBeepRule(mi.Header.ToString(), bw.tiles);
+            
+            beepRules.Add(br);
+            BeepRuleUserControl bruc = BeepRuleUserControl.CreateBeepRuleUserControl(br);
             bruc.SelectedRule += RuleUserControlRuleSelection;
             bruc.Deleting += DeleteRuleUserControl;
             BeepRulesUIComponents.Add(bruc);
         }
-        
+
+
         //
         private void RuleUserControlRuleSelection(object sender, EventArgs e) {
             BeepRuleUserControl bruc = sender as BeepRuleUserControl;
@@ -345,13 +365,14 @@ namespace Beep {
                 DefaultExt = ".txt"
             };
             bool? result = sfd.ShowDialog();
-
+            string createText = "" + Environment.NewLine;
             if (result.HasValue && result.Value) {
-                string createText = "";
+                
                 foreach (Point Key in bw.tiles.Keys) {
 
                     createText = createText + String.Format("{0}:{1}", Key, bw.tiles[Key].Color) + Environment.NewLine;
                 }
+                Debug.WriteLine(createText);
                 string path = sfd.FileName;
 
                 File.WriteAllText(path, createText);
