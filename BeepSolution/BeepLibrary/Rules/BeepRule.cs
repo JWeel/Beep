@@ -55,6 +55,13 @@ namespace Beep.Rules {
             }
         }
 
+        //BeepRule virus = BeepRule.CreateBeepRule(BeepRule.RULE_VIRUS, bw.tiles,
+        //    colorArguments: new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFA500"), (Color)ColorConverter.ConvertFromString("#FFF0FFFF"), (Color)ColorConverter.ConvertFromString("#FFF05E1C") },
+        //    intArguments: new List<int> { 1 },
+        //    boolArguments: new List<bool> { true, false }
+        //);
+
+        //beepRules.Add(virus);
         //
         public static BeepRule CreateBeepRule(string type, Dictionary<Point, Tile> bwTiles) {
             switch (type) {
@@ -77,7 +84,11 @@ namespace Beep.Rules {
                         null
                     );
                 case RULE_VIRUS:
-                    return new VirusRule(bwTiles, null, null, null);
+
+                    return new VirusRule(bwTiles, 
+                        colorArguments: new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFA500"), (Color)ColorConverter.ConvertFromString("#FFF0FFFF"), (Color)ColorConverter.ConvertFromString("#FFF05E1C") },
+                        intArguments: new List<int> { 1 }, boolArguments: new List<bool> { true, false });
+
                 default:
                     return null;
             }
