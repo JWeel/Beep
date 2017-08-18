@@ -41,6 +41,8 @@ namespace Beep {
         private static readonly Color HEXAGON_FILL_COLOR = (Color)ColorConverter.ConvertFromString("#FFDEAD"); // NavajoWhite LOL
         private static readonly Color HEXAGON_FUN_COLOR = (Color)ColorConverter.ConvertFromString("#FFFFD700");
 
+        private static Color MOUSE_CLICK_COLOR = (Color)ColorConverter.ConvertFromString("#FFDEAD");
+
         // point that is selected by user
         private List<Point> SelectedPointList = new List<Point>();
         private List<Point> ColouredPointList = new List<Point>();
@@ -191,7 +193,7 @@ namespace Beep {
             PixelPoint p = e.GetPosition(sender as IInputElement);
             Point axialPoint = MouseCoordinatesToAxialCoordinates(p.X, p.Y);
             if (bw.tiles.ContainsKey(axialPoint)) {
-                bw.tiles[axialPoint].Color = (Color)ColorConverter.ConvertFromString("#FFFFA500");
+                bw.tiles[axialPoint].Color = (Color)MOUSE_CLICK_COLOR;
                 UpdateRules();
             }
             MouseTextCopy.Text = axialPoint.X + " , " + axialPoint.Y;
@@ -363,6 +365,7 @@ namespace Beep {
         private void AmountChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {
           
         }
+       
 
         private void BtnSave_Click(object sender, RoutedEventArgs e) {
 
@@ -422,6 +425,14 @@ namespace Beep {
             }
                
             
+        }
+
+        private void btnBeepSize_Click(object sender, RoutedEventArgs e) {
+
+        }
+
+        private void MouseColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
+            MOUSE_CLICK_COLOR = (Color)clrPickMouse.SelectedColor;
         }
     }
 }

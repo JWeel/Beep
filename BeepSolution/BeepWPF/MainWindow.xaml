@@ -45,9 +45,9 @@
                     Margin="0"
                     ContextMenuService.IsEnabled="False">
                 <Button.ContextMenu>
-                    <ContextMenu
-                        >
-                        <MenuItem Header="Change Color" x:Name="ChangeColor" Click="AddRuleClick"/>
+                    <ContextMenu>
+                        <MenuItem Header="Change Color"
+                                  Click="AddRuleClick" />
                         <MenuItem Header="Change Neighbor Color"
                                   Click="AddRuleClick" />
                         <MenuItem Header="Random Change"
@@ -56,13 +56,14 @@
                                   Click="AddRuleClick" />
                     </ContextMenu>
                 </Button.ContextMenu>
-            </Button> 
+            </Button>
             <Button Name="btnBeepSize"
                     Content="Size"
                     Canvas.Left="320"
                     Canvas.Top="13"
                     Width="36"
-                    Margin="0" />
+                    Margin="0"
+                    Click="btnBeepSize_Click" />
 
             <ListBox Name="lbRules"
                      Height="240"
@@ -105,6 +106,22 @@
                     Click="BtnClearClick">
 
             </Button>
+            <Button Canvas.Left="142"
+                    Margin="0"
+                    Canvas.Top="317">
+                <xctk:ColorPicker Name="clrPickMouse"
+                                  Height="20"
+                                  Width="35"
+                                  Padding="0,0,0,1"
+                                  BorderThickness="0"
+                                  DisplayColorAndName="False"
+                                  ShowStandardColors="False"
+                                  SelectedColorChanged="MouseColorChanged"
+                                  Canvas.Left="173"
+                                  Canvas.Top="324" />
+            </Button>
+
+
 
             <Button Name="btnPaint"
                     Content="Paint"
@@ -116,7 +133,7 @@
                     Margin="0" />
             <xctk:IntegerUpDown Name="iudAmountPicker1"
                                 Height="30"
-                                Width="42"
+                                Width="70"
                                 FontSize="16"
                                 Value="1"
                                 Maximum="100"
