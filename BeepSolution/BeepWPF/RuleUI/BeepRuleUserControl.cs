@@ -4,12 +4,42 @@ using System.Windows;
 using System.Windows.Controls;
 
 namespace Beep.RuleUI {
-    public class BeepRuleUserControl : UserControl {
+    public abstract class BeepRuleUserControl : UserControl {
 
         public event EventHandler SelectedRule;
         public event EventHandler Deleting;
 
-        public ViewBase View { get; set; }
+        //public ViewBase View {
+        //    get { return (ViewBase)GetValue(ViewProperty); }
+        //    set { SetValue(ViewProperty, value); }
+        //}
+        ////ListView lv;
+        //// Using a DependencyProperty as the backing store for View.  This enables animation, styling, binding, etc...
+        //public static readonly DependencyProperty ViewProperty =
+        //    DependencyProperty.Register("View", typeof(ViewBase), typeof(BeepRuleUserControl), new PropertyMetadata(0));
+
+        protected StackPanel panelExpanded;
+        protected StackPanel panelCollapsed;
+
+        protected abstract void SetPanels();
+
+        private bool collapsed;
+
+        public bool Collapsed {
+            get { return collapsed; }
+            set {
+                collapsed = value;
+                if (value) {
+                    panelExpanded.Visibility = Visibility.Collapsed;
+                    panelCollapsed.Visibility = Visibility.Visible;
+                }
+                else {
+                    panelExpanded.Visibility = Visibility.Visible;
+                    panelCollapsed.Visibility = Visibility.Collapsed;
+                }
+            }
+        }
+
 
         protected string ruleName;
         public string RuleName { get => ruleName; }
@@ -41,6 +71,9 @@ namespace Beep.RuleUI {
         }
         protected void DeleteButtonClick(object sender, RoutedEventArgs e) {
             Deleting?.Invoke(this, e);
+        }
+        protected void BtnCollapseOrExpandClick(object sender, RoutedEventArgs e) {
+            Collapsed = !Collapsed;
         }
     }
 }

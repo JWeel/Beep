@@ -10,84 +10,108 @@
                            d:DesignHeight="30"
                            d:DesignWidth="363">
 
-    <StackPanel HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                Orientation="Horizontal">
-        
-        <ComboBox Name="comboBoxRulePicker"
-                  ItemsSource="{Binding RuleMenuItems, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Mode=OneWay}"
-                  Height="20"
-                  Width="100"
-                  Text="{Binding RuleName, Mode=OneWay}"
-                  Margin="0,0,1,0"
-                  IsReadOnly="True"
-                  Cursor="None"
-                  SelectionChanged="ComboBoxRuleSelected">
+    <Grid>
+        <StackPanel Name="pnlCollapsed"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Orientation="Horizontal"
+                    Height="20"
+                    Visibility="Collapsed">
+            <Button Name="btnExpand"
+                    Content="+"
+                    Width="20"
+                    Height="20"
+                    Margin="3,1,3,1"
+                    Click="BtnCollapseOrExpandClick" />
+            <Label Content="Change Neighbor Color"
+                   Height="20"
+                   Padding="0,0,0,0"
+                   Margin="1,1,1,1" />
+        </StackPanel>
+        <StackPanel Name="pnlExpanded"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                     Orientation="Horizontal">
 
-            <!--
+            <Button Name="btnCollapse"
+                    Content="-"
+                    Width="20"
+                    Height="20"
+                    Padding="0,0,0,4"
+                    Click="BtnCollapseOrExpandClick" />
+            <ComboBox Name="comboBoxRulePicker"
+                      ItemsSource="{Binding RuleMenuItems, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Mode=OneWay}"
+                      Height="20"
+                      Width="100"
+                      Text="{Binding RuleName, Mode=OneWay}"
+                      Margin="0,0,1,0"
+                      IsReadOnly="True"
+                      Cursor="None"
+                      SelectionChanged="ComboBoxRuleSelected">
+
+                <!--
             xmlns:sys="clr-namespace:System;assembly=mscorlib">
             <ComboBox.Resources>
                 <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">0</sys:Double>
             </ComboBox.Resources>
             -->
 
-        </ComboBox>
-        <xctk:IntegerUpDown Name="iudAmountPicker1"
-                            Height="20"
-                            Width="32"
-                            Value="6"
-                            Maximum="6"
-                            Minimum="1"
-                            Padding="0,0,9,0"
-                            VerticalAlignment="Center"
-                            ValueChanged="AmountChanged" />
+            </ComboBox>
+            <xctk:IntegerUpDown Name="iudAmountPicker1"
+                                Height="20"
+                                Width="32"
+                                Value="6"
+                                Maximum="6"
+                                Minimum="1"
+                                Padding="0,0,9,0"
+                                VerticalAlignment="Center"
+                                ValueChanged="AmountChanged" />
 
-        <TextBox Name="txtRule1"
-                 Text="neighbors of"
-                 Height="20"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Center"
-                 Margin="1,0,1,0"
-                 IsReadOnly="True"
-                 IsHitTestVisible="false"
-                 />
-        <!-- TODO only select colors that are used in beepworld -->
-        <xctk:ColorPicker Name="clrPickMatch"
-                          Height="20"
-                          Width="36"
-                          Padding="0,0,0,1"
-                          BorderThickness="0"
-                          DisplayColorAndName="False"
-                          ShowStandardColors="False"
-                          SelectedColorChanged="ClrPickMatchChanged" />
-        <TextBox Name="txtRule3"
-                 Text="become"
-                 Height="20"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Center"
-                 Margin="1,0,1,0"
-                 IsReadOnly="True"
-                 IsHitTestVisible="false"
-                 />
-        <xctk:ColorPicker Name="clrPickTarget"
-                          Height="20"
-                          Width="36"
-                          Padding="0,0,0,1"
-                          BorderThickness="0.5"
-                          DisplayColorAndName="False"
-                          ShowStandardColors="False"
-                          SelectedColorChanged="ClrPickTargetChanged" />
-        <Button Name="btnDeleteRule"
-                Content="X"
-                FontSize="12"
-                FontWeight="Bold"
-                Background="Gray"
-                Foreground="Red"
-                Height="20"
-                Width="16"
-                Margin="1,0,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Click="DeleteButtonClick" />
-    </StackPanel>
+            <TextBox Name="txtRule1"
+                     Text="neighbors of"
+                     Height="20"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Center"
+                     Margin="1,0,1,0"
+                     IsReadOnly="True"
+                     IsHitTestVisible="false" />
+            <!-- TODO only select colors that are used in beepworld -->
+            <xctk:ColorPicker Name="clrPickMatch"
+                              Height="20"
+                              Width="36"
+                              Padding="0,0,0,1"
+                              BorderThickness="0"
+                              DisplayColorAndName="False"
+                              ShowStandardColors="False"
+                              SelectedColorChanged="ClrPickMatchChanged" />
+            <TextBox Name="txtRule3"
+                     Text="become"
+                     Height="20"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Center"
+                     Margin="1,0,1,0"
+                     IsReadOnly="True"
+                     IsHitTestVisible="false" />
+            <xctk:ColorPicker Name="clrPickTarget"
+                              Height="20"
+                              Width="36"
+                              Padding="0,0,0,1"
+                              BorderThickness="0.5"
+                              DisplayColorAndName="False"
+                              ShowStandardColors="False"
+                              SelectedColorChanged="ClrPickTargetChanged" />
+            <Button Name="btnDeleteRule"
+                    Content="X"
+                    FontSize="12"
+                    FontWeight="Bold"
+                    Background="Gray"
+                    Foreground="Red"
+                    Height="20"
+                    Width="16"
+                    Margin="1,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Click="DeleteButtonClick" />
+        </StackPanel>
+    </Grid>
 </local:BeepRuleUserControl>

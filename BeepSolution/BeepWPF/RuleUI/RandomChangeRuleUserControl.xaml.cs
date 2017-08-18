@@ -13,10 +13,16 @@ namespace Beep.RuleUI {
             get { return comboBoxRulePicker.SelectedItem as string; }
         }
 
+        protected override void SetPanels() {
+            panelCollapsed = pnlCollapsed;
+            panelExpanded = pnlExpanded;
+        }
+
         public RandomChangeRuleUserControl(RandomChangeRule rule) {
             this.Rule = rule;
             this.ruleName = rule.RuleName;
             InitializeComponent();
+            SetPanels();
             clrPickTarget.SelectedColor = rule.TargetColor;
         }
 

@@ -12,11 +12,17 @@ namespace Beep.RuleUI {
             get { return comboBoxRulePicker.SelectedItem as string; }
         }
 
+        protected override void SetPanels() {
+            panelCollapsed = pnlCollapsed;
+            panelExpanded = pnlExpanded;
+        }
+
         public ChangeNeighborColorRuleUserControl(ChangeNeighborColorRule rule) {
             this.Rule = rule;
             this.ruleName = rule.RuleName;
 
             InitializeComponent();
+            SetPanels();
 
             clrPickMatch.SelectedColor = rule.MatchColor;
             clrPickTarget.SelectedColor = rule.TargetColor;

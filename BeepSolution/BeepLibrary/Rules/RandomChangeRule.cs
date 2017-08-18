@@ -32,7 +32,6 @@ namespace Beep.Rules {
             foreach (Tile t in tiles.Values) {
                 if (random.Next(1000) < PermillageAffected) alteredTiles[t.Coordinates].Color = TargetColor;
             }
-            Debug.WriteLine("oi govna");
             return alteredTiles;
         }
     }
