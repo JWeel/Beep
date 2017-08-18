@@ -13,6 +13,7 @@ using Microsoft.Win32;
 using System.IO;
 using Beep.RuleUI;
 using System.Collections.ObjectModel;
+using System.Threading;
 
 namespace Beep {
     /// <summary>
@@ -291,11 +292,16 @@ namespace Beep {
         }
 
         private void BtnNewRuleClick(object sender, RoutedEventArgs e) {
-            BeepRule br = BeepRule.CreateBeepRule(BeepRule.RULE_CHANGE_NEIGHBOR_COLOR, bw.tiles);
-            beepRules.Add(br);
+            //BeepRule br = BeepRule.CreateBeepRule(BeepRule.RULE_CHANGE_NEIGHBOR_COLOR, bw.tiles);
+            //beepRules.Add(br);
 
-            // TODO dropdown menu for a specific rule ?
-            BeepRuleUserControl bruc = new ChangeNeighborColorRuleUserControl(br as ChangeNeighborColorRule); // { Tag = br.RuleName };
+            //// TODO dropdown menu for a specific rule ?
+            //BeepRuleUserControl bruc = new ChangeNeighborColorRuleUserControl(br as ChangeNeighborColorRule); // { Tag = br.RuleName };
+            BeepRule virus = BeepRule.CreateBeepRule(BeepRule.RULE_VIRUS, bw.tiles);
+            beepRules.Add(virus);
+
+            BeepRuleUserControl bruc = new VirusRuleUserControl(virus as VirusRule);
+
             bruc.SelectedRule += RuleUserControlRuleSelection;
             bruc.Deleting += DeleteRuleUserControl;
             BeepRulesUIComponents.Add(bruc);
@@ -336,11 +342,18 @@ namespace Beep {
 
         // paints according to defined rules
         private void BtnPaintClick(object sender, RoutedEventArgs e) {
-            foreach (BeepRule rule in beepRules) {                
-                bw.tiles = rule.Run();
-                UpdateRules();
+            int number;
+            bool isNumber = int.TryParse(IterationText.Text, out number);// Iteration button
+            if (isNumber) {
+                for (int i = 0; i < number + 1; i++) {
+
+                    foreach (BeepRule rule in beepRules) {
+                        bw.tiles = rule.Run();
+                        UpdateRules();
+                    }
+                }
             }
-            Refresh();
+                Refresh();
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e) {

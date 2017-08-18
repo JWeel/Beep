@@ -34,7 +34,7 @@ namespace Beep.Rules {
             IsAbleToInfect = boolArguments[1];
 
         }
-
+        
 
         public override string RuleName { get => RULE_VIRUS; }
         public Color MatchColor { get; set; }
@@ -49,15 +49,24 @@ namespace Beep.Rules {
         public override Dictionary<Point, Tile> Run() {
             Dictionary<Point, Tile> alteredTiles = DeepCopyDict(tiles);
 
-            
+            foreach (Tile t in tiles.Values) {
+                if(t.Color == (Color)ColorConverter.ConvertFromString("#FFFFA500")) {
+                    t.Color = MatchColor;
+                    
+
+                }
+            }
+           
             List<Tile> TileList = new List<Tile>();
             List<Color> PreviousColors = new List<Color>();
+
 
             foreach (Tile t in tiles.Values) {
                 if (t.Color == MatchColor) {
                     //add a contagionrate randomizer here
 
                     Point p = t.Neighbors[rand.Next(0, t.Neighbors.Count)];
+
                     if (tiles[p].Color == MatchColor || PreviousColors.Contains(tiles[p].Color)) {
                         Debug.WriteLine("previous color hit");
                         continue;
