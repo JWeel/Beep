@@ -368,13 +368,14 @@ namespace Beep {
                 DefaultExt = ".txt"
             };
             bool? result = sfd.ShowDialog();
-
+            string createText = "" + Environment.NewLine;
             if (result.HasValue && result.Value) {
-                string createText = "";
+                
                 foreach (Point Key in bw.tiles.Keys) {
 
                     createText = createText + String.Format("{0}:{1}", Key, bw.tiles[Key].Color) + Environment.NewLine;
                 }
+                Debug.WriteLine(createText);
                 string path = sfd.FileName;
 
                 File.WriteAllText(path, createText);
