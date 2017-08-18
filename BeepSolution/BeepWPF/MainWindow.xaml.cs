@@ -344,9 +344,8 @@ namespace Beep {
 
         // paints according to defined rules
         private void BtnPaintClick(object sender, RoutedEventArgs e) {
-            int number;
-            bool isNumber = int.TryParse(IterationText.Text, out number);// Iteration button
-            if (isNumber) {
+            int? number = iudAmountPicker1.Value;
+           
                 for (int i = 0; i < number + 1; i++) {
 
                     foreach (BeepRule rule in beepRules) {
@@ -354,8 +353,11 @@ namespace Beep {
                         UpdateRules();
                     }
                 }
-            }
+            
                 Refresh();
+        }
+        private void AmountChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {
+          
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e) {
