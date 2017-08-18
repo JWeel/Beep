@@ -14,6 +14,7 @@ using System.IO;
 using Beep.RuleUI;
 using System.Collections.ObjectModel;
 using System.Threading;
+using System.Windows.Input;
 
 namespace Beep {
     /// <summary>
@@ -61,7 +62,7 @@ namespace Beep {
 
         // list containing the rules used for painting generation, and list for corresponding UI
         private List<BeepRule> beepRules;
-        private ObservableCollection<UserControl> BeepRulesUIComponents;
+        private ObservableCollection<BeepRuleUserControl> BeepRulesUIComponents;
 
         private BeepWorld bw;
         private Polygon selectedHexagon;
@@ -72,7 +73,7 @@ namespace Beep {
             bw = new BeepWorld(BEEP_SIZE, BEEP_BOXED);
 
             beepRules = new List<BeepRule>();
-            BeepRulesUIComponents = new ObservableCollection<UserControl>();
+            BeepRulesUIComponents = new ObservableCollection<BeepRuleUserControl>();
 
             lbRules.ItemsSource = BeepRulesUIComponents;
 
@@ -326,7 +327,7 @@ namespace Beep {
         //
         private void RuleUserControlRuleSelection(object sender, EventArgs e) {
             BeepRuleUserControl bruc = sender as BeepRuleUserControl;
-
+            return;
             // selected rule must be different
             if (bruc.SelectedRuleName == bruc.RuleName) return;
 
@@ -365,7 +366,36 @@ namespace Beep {
         private void AmountChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {
           
         }
-       
+
+        // experimental drag drop code
+        private void ListBoxPreviewMouseMoved(object sender, MouseEventArgs e) {
+            return;
+            if (sender is ListBoxItem && e.LeftButton == MouseButtonState.Pressed) {
+                ListBoxItem draggedItem = sender as ListBoxItem;
+                DragDrop.DoDragDrop(draggedItem, new DataObject("abc", draggedItem.DataContext), DragDropEffects.Move);
+                draggedItem.IsSelected = true;
+            }
+        }
+        private void ListBoxRuleDropped(object sender, DragEventArgs e) {
+            return;
+            BeepRuleUserControl droppedData = e.Data.GetData("abc") as BeepRuleUserControl;
+            BeepRuleUserControl target = ((ListBoxItem)(sender)).DataContext as BeepRuleUserControl;
+
+            int removedIdx = lbRules.Items.IndexOf(droppedData);
+            int targetIdx = lbRules.Items.IndexOf(target);
+
+            if (removedIdx < targetIdx) {
+                BeepRulesUIComponents.Insert(targetIdx + 1, droppedData);
+                BeepRulesUIComponents.RemoveAt(removedIdx);
+            }
+            else {
+                int remIdx = removedIdx + 1;
+                if (BeepRulesUIComponents.Count + 1 > remIdx) {
+                    BeepRulesUIComponents.Insert(targetIdx, droppedData);
+                    BeepRulesUIComponents.RemoveAt(remIdx);
+                }
+            }
+        }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e) {
 

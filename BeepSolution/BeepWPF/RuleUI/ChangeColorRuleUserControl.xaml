@@ -29,26 +29,28 @@
                    Margin="1,1,1,1" />
         </StackPanel>
         <StackPanel Name="pnlExpanded"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
                     Orientation="Horizontal"
-                    Height="30">
+                    Height="100"
+                    >
 
             <Button Name="btnCollapse"
                     Content="-"
                     Width="20"
                     Height="20"
                     Padding="0,0,0,4"
+                    VerticalAlignment="Top"
                     Click="BtnCollapseOrExpandClick" />
             <ComboBox Name="comboBoxRulePicker"
-                  ItemsSource="{Binding RuleMenuItems, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Mode=OneWay}"
-                  Height="20"
-                  Width="100"
-                  Text="{Binding RuleName, Mode=OneWay}"
-                  Margin="0,0,1,0"
-                  IsReadOnly="True"
-                  Cursor="None"
-                  SelectionChanged="ComboBoxRuleSelected" />
+                      ItemsSource="{Binding RuleMenuItems, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Mode=OneWay}"
+                      Height="20"
+                      Width="100"
+                      Text="{Binding RuleName, Mode=OneWay}"
+                      Margin="0,0,1,0"
+                      IsReadOnly="True"
+                      Cursor="None"
+                      SelectionChanged="ComboBoxRuleSelected" />
 
         <xctk:ColorPicker Name="clrPickMatch"
                           Height="20"

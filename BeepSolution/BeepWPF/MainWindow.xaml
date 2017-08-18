@@ -80,6 +80,16 @@
                         <beepRuleUI:ChangeNeighborColorUserControl /> 
                     </DataTemplate>
                 </ListBox.ItemTemplate> -->
+                <ListBox.ItemContainerStyle>
+                    <Style>
+                        <Setter Property="ListBoxItem.AllowDrop"
+                                Value="True" />
+                        <EventSetter Event="ListBoxItem.PreviewMouseMove"
+                                     Handler="ListBoxPreviewMouseMoved" />
+                        <EventSetter Event="ListBoxItem.Drop"
+                                     Handler="ListBoxRuleDropped" />
+                    </Style>
+                </ListBox.ItemContainerStyle>
             </ListBox>
 
             <Button Name="BtnSave"
