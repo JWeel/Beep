@@ -27,8 +27,9 @@ namespace Beep.Rules {
         public VirusRule(Dictionary<Point, Tile> tiles, List<Color> colorArguments = null, List<int> intArguments = null, List<bool> boolArguments = null) : base(tiles) {
 
             MatchColor = colorArguments[0];
-            TargetColor = colorArguments[1];
-            PreviousColor = colorArguments[2];
+            //TargetColor = colorArguments[2];
+            //PreviousColor = colorArguments[3];
+            MouseColor = colorArguments[1];
             ContagionRate = intArguments[0];
             ColorNeighboringMatchers = boolArguments[0];
             IsAbleToInfect = boolArguments[1];
@@ -40,17 +41,18 @@ namespace Beep.Rules {
         public Color MatchColor { get; set; }
         public Color TargetColor { get; set; }
         public Color PreviousColor { get; set; }
+        public Color MouseColor { get; set; }
         public int ContagionRate { get; set; }
         public bool IsAbleToInfect { get; set; }
         public bool ColorNeighboringMatchers { get; set; }
 
-
+        
 
         public override Dictionary<Point, Tile> Run() {
             Dictionary<Point, Tile> alteredTiles = DeepCopyDict(tiles);
 
             foreach (Tile t in tiles.Values) {
-                if(t.Color == (Color)ColorConverter.ConvertFromString("#FFFFA500")) {
+                if(t.Color == MouseColor) {
                     t.Color = MatchColor;
                     
 

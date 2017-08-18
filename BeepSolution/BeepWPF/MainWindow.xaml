@@ -28,16 +28,77 @@
                 Width="367"
                 HorizontalAlignment="Right"
                 Background="FloralWhite">
+            <Menu Height="20"
+                  HorizontalAlignment="Right"
+                  Name="ControlMenu"
+                  VerticalAlignment="Top"
+                  Width="367">
+                <MenuItem Header="_File"
+                          Style="{StaticResource menuParentStyle}"
+                          ItemContainerStyle="{DynamicResource MenuItemStyle1}"
+                          Template="{DynamicResource MenuItemControlTemplate2}">
+                    <MenuItem Header="_Load"
+                              Click="BtnLoad_Click" />
+                    <MenuItem Header="_Save"
+                              Click="BtnSave_Click"/>
+                    <MenuItem Header="_Quit" />
+                </MenuItem>
+                <MenuItem Header="_Edit"
+                          Style="{StaticResource menuParentStyle}"
+                          ItemContainerStyle="{DynamicResource MenuItemStyle1}"
+                          Template="{DynamicResource MenuItemControlTemplate2}">
+                    <MenuItem Header="_Size">
+                        <!--<MenuItem Header="Small"-->
+                    </MenuItem>
+                               
+                    
+                </MenuItem>
 
 
-            <Label Name="lblHeader"
+
+                <MenuItem Header="_View"
+                          Style="{StaticResource menuParentStyle}"
+                          ItemContainerStyle="{DynamicResource MenuItemStyle1}"
+                          Template="{DynamicResource MenuItemControlTemplate2}">
+                    <MenuItem Header="Full Screen" />
+
+                </MenuItem>
+
+                <MenuItem Header="_Add Rule"
+                          Style="{StaticResource menuParentStyle}"
+                          ItemContainerStyle="{DynamicResource MenuItemStyle1}"
+                          Template="{DynamicResource MenuItemControlTemplate2}">
+                    <MenuItem Header="Change Color"
+                              Click="AddRuleClick" />
+                    <MenuItem Header="Change Neighbor Color"
+                              Click="AddRuleClick" />
+                    <MenuItem Header="Random Change"
+                              Click="AddRuleClick" />
+                    <MenuItem Header="Virus"
+                              Click="AddRuleClick" />
+                </MenuItem>
+                <MenuItem Header="Style"
+                          Style="{StaticResource menuParentStyle}"
+                          ItemContainerStyle="{DynamicResource MenuItemStyle1}"
+                          Template="{DynamicResource MenuItemControlTemplate2}" />
+                
+
+
+
+            </Menu>
+
+
+
+
+
+                <!--<Label Name="lblHeader"
                    Content="Beep Rules"
                    FontSize="18"
                    Canvas.Left="21"
                    Canvas.Top="9"
                    Height="44"
-                   Width="171" />
-            <Button Name="btnNewRule"
+                   Width="171" />-->
+            <!--<Button Name="btnNewRule"
                     Content="Add Rule"
                     Canvas.Left="226"
                     Canvas.Top="13"
@@ -56,14 +117,14 @@
                                   Click="AddRuleClick" />
                     </ContextMenu>
                 </Button.ContextMenu>
-            </Button>
-            <Button Name="btnBeepSize"
+            </Button>-->
+            <!--<Button Name="btnBeepSize"
                     Content="Size"
                     Canvas.Left="320"
                     Canvas.Top="13"
                     Width="36"
                     Margin="0"
-                    Click="btnBeepSize_Click" />
+                    Click="btnBeepSize_Click" />-->
 
             <ListBox Name="lbRules"
                      Height="240"
@@ -82,7 +143,7 @@
                 </ListBox.ItemTemplate> -->
             </ListBox>
 
-            <Button Name="BtnSave"
+            <!--<Button Name="BtnSave"
                     Content="Save Painting"
                     HorizontalAlignment="Center"
                     Canvas.Left="30"
@@ -95,8 +156,8 @@
                     Canvas.Left="30"
                     Canvas.Top="413"
                     Margin="0"
-                    Click="BtnLoad_Click">
-            </Button>
+                    Click="BtnLoad_Click">-->
+            <!--</Button>-->
             <Button Name="BtnClear"
                     Content="Clear"
                     HorizontalAlignment="Center"
