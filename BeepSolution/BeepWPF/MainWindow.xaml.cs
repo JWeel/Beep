@@ -46,7 +46,14 @@ namespace Beep {
         private List<Point> ColouredPointList = new List<Point>();
 
         public List<string> RuleMenuItems { get; set; }
-        
+
+        internal List<Color> StandardColors = new List<Color>() {
+
+        };
+        internal List<Color> UsedColors = new List<Color>() {
+
+        };
+
         // random number
         Random rand = new Random();
 
