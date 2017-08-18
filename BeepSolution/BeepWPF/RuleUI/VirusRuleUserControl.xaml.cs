@@ -12,12 +12,17 @@ namespace Beep.RuleUI {
             get { return comboBoxRulePicker.SelectedItem as string; }
         }
 
-        public VirusRuleUserControl(VirusRule rule)
-        {
+        protected override void SetPanels() {
+            panelCollapsed = pnlCollapsed;
+            panelExpanded = pnlExpanded;
+        }
+
+        public VirusRuleUserControl(VirusRule rule) {
             this.Rule = rule;
             this.ruleName = rule.RuleName;
                        
             InitializeComponent();
+            SetPanels();
             clrPickMatch.SelectedColor = rule.MatchColor;
         }
         private void AmountChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {
