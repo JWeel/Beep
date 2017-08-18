@@ -26,7 +26,7 @@ namespace Beep {
         //private static readonly Point BEEP_SIZE = new Point(8, 7); // best with 42.8
         //private static readonly Point BEEP_SIZE = new Point(23, 26); // best with 20
         //private static readonly Point BEEP_SIZE = new Point(23, 26); // 10
-        private static readonly Point BEEP_SIZE = new Point(49, 45); // 7
+        private static Point BEEP_SIZE = new Point(49, 45); // 7
         //private static readonly Point BEEP_SIZE = new Point(46, 53); // 5
 
         private const bool BEEP_BOXED = true;
@@ -42,7 +42,7 @@ namespace Beep {
         private static readonly Color HEXAGON_FILL_COLOR = (Color)ColorConverter.ConvertFromString("#FFDEAD"); // NavajoWhite LOL
         private static readonly Color HEXAGON_FUN_COLOR = (Color)ColorConverter.ConvertFromString("#FFFFD700");
 
-        private static Color MOUSE_CLICK_COLOR = (Color)ColorConverter.ConvertFromString("#FFDEAD");
+        public static Color MOUSE_CLICK_COLOR = (Color)ColorConverter.ConvertFromString("#FFFFD700");
 
         // point that is selected by user
         private List<Point> SelectedPointList = new List<Point>();
@@ -458,7 +458,7 @@ namespace Beep {
         }
 
         private void btnBeepSize_Click(object sender, RoutedEventArgs e) {
-
+            
         }
 
         private void MouseColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
