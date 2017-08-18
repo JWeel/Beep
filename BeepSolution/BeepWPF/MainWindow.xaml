@@ -42,7 +42,21 @@
                     Canvas.Left="226"
                     Canvas.Top="13"
                     Click="BtnNewRuleClick"
-                    Margin="0" />
+                    Margin="0"
+                    ContextMenuService.IsEnabled="False">
+                <Button.ContextMenu>
+                    <ContextMenu
+                        >
+                        <MenuItem Header="Change Color" x:Name="ChangeColor" Click="AddRuleClick"/>
+                        <MenuItem Header="Change Neighbor Color"
+                                  Click="AddRuleClick" />
+                        <MenuItem Header="Random Change"
+                                  Click="AddRuleClick" />
+                        <MenuItem Header="Virus"
+                                  Click="AddRuleClick" />
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button> 
             <Button Name="btnBeepSize"
                     Content="Size"
                     Canvas.Left="320"
