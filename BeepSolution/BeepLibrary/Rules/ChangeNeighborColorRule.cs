@@ -18,7 +18,7 @@ namespace Beep.Rules {
         //  -one bool argument specifying whether to not affect neigbhors that are also matchers
         // TODO change neighbors of COLOR1 that are not COLOR3 to COLOR2
 
-        public ChangeNeighborColorRule(Dictionary<Point, Tile> tiles, List<Color> colorArguments = null, List<int> intArguments = null, List<bool> boolArguments = null) : base(tiles, colorArguments, intArguments, boolArguments) {
+        public ChangeNeighborColorRule(Dictionary<Point, Tile> tiles, List<Color> colorArguments = null, List<int> intArguments = null, List<bool> boolArguments = null) : base(tiles) {
             MatchColor = colorArguments[0];
             TargetColor = colorArguments[1];
             AmountAffectedNeighbors = intArguments[0];

@@ -4,15 +4,17 @@ using System.Windows.Media;
 
 namespace Beep.RuleUI {
     /// <summary>
-    /// Interaction logic for ChangeNeighbor.xaml
+    /// Interaction logic for ChangeColorRuleUserControl.xaml
     /// </summary>
-    public partial class ChangeNeighborColorRuleUserControl : BeepRuleUserControl {
+    public partial class ChangeColorRuleUserControl : BeepRuleUserControl {
 
         public override string SelectedRuleName {
             get { return comboBoxRulePicker.SelectedItem as string; }
         }
 
-        public ChangeNeighborColorRuleUserControl(ChangeNeighborColorRule rule) {
+        public string ViewType { get; set; }
+
+        public ChangeColorRuleUserControl(ChangeColorRule rule) {
             this.Rule = rule;
             this.ruleName = rule.RuleName;
 
@@ -21,17 +23,13 @@ namespace Beep.RuleUI {
             clrPickMatch.SelectedColor = rule.MatchColor;
             clrPickTarget.SelectedColor = rule.TargetColor;
         }
-        
-        private void AmountChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {
-            (Rule as ChangeNeighborColorRule).AmountAffectedNeighbors = (int) e.NewValue;
-        }
 
         private void ClrPickMatchChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
-            (Rule as ChangeNeighborColorRule).MatchColor = (Color) e.NewValue;
+            (Rule as ChangeColorRule).MatchColor = (Color)e.NewValue;
         }
 
         private void ClrPickTargetChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
-            (Rule as ChangeNeighborColorRule).TargetColor = (Color) e.NewValue;
+            (Rule as ChangeColorRule).TargetColor = (Color)e.NewValue;
         }
     }
 }

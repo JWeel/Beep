@@ -144,7 +144,7 @@ namespace Beep {
         private void Refresh() {
             foreach (Tile t in bw.tiles.Values) {
                 Polygon po = (Polygon)FindName(HexagonPointToName(t.Coordinates));
-                po.Fill = new SolidColorBrush(t.Color);
+                if ((po.Fill as SolidColorBrush).Color != t.Color) po.Fill = new SolidColorBrush(t.Color);
             }
             //UpdateRules();
         }
@@ -181,23 +181,13 @@ namespace Beep {
 
         //
         private void OnMouseLeftClick(object sender, System.Windows.Input.MouseButtonEventArgs e) {
-            //return;
             PixelPoint p = e.GetPosition(sender as IInputElement);
-
             Point axialPoint = MouseCoordinatesToAxialCoordinates(p.X, p.Y);
-            //SelectedPointList.Add(axialPoint);								  
-            //Polygon po = (Polygon)this.FindName(HexagonPointToName(axialPoint));
-            //if (po != null) {
-            //    po.Fill = Brushes.BlueViolet;
-            //    //if (selectedHexagon != null) selectedHexagon.Fill = HEXAGON_FILL_COLOR;
-            //    //selectedHexagon = po;
-            //}
             if (bw.tiles.ContainsKey(axialPoint)) {
                 bw.tiles[axialPoint].Color = (Color)ColorConverter.ConvertFromString("#FFFFA500");
                 UpdateRules();
             }
             MouseTextCopy.Text = axialPoint.X + " , " + axialPoint.Y;
-            //Refresh();
         }
 
         // converts coordinates of mouse to axial coordinates
@@ -282,13 +272,13 @@ namespace Beep {
             int random = rand.Next(properties.Length);
             result = (Brush)properties[random].GetValue(null, null);
             return result;
-
         }
 
         // sets the color property of all tiles to the default color
         private void BtnClearClick(object sender, RoutedEventArgs e) {
             foreach (Tile t in bw.tiles.Values) t.Color = Tile.DEFAULT_COLOR;
             Refresh();
+            //UpdateRules(); // <= not needed because tiles reference is shared with rules
         }
 
         private void BtnNewRuleClick(object sender, RoutedEventArgs e) {
@@ -333,16 +323,15 @@ namespace Beep {
         // paints according to defined rules
         private void BtnPaintClick(object sender, RoutedEventArgs e) {
             int? number = iudAmountPicker1.Value;
-           
-                for (int i = 0; i < number + 1; i++) {
+            for (int i = 0; i < number; i++) {
 
-                    foreach (BeepRule rule in beepRules) {
-                        bw.tiles = rule.Run();
-                        UpdateRules();
-                    }
+                foreach (BeepRule rule in beepRules) {
+                    bw.tiles = rule.Run();
+                    UpdateRules();
                 }
-            
-                Refresh();
+                // TODO async Refresh();
+            }
+            Refresh();
         }
         private void AmountChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {
           

@@ -24,7 +24,7 @@ namespace Beep.Rules {
 
         Random rand = new Random();
 
-        public VirusRule(Dictionary<Point, Tile> tiles, List<Color> colorArguments = null, List<int> intArguments = null, List<bool> boolArguments = null) : base(tiles, colorArguments, intArguments, boolArguments) {
+        public VirusRule(Dictionary<Point, Tile> tiles, List<Color> colorArguments = null, List<int> intArguments = null, List<bool> boolArguments = null) : base(tiles) {
 
             MatchColor = colorArguments[0];
             TargetColor = colorArguments[1];

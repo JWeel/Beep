@@ -9,6 +9,8 @@ namespace Beep.RuleUI {
         public event EventHandler SelectedRule;
         public event EventHandler Deleting;
 
+        public ViewBase View { get; set; }
+
         protected string ruleName;
         public string RuleName { get => ruleName; }
 
@@ -22,7 +24,7 @@ namespace Beep.RuleUI {
         public static BeepRuleUserControl CreateBeepRuleUserControl(BeepRule rule) {
             switch (rule.RuleName) {
                 case BeepRule.RULE_CHANGE_COLOR:
-                    return null;
+                    return new ChangeColorRuleUserControl(rule as ChangeColorRule);
                 case BeepRule.RULE_CHANGE_NEIGHBOR_COLOR:
                     return new ChangeNeighborColorRuleUserControl(rule as ChangeNeighborColorRule);
                 case BeepRule.RULE_RANDOM_CHANGE:

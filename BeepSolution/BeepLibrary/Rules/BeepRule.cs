@@ -21,19 +21,9 @@ namespace Beep.Rules {
         protected List<int> intArguments;
         protected List<bool> boolArguments;
         // protected List<double> doubleArguments;
-
-        public BeepRule() { }
-
-        public BeepRule(Dictionary<Point, Tile> tiles,
-                List<Color> colorArguments = null,
-                List<int> intArguments = null,
-                List<bool> boolArguments = null,
-                List<double> doubleArguments = null) {
+        
+        public BeepRule(Dictionary<Point, Tile> tiles) {
             this.tiles = tiles;
-            this.colorArguments = colorArguments;
-            this.intArguments = intArguments;
-            this.boolArguments = boolArguments;
-           // this.doubleArguments = doubleArguments;
         }
 
         //

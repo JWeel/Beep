@@ -21,7 +21,7 @@ namespace Beep.RuleUI {
         }
 
         private void AmountChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {
-            (Rule as RandomChangeRule).PercentageAffected = (int)e.NewValue;
+            (Rule as RandomChangeRule).PermillageAffected = (int)e.NewValue;
         }
 
         private void ClrPickTargetChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
