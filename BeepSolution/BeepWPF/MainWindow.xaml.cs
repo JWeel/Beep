@@ -320,10 +320,12 @@ namespace Beep {
             BeepRule br = BeepRule.CreateBeepRule(bruc.SelectedRuleName, bw.tiles);
             beepRules.Add(br);
 
-            // BeepRuleUserControl bruc = BeepRuleUserControl.CreateBeepRuleUserControl(....);
-            //bruc = new ChangeNeighborColorUserControl(br as ChangeNeighborColorRule);
-            //bruc.SelectedRule += RuleUserControlRuleSelection;
-            //BeepRulesUIComponents.Add(bruc);
+            bruc = BeepRuleUserControl.CreateBeepRuleUserControl(br);
+            bruc.SelectedRule += RuleUserControlRuleSelection;
+            bruc.Deleting += DeleteRuleUserControl;
+            BeepRulesUIComponents.Add(bruc);
+
+            Debug.WriteLine("hello");
 
             //BeepRule virus = BeepRule.CreateBeepRule(BeepRule.RULE_VIRUS, bw.tiles,
             //    colorArguments: new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFA500"), (Color)ColorConverter.ConvertFromString("#FFF0FFFF"), (Color)ColorConverter.ConvertFromString("#FFF05E1C") },
@@ -379,8 +381,9 @@ namespace Beep {
         }
 
         private void BtnLoad_Click(object sender, RoutedEventArgs e) {
-            OpenFileDialog open = new OpenFileDialog();
-            open.Filter = "Text Document|*.txt";
+            OpenFileDialog open = new OpenFileDialog() {
+                Filter = "Text Document|*.txt"
+            };
             string line;
             bool? result = open.ShowDialog();
 

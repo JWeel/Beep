@@ -20,7 +20,9 @@ namespace Beep.Rules {
         protected List<Color> colorArguments;
         protected List<int> intArguments;
         protected List<bool> boolArguments;
-       // protected List<double> doubleArguments;
+        // protected List<double> doubleArguments;
+
+        public BeepRule() { }
 
         public BeepRule(Dictionary<Point, Tile> tiles,
                 List<Color> colorArguments = null,
@@ -34,7 +36,7 @@ namespace Beep.Rules {
            // this.doubleArguments = doubleArguments;
         }
 
-
+        //
         public static BeepRule CreateBeepRule(string type, Dictionary<Point, Tile> bwTiles,
             List<Color> colorArguments = null,
             List<int> intArguments = null,
@@ -62,20 +64,31 @@ namespace Beep.Rules {
         //beepRules.Add(virus);
         //
         public static BeepRule CreateBeepRule(string type, Dictionary<Point, Tile> bwTiles) {
-            List<Color> colorArguments = new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFA500"), (Color)ColorConverter.ConvertFromString("#FFF0FFFF") };
-            List<int> intArguments = new List<int> { 6 };
-            List<bool> boolArguments = new List<bool> { true };
             switch (type) {
                 case RULE_CHANGE_COLOR:
-                    return new ChangeColorRule(bwTiles, colorArguments, intArguments, boolArguments);
+                    return new ChangeColorRule(bwTiles,
+                        new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFA500"), (Color)ColorConverter.ConvertFromString("#FFF0FFFF") },
+                        null,
+                        null
+                    );
                 case RULE_CHANGE_NEIGHBOR_COLOR:
-                    return new ChangeNeighborColorRule(bwTiles, colorArguments, intArguments, boolArguments);
+                    return new ChangeNeighborColorRule(bwTiles,
+                        new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFA500"), (Color)ColorConverter.ConvertFromString("#FFF0FFFF") },
+                        new List<int> { 6 },
+                        new List<bool> { true }
+                    );
                 case RULE_RANDOM_CHANGE:
-                    return new RandomChangeRule(bwTiles, colorArguments, intArguments, boolArguments);
+                    return new RandomChangeRule(bwTiles,
+                        new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFA500") },
+                        new List<int> { 30 },
+                        null
+                    );
                 case RULE_VIRUS:
+
                     return new VirusRule(bwTiles, 
                         colorArguments: new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFA500"), (Color)ColorConverter.ConvertFromString("#FFF0FFFF"), (Color)ColorConverter.ConvertFromString("#FFF05E1C") },
                         intArguments: new List<int> { 1 }, boolArguments: new List<bool> { true, false });
+
                 default:
                     return null;
             }
