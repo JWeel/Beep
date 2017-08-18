@@ -8,9 +8,14 @@ namespace Beep.RuleUI {
     /// </summary>
     public partial class RandomChangeRuleUserControl : BeepRuleUserControl {
 
+
+        public override string SelectedRuleName {
+            get { return comboBoxRulePicker.SelectedItem as string; }
+        }
+
         public RandomChangeRuleUserControl(RandomChangeRule rule) {
             this.Rule = rule;
-            this.ruleName = Rule.RuleName;
+            this.ruleName = rule.RuleName;
             InitializeComponent();
             clrPickTarget.SelectedColor = rule.TargetColor;
         }

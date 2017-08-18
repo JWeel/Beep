@@ -28,7 +28,7 @@ namespace Beep.RuleUI {
                 case BeepRule.RULE_RANDOM_CHANGE:
                     return new RandomChangeRuleUserControl(rule as RandomChangeRule);
                 case BeepRule.RULE_VIRUS:
-                    return null;
+                    return new VirusRuleUserControl(rule as VirusRule);
                 default:
                     return null;
             }
