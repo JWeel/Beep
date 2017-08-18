@@ -6,7 +6,7 @@ Procedural painting generation in Visual C# as part of MCSD 70-483 Certificate t
 
 The idea is to generate a painting from scratch, using various techniques.
 
-This project stemmed from a combination of ideas involving procedular map generation, music generation using System.Beep, and a user driven system that predicted celestial movement. Hence the obvious name - BeepWorld.
+This project stemmed from a combination of ideas involving procedural map generation, music generation using Console.Beep, and a user-driven system that predicted celestial movement and applied this to the workplace. Hence the obvious name - BeepWorld.
 
 Our algorithm is as follows:
 

@@ -292,11 +292,8 @@ namespace Beep {
         }
 
         private void BtnNewRuleClick(object sender, RoutedEventArgs e) {
-            //BeepRule br = BeepRule.CreateBeepRule(BeepRule.RULE_CHANGE_NEIGHBOR_COLOR, bw.tiles);
-            //beepRules.Add(br);
 
             //// TODO dropdown menu for a specific rule ?
-            //BeepRuleUserControl bruc = new ChangeNeighborColorRuleUserControl(br as ChangeNeighborColorRule); // { Tag = br.RuleName };
             BeepRule virus = BeepRule.CreateBeepRule(BeepRule.RULE_VIRUS, bw.tiles);
             beepRules.Add(virus);
 
@@ -324,15 +321,6 @@ namespace Beep {
             bruc.SelectedRule += RuleUserControlRuleSelection;
             bruc.Deleting += DeleteRuleUserControl;
             BeepRulesUIComponents.Add(bruc);
-
-            Debug.WriteLine("hello");
-
-            //BeepRule virus = BeepRule.CreateBeepRule(BeepRule.RULE_VIRUS, bw.tiles,
-            //    colorArguments: new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFA500"), (Color)ColorConverter.ConvertFromString("#FFF0FFFF"), (Color)ColorConverter.ConvertFromString("#FFF05E1C") },
-            //    intArguments: new List<int> { 1 },
-            //    boolArguments: new List<bool> { true, false }
-            //);
-            //beepRules.Add(virus);
         }
 
         // deletes a rule
