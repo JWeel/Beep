@@ -341,7 +341,7 @@
                              EndPoint="1,1">
             <GradientStop Color="#0B1013"
                           Offset="0.25" />
-            <GradientStop Color="#F05E1C"
+            <GradientStop Color="#FFF0E21C"
                           Offset="0.75" />
 
         </LinearGradientBrush>
@@ -351,7 +351,7 @@
                              EndPoint="0,0">
             <GradientStop Color="#0B1013"
                           Offset="0.0" />
-            <GradientStop Color="#F05E1C"
+            <GradientStop Color="#FFF0E21C"
                           Offset="0.25" />
 
         </LinearGradientBrush>
@@ -361,7 +361,7 @@
             <Setter Property="Background" 
                     Value="{StaticResource GradientBrush}"/>
             <Setter Property="Foreground"
-                    Value="Black" />
+                    Value="White" />
             <Setter Property="Width"
                     Value="80" />
             <Setter Property="Height"

@@ -70,7 +70,7 @@ namespace Beep.Rules {
                     Point p = t.Neighbors[rand.Next(0, t.Neighbors.Count)];
 
                     if (tiles[p].Color == MatchColor || PreviousColors.Contains(tiles[p].Color)) {
-                        Debug.WriteLine("previous color hit");
+                        //Debug.WriteLine("previous color hit");
                         continue;
                     }
                     TileList.Add(tiles[p]);

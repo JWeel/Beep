@@ -15,6 +15,7 @@ using Beep.RuleUI;
 using System.Collections.ObjectModel;
 using System.Threading;
 using System.Windows.Input;
+using Xceed.Wpf.Toolkit;
 
 namespace Beep {
     /// <summary>
@@ -51,9 +52,6 @@ namespace Beep {
         public List<string> RuleMenuItems { get; set; }
 
         internal List<Color> StandardColors = new List<Color>() {
-
-        };
-        internal List<Color> UsedColors = new List<Color>() {
 
         };
 
@@ -112,25 +110,34 @@ namespace Beep {
                 canvas.Children.Add(label);
             }
 
-            RuleMenuItems = new List<String> 
-                {
-                    BeepRule.RULE_CHANGE_COLOR, 
-                    BeepRule.RULE_CHANGE_NEIGHBOR_COLOR,
-                    BeepRule.RULE_RANDOM_CHANGE,
-                    BeepRule.RULE_VIRUS
-                };
+            RuleMenuItems = new List<String> {
+                BeepRule.RULE_CHANGE_COLOR, 
+                BeepRule.RULE_CHANGE_NEIGHBOR_COLOR,
+                BeepRule.RULE_RANDOM_CHANGE,
+                BeepRule.RULE_VIRUS
+            };
 
             Refresh();
         }
 
+        // TODO rename to UpdateUsedColorPickers
+        private void UpdateColorPickers() {
+            ObservableCollection<ColorItem> UsedColorItems = UsedColorsToColorItems(bw.UsedColors);
+            clrPickMouse.AvailableColors = UsedColorItems;
+            foreach (BeepRuleUserControl bruc in BeepRulesUIComponents) bruc.UpdateColorPickers(UsedColorItems);
+        }
+
+        private ObservableCollection<ColorItem> UsedColorsToColorItems(List<Color> usedColors) {
+            ObservableCollection<ColorItem> UsedColorItems = new ObservableCollection<ColorItem>();
+            usedColors.ForEach(color => UsedColorItems.Add(new ColorItem(color, color.ToString())));
+            return UsedColorItems;
+        }
+
         private void ColourListTiles(List<Point> listPoint) {
-            foreach (Point m in listPoint)
-            {
+            foreach (Point m in listPoint) {
                 Polygon temp = (Polygon)this.FindName(HexagonPointToName(m));
-                if (temp != null)
-                    temp.Fill = new SolidColorBrush(HEXAGON_FUN_COLOR);
-                 ColouredPointList.Add(m);
-                
+                if (temp != null) temp.Fill = new SolidColorBrush(HEXAGON_FUN_COLOR);
+                ColouredPointList.Add(m);
             }
         }
 												
@@ -157,6 +164,7 @@ namespace Beep {
                 if ((po.Fill as SolidColorBrush).Color != t.Color) po.Fill = new SolidColorBrush(t.Color);
             }
             //UpdateRules();
+            UpdateColorPickers();
         }
 
         //
@@ -196,6 +204,7 @@ namespace Beep {
             if (bw.tiles.ContainsKey(axialPoint)) {
                 bw.tiles[axialPoint].Color = (Color)MOUSE_CLICK_COLOR;
                 UpdateRules();
+                UpdateColorPickers();
             }
             MouseTextCopy.Text = axialPoint.X + " , " + axialPoint.Y;
         }
@@ -321,13 +330,15 @@ namespace Beep {
             bruc.SelectedRule += RuleUserControlRuleSelection;
             bruc.Deleting += DeleteRuleUserControl;
             BeepRulesUIComponents.Add(bruc);
+            //UpdateColorPickers(); // TODO now updates all, really should only update bruc
+            bruc.UpdateColorPickers(UsedColorsToColorItems(bw.UsedColors));
         }
 
 
         //
         private void RuleUserControlRuleSelection(object sender, EventArgs e) {
             BeepRuleUserControl bruc = sender as BeepRuleUserControl;
-            return;
+            //return;
             // selected rule must be different
             if (bruc.SelectedRuleName == bruc.RuleName) return;
 

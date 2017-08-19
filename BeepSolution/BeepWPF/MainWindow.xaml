@@ -189,7 +189,10 @@
                                   ShowStandardColors="False"
                                   SelectedColorChanged="MouseColorChanged"
                                   Canvas.Left="173"
-                                  Canvas.Top="324" />
+                                  Canvas.Top="324"
+                                  ShowDropDownButton="False"
+                                  AdvancedButtonHeader="Specify"
+                                  SelectedColor="Orange" />
             </Button>
 
 

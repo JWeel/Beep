@@ -1,6 +1,9 @@
 ﻿using Beep.Rules;
 using System.Windows;
 using System.Windows.Media;
+using System;
+using System.Collections.ObjectModel;
+using Xceed.Wpf.Toolkit;
 
 namespace Beep.RuleUI {
     /// <summary>
@@ -10,6 +13,11 @@ namespace Beep.RuleUI {
 
         public override string SelectedRuleName {
             get { return comboBoxRulePicker.SelectedItem as string; }
+        }
+
+        public override void UpdateColorPickers(ObservableCollection<ColorItem> usedColors) {
+            clrPickMatch.AvailableColors = usedColors;
+            //clrPickTarget.AvailableColors = usedColors;
         }
 
         protected override void SetPanels() {

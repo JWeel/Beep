@@ -1,7 +1,9 @@
 ﻿using Beep.Rules;
 using System;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using Xceed.Wpf.Toolkit;
 
 namespace Beep.RuleUI {
     public abstract class BeepRuleUserControl : UserControl {
@@ -40,6 +42,7 @@ namespace Beep.RuleUI {
             }
         }
 
+        public abstract void UpdateColorPickers(ObservableCollection<ColorItem> usedColors);
 
         protected string ruleName;
         public string RuleName { get => ruleName; }
