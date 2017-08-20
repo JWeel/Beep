@@ -24,7 +24,7 @@
                    Padding="0,0,0,0"
                    DockPanel.Dock="Left"
                    Margin="1,1,1,1" />
-            <Button Name="btnDragme"
+            <Button Name="btnDrag"
                     Content="O"
                     Width="20"
                     Height="20"
