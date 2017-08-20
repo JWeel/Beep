@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 using System.Threading;
 using System.Windows.Input;
 using Xceed.Wpf.Toolkit;
+using System.Threading.Tasks;
 
 namespace Beep {
     /// <summary>
@@ -51,9 +52,21 @@ namespace Beep {
 
         public List<string> RuleMenuItems { get; set; }
 
-        internal List<Color> StandardColors = new List<Color>() {
-
+        internal ObservableCollection<ColorItem> StandardColorItems = new ObservableCollection<ColorItem>() {
+            new ColorItem((Color)ColorConverter.ConvertFromString("#FFFF0000"),"#FFFF0000"),
+            new ColorItem((Color)ColorConverter.ConvertFromString("#FFFFA500"),"#FFFFA500"),
+            new ColorItem((Color)ColorConverter.ConvertFromString("#FFFFFF00"),"#FFFFFF00"),
+            new ColorItem((Color)ColorConverter.ConvertFromString("#FF00FF00"),"#FF00FF00"),
+            new ColorItem((Color)ColorConverter.ConvertFromString("#FF00FFFF"),"#FF00FFFF"),
+            new ColorItem((Color)ColorConverter.ConvertFromString("#FF0000FF"),"#FF0000FF"),
+            new ColorItem((Color)ColorConverter.ConvertFromString("#FFFF00FF"),"#FFFF00FF"),
+            new ColorItem((Color)ColorConverter.ConvertFromString("#FFFFFFFF"),"#FFFFFFFF"),
+            new ColorItem((Color)ColorConverter.ConvertFromString("#FF888888"),"#FF888888"),
+            new ColorItem((Color)ColorConverter.ConvertFromString("#FF000000"),"#FF000000")
         };
+
+        //private List<Color> UsedColors;
+        //internal ObservableCollection<ColorItem> UsedColorItems = new ObservableCollection<ColorItem>();
 
         // random number
         Random rand = new Random();
@@ -118,19 +131,29 @@ namespace Beep {
             };
 
             Refresh();
+            UpdateUsedColors();
+            clrPickMouse.StandardColors = StandardColorItems;
+        }
+
+        //private void UpdateUsedColors(object sender, ColorChangeEventArgs e) {
+        private void UpdateUsedColors() {
+            List<Color> usedColors = new List<Color>();
+            Parallel.ForEach(bw.tiles.Values, tile => {
+                if (!usedColors.Contains(tile.Color)) usedColors.Add(tile.Color);
+            });
+            UpdateColorPickers(ColorsToColorItems(usedColors));
         }
 
         // TODO rename to UpdateUsedColorPickers
-        private void UpdateColorPickers() {
-            ObservableCollection<ColorItem> UsedColorItems = UsedColorsToColorItems(bw.UsedColors);
-            clrPickMouse.AvailableColors = UsedColorItems;
-            foreach (BeepRuleUserControl bruc in BeepRulesUIComponents) bruc.UpdateColorPickers(UsedColorItems);
+        private void UpdateColorPickers(ObservableCollection<ColorItem> usedColorItems) {
+            clrPickMouse.AvailableColors = usedColorItems;
+            foreach (BeepRuleUserControl bruc in BeepRulesUIComponents) bruc.UpdateColorPickers(usedColorItems);
         }
 
-        private ObservableCollection<ColorItem> UsedColorsToColorItems(List<Color> usedColors) {
-            ObservableCollection<ColorItem> UsedColorItems = new ObservableCollection<ColorItem>();
-            usedColors.ForEach(color => UsedColorItems.Add(new ColorItem(color, color.ToString())));
-            return UsedColorItems;
+        private ObservableCollection<ColorItem> ColorsToColorItems(List<Color> usedColors) {
+            ObservableCollection<ColorItem> usedColorItems = new ObservableCollection<ColorItem>();
+            usedColors.ForEach(color => usedColorItems.Add(new ColorItem(color, color.ToString())));
+            return usedColorItems;
         }
 
         private void ColourListTiles(List<Point> listPoint) {
@@ -164,7 +187,7 @@ namespace Beep {
                 if ((po.Fill as SolidColorBrush).Color != t.Color) po.Fill = new SolidColorBrush(t.Color);
             }
             //UpdateRules();
-            UpdateColorPickers();
+            //UpdateColorPickers();
         }
 
         //
@@ -204,7 +227,7 @@ namespace Beep {
             if (bw.tiles.ContainsKey(axialPoint)) {
                 bw.tiles[axialPoint].Color = (Color)MOUSE_CLICK_COLOR;
                 UpdateRules();
-                UpdateColorPickers();
+                UpdateUsedColors();
             }
             MouseTextCopy.Text = axialPoint.X + " , " + axialPoint.Y;
         }
@@ -295,9 +318,11 @@ namespace Beep {
 
         // sets the color property of all tiles to the default color
         private void BtnClearClick(object sender, RoutedEventArgs e) {
-            foreach (Tile t in bw.tiles.Values) t.Color = Tile.DEFAULT_COLOR;
+            Parallel.ForEach(bw.tiles.Values, tile => { tile.Color = Tile.DEFAULT_COLOR; });
+            //foreach (Tile t in bw.tiles.Values) t.Color = Tile.DEFAULT_COLOR;
             Refresh();
             //UpdateRules(); // <= not needed because tiles reference is shared with rules
+            UpdateUsedColors();
         }
 
         private void BtnNewRuleClick(object sender, RoutedEventArgs e) {
@@ -306,9 +331,6 @@ namespace Beep {
             (sender as Button).ContextMenu.PlacementTarget = (sender as Button);
             (sender as Button).ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
             (sender as Button).ContextMenu.IsOpen = true;
-
-           
-
 
             //BeepRule virus = BeepRule.CreateBeepRule(BeepRule.RULE_VIRUS, bw.tiles);
             //beepRules.Add(virus);
@@ -320,20 +342,17 @@ namespace Beep {
             //BeepRulesUIComponents.Add(bruc);
         }
         
-        private void AddRuleClick(object sender, RoutedEventArgs e) {
-
-            MenuItem mi = sender as MenuItem;
-            BeepRule br = BeepRule.CreateBeepRule(mi.Header.ToString(), bw.tiles);
-            
+        private void AddRuleClick(object sender, RoutedEventArgs e) { 
+            BeepRule br = BeepRule.Create((sender as MenuItem).Header.ToString(), bw.tiles);
             beepRules.Add(br);
-            BeepRuleUserControl bruc = BeepRuleUserControl.CreateBeepRuleUserControl(br);
+
+            BeepRuleUserControl bruc = BeepRuleUserControl.Create(br);
             bruc.SelectedRule += RuleUserControlRuleSelection;
             bruc.Deleting += DeleteRuleUserControl;
+            bruc.PrepareColorPickers(StandardColorItems);
+            bruc.UpdateColorPickers(clrPickMouse.AvailableColors);
             BeepRulesUIComponents.Add(bruc);
-            //UpdateColorPickers(); // TODO now updates all, really should only update bruc
-            bruc.UpdateColorPickers(UsedColorsToColorItems(bw.UsedColors));
         }
-
 
         //
         private void RuleUserControlRuleSelection(object sender, EventArgs e) {
@@ -345,12 +364,14 @@ namespace Beep {
             beepRules.Remove(bruc.Rule);
             BeepRulesUIComponents.Remove(bruc);
 
-            BeepRule br = BeepRule.CreateBeepRule(bruc.SelectedRuleName, bw.tiles);
+            BeepRule br = BeepRule.Create(bruc.SelectedRuleName, bw.tiles);
             beepRules.Add(br);
 
-            bruc = BeepRuleUserControl.CreateBeepRuleUserControl(br);
+            bruc = BeepRuleUserControl.Create(br);
             bruc.SelectedRule += RuleUserControlRuleSelection;
             bruc.Deleting += DeleteRuleUserControl;
+            bruc.PrepareColorPickers(StandardColorItems);
+            bruc.UpdateColorPickers(clrPickMouse.AvailableColors);
             BeepRulesUIComponents.Add(bruc);
         }
 
@@ -362,17 +383,28 @@ namespace Beep {
         }
 
         // paints according to defined rules
-        private void BtnPaintClick(object sender, RoutedEventArgs e) {
+        private async void BtnPaintClick(object sender, RoutedEventArgs e) {
             int? number = iudAmountPicker1.Value;
-            for (int i = 0; i < number; i++) {
+            await Task.Run(() => {
+                for (int i = 0; i < number; i++) {
+                    //Task.Run(() => {
+                        foreach (BeepRule rule in beepRules) {
+                            bw.tiles = rule.Run();
+                            UpdateRules();
+                        }
+                        //    Refresh();
 
-                foreach (BeepRule rule in beepRules) {
-                    bw.tiles = rule.Run();
-                    UpdateRules();
+                    //});
+                    this.Dispatcher.Invoke(() => {
+                        Refresh();
+                    });
+                    //Task.WaitAll();
+                    // TODO async Refresh();
                 }
-                // TODO async Refresh();
-            }
+            });
+            //t.Wait();
             Refresh();
+            UpdateUsedColors();
         }
         private void AmountChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {
           

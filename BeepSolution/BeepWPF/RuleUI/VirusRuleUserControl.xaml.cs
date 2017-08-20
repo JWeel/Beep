@@ -14,8 +14,12 @@ namespace Beep.RuleUI {
             get { return comboBoxRulePicker.SelectedItem as string; }
         }
 
-        public override void UpdateColorPickers(ObservableCollection<ColorItem> usedColors) {
-            clrPickMatch.AvailableColors = usedColors;
+        public override void UpdateColorPickers(ObservableCollection<ColorItem> usedColorItems) {
+            clrPickMatch.AvailableColors = usedColorItems;
+        }
+
+        public override void PrepareColorPickers(ObservableCollection<ColorItem> standardColorItems) {
+            clrPickMatch.StandardColors = standardColorItems;
         }
 
         protected override void SetPanels() {

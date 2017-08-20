@@ -2,6 +2,7 @@
 using System.Windows.Media;
 using System.Linq;
 using System.Diagnostics;
+using System;
 //using System.Drawing; // Point structure
 
 // TODO
@@ -16,6 +17,8 @@ namespace Beep {
         public bool Boxed { get; set; }
         public Dictionary<Point, Tile> tiles;
         public List<Color> UsedColors;
+
+        public event EventHandler<ColorChangeEventArgs> ColorsChanged;
 
         public BeepWorld(Point p) : this(p, false) { }
         public BeepWorld(int sizeX, int sizeY) : this(new Point(sizeX, sizeY), false) { }
@@ -35,7 +38,7 @@ namespace Beep {
                 for (int indexX = startX; indexX < endX; indexX++) {
                     Tile t = new Tile(indexX, indexY);
                     t.SetNeighbors(Size, Boxed);
-                    t.ColorChanged += UpdateColorList;
+                    //t.ColorChanged += RaiseColorsChanged;
                     tiles.Add(new Point(indexX, indexY), t);
                 }
             }
@@ -59,6 +62,10 @@ namespace Beep {
 
         private void PrepareColorList() {
             foreach (Tile t in tiles.Values) if (!UsedColors.Contains(t.Color)) UsedColors.Add(t.Color);
+        }
+
+        private void RaiseColorsChanged(object sender, ColorChangeEventArgs e) {
+            ColorsChanged(this, e);
         }
 
         private void UpdateColorList(object sender, ColorChangeEventArgs e) {

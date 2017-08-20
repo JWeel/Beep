@@ -11,17 +11,8 @@ namespace Beep.RuleUI {
         public event EventHandler SelectedRule;
         public event EventHandler Deleting;
 
-        //public ViewBase View {
-        //    get { return (ViewBase)GetValue(ViewProperty); }
-        //    set { SetValue(ViewProperty, value); }
-        //}
-        ////ListView lv;
-        //// Using a DependencyProperty as the backing store for View.  This enables animation, styling, binding, etc...
-        //public static readonly DependencyProperty ViewProperty =
-        //    DependencyProperty.Register("View", typeof(ViewBase), typeof(BeepRuleUserControl), new PropertyMetadata(0));
-
         protected StackPanel panelExpanded;
-        protected StackPanel panelCollapsed;
+        protected DockPanel panelCollapsed;
 
         protected abstract void SetPanels();
 
@@ -42,7 +33,8 @@ namespace Beep.RuleUI {
             }
         }
 
-        public abstract void UpdateColorPickers(ObservableCollection<ColorItem> usedColors);
+        public abstract void UpdateColorPickers(ObservableCollection<ColorItem> usedColorItems);
+        public abstract void PrepareColorPickers(ObservableCollection<ColorItem> standardColorItems);
 
         protected string ruleName;
         public string RuleName { get => ruleName; }
@@ -54,7 +46,7 @@ namespace Beep.RuleUI {
         public BeepRuleUserControl() { }
 
         //
-        public static BeepRuleUserControl CreateBeepRuleUserControl(BeepRule rule) {
+        public static BeepRuleUserControl Create(BeepRule rule) {
             switch (rule.RuleName) {
                 case BeepRule.RULE_CHANGE_COLOR:
                     return new ChangeColorRuleUserControl(rule as ChangeColorRule);

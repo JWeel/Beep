@@ -27,13 +27,13 @@ namespace Beep {
 
         internal Tile(int x, int y) : this(new Point(x, y)) { }
 
-        public Tile(Point p) {
+        internal Tile(Point p) {
             this.Coordinates = p;
             this.Color = DEFAULT_COLOR;
         }
 
         // (deep) copy constructor
-        public Tile(Tile t) {
+        internal Tile(Tile t) {
             this.Coordinates = t.Coordinates;
             this.Color = t.Color;
             this.Neighbors = new List<Point>(t.Neighbors);

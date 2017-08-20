@@ -126,32 +126,37 @@
                     Margin="0"
                     Click="btnBeepSize_Click" />-->
 
-            <ListBox Name="lbRules"
-                     Height="240"
-                     Canvas.Left="2"
-                     Canvas.Top="58"
-                     Width="363"
-                     Background="WhiteSmoke"
-                     ItemsSource="{Binding BeepRulesUIComponents}">
-                <!-- ItemsSource="{Binding}"> -->
+            <ScrollViewer FlowDirection="RightToLeft"
+                          CanContentScroll="False"
+                          VerticalScrollBarVisibility="Auto"
+                          Height="240"
+                          Canvas.Left="2"
+                          Canvas.Top="58"
+                          Width="363">
+                <ListBox Name="lbRules"
+                         FlowDirection="LeftToRight"
+                         Background="WhiteSmoke"
+                         ItemsSource="{Binding BeepRulesUIComponents}">
+                    <!-- ItemsSource="{Binding}"> -->
 
-                <!--
+                    <!--
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <beepRuleUI:ChangeNeighborColorUserControl /> 
                     </DataTemplate>
                 </ListBox.ItemTemplate> -->
-                <ListBox.ItemContainerStyle>
-                    <Style>
-                        <Setter Property="ListBoxItem.AllowDrop"
-                                Value="True" />
-                        <EventSetter Event="ListBoxItem.PreviewMouseMove"
-                                     Handler="ListBoxPreviewMouseMoved" />
-                        <EventSetter Event="ListBoxItem.Drop"
-                                     Handler="ListBoxRuleDropped" />
-                    </Style>
-                </ListBox.ItemContainerStyle>
-            </ListBox>
+                    <ListBox.ItemContainerStyle>
+                        <Style>
+                            <Setter Property="ListBoxItem.AllowDrop"
+                                    Value="True" />
+                            <EventSetter Event="ListBoxItem.PreviewMouseMove"
+                                         Handler="ListBoxPreviewMouseMoved" />
+                            <EventSetter Event="ListBoxItem.Drop"
+                                         Handler="ListBoxRuleDropped" />
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
+            </ScrollViewer>
 
             <!--<Button Name="BtnSave"
                     Content="Save Painting"
@@ -186,8 +191,10 @@
                                   Padding="0,0,0,1"
                                   BorderThickness="0"
                                   DisplayColorAndName="False"
-                                  ShowStandardColors="False"
+                                  AvailableColorsHeader="Canvas Colors"
+                                  ShowStandardColors="True"
                                   SelectedColorChanged="MouseColorChanged"
+                                  StandardColors="{Binding StandardColorItems, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Mode=OneWay}"
                                   Canvas.Left="173"
                                   Canvas.Top="324"
                                   ShowDropDownButton="False"
