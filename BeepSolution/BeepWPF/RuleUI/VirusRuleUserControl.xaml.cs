@@ -34,7 +34,7 @@ namespace Beep.RuleUI {
             InitializeComponent();
             SetPanels();
             clrPickMatch.SelectedColor = rule.MatchColor;
-            rule.MouseColor = MainWindow.MOUSE_CLICK_COLOR;
+            rule.MouseColor = MainWindow.MouseClickColor;
         }
         private void AmountChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {
             (Rule as VirusRule).ContagionRate = (int)e.NewValue;

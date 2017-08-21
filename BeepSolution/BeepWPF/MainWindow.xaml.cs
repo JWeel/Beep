@@ -44,11 +44,17 @@ namespace Beep {
         private static readonly Color HEXAGON_FILL_COLOR = (Color)ColorConverter.ConvertFromString("#FFDEAD"); // NavajoWhite LOL
         private static readonly Color HEXAGON_FUN_COLOR = (Color)ColorConverter.ConvertFromString("#FFFFD700");
 
-        public static Color MOUSE_CLICK_COLOR = (Color)ColorConverter.ConvertFromString("#FFFFD700");
+        public static Color MouseClickColor = (Color)ColorConverter.ConvertFromString("#FFFFD700");
 
         // point that is selected by user
         private List<Point> SelectedPointList = new List<Point>();
         private List<Point> ColouredPointList = new List<Point>();
+
+        private bool useMouseDownColorDrag = true;
+        private bool isMouseDownColorDragging = false;
+
+        private bool useRelativeBorderColor = false;
+        private Color fixedBorderColor = (Color)ColorConverter.ConvertFromString("#FF000000");
 
         public List<string> RuleMenuItems { get; set; }
 
@@ -175,8 +181,9 @@ namespace Beep {
                     new PixelPoint(posX + HEXAGON_HORIZONTAL_LENGTH, posY),
                     new PixelPoint(posX + HEXAGON_HORIZONTAL_HALF, posY - HEXAGON_VERTICAL_EDGE)
                 },
-                Stroke = new SolidColorBrush(HEXAGON_BORDER_COLOR),
-                Fill = new SolidColorBrush(HEXAGON_FILL_COLOR)
+                Fill = Brushes.Black,
+                Stroke = Brushes.Black,
+                StrokeThickness = 0.5
             };
         }
 
@@ -185,6 +192,7 @@ namespace Beep {
             foreach (Tile t in bw.tiles.Values) {
                 Polygon po = (Polygon)FindName(HexagonPointToName(t.Coordinates));
                 if ((po.Fill as SolidColorBrush).Color != t.Color) po.Fill = new SolidColorBrush(t.Color);
+                if (useRelativeBorderColor && (po.Stroke as SolidColorBrush).Color != t.Color) po.Stroke = po.Fill;
             }
             //UpdateRules();
             //UpdateColorPickers();
@@ -196,40 +204,58 @@ namespace Beep {
         }
 
         //
-        private void OnMouseMove(object sender, System.Windows.Input.MouseEventArgs e) {
-			//return;
+        private void OnMouseMove(object sender, MouseEventArgs e) {
             PixelPoint p = e.GetPosition(sender as IInputElement);
-            MouseText.Text = (int)(p.X) + " , " + (int)(p.Y);
-
             Point axialPoint = MouseCoordinatesToAxialCoordinates(p.X, p.Y);
-			
-            //SelectedPointList.Add(axialPoint);
-
             Polygon po = (Polygon)this.FindName(HexagonPointToName(axialPoint));
 
-            if (po != null && po != selectedHexagon) {
-                po.Fill = Brushes.SlateGray;
+            MouseText.Text = (int)(p.X) + " , " + (int)(p.Y);
 
-                if (selectedHexagon != null && (selectedHexagon.Fill as SolidColorBrush).Color == (Brushes.BlueViolet as SolidColorBrush).Color) {
-                    selectedHexagon = null;
-                    //return;
+            if (po != null) {
+                if (useMouseDownColorDrag && isMouseDownColorDragging) {
+                    if ((po.Fill as SolidColorBrush).Color != MouseClickColor) {
+                        bw.tiles[axialPoint].Color = MouseClickColor;
+                        po.Fill = new SolidColorBrush(MouseClickColor);
+                        if (useRelativeBorderColor && (po.Stroke as SolidColorBrush).Color != MouseClickColor) po.Stroke = po.Fill;
+                    }
+                } else {
+                    if (po != selectedHexagon) {
+                        po.Fill = Brushes.SlateGray;
+                        po.Stroke = Brushes.SlateGray;
+
+                        if (selectedHexagon != null && (selectedHexagon.Fill as SolidColorBrush).Color == (Brushes.BlueViolet as SolidColorBrush).Color) {
+                            selectedHexagon = null;
+                            //return;
+                        }
+
+                        if (selectedHexagon != null) {
+                            selectedHexagon.Fill = new SolidColorBrush(bw.tiles[HexagonNameToPoint(selectedHexagon.Name)].Color);
+                            if (useRelativeBorderColor) selectedHexagon.Stroke = selectedHexagon.Fill;
+                            else selectedHexagon.Stroke = new SolidColorBrush(fixedBorderColor);
+                        }
+                        selectedHexagon = po;
+                    }
                 }
-
-                if (selectedHexagon != null) selectedHexagon.Fill = new SolidColorBrush(bw.tiles[HexagonNameToPoint(selectedHexagon.Name)].Color);
-                selectedHexagon = po;
             }
         }
 
         //
-        private void OnMouseLeftClick(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+        private void OnMouseLeftDown(object sender, MouseButtonEventArgs e) {
             PixelPoint p = e.GetPosition(sender as IInputElement);
             Point axialPoint = MouseCoordinatesToAxialCoordinates(p.X, p.Y);
             if (bw.tiles.ContainsKey(axialPoint)) {
-                bw.tiles[axialPoint].Color = (Color)MOUSE_CLICK_COLOR;
+                bw.tiles[axialPoint].Color = MouseClickColor;
                 UpdateRules();
                 UpdateUsedColors();
             }
             MouseTextCopy.Text = axialPoint.X + " , " + axialPoint.Y;
+
+            if (useMouseDownColorDrag) isMouseDownColorDragging = true;
+        }
+
+        // 
+        private void OnMouseLeftUp(object sender, MouseButtonEventArgs e) {
+            if (useMouseDownColorDrag && isMouseDownColorDragging) isMouseDownColorDragging = false;
         }
 
         // converts coordinates of mouse to axial coordinates
@@ -505,7 +531,7 @@ namespace Beep {
         }
 
         private void MouseColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
-            MOUSE_CLICK_COLOR = (Color)clrPickMouse.SelectedColor;
+            MouseClickColor = (Color)clrPickMouse.SelectedColor;
         }
     }
 }
