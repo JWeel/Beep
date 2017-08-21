@@ -13,7 +13,9 @@
     <Grid Height="480"
           Width="960"
           HorizontalAlignment="Left"
-          VerticalAlignment="Top">
+          VerticalAlignment="Top"
+          MouseMove="OnMouseMove"
+          MouseLeftButtonUp="OnMouseLeftUp">
 
         <Canvas Name="canvas"
                 Background="LightGreen"
@@ -21,9 +23,7 @@
                 VerticalAlignment="Top"
                 Height="480"
                 Width="593"
-                MouseMove="OnMouseMove"
-                MouseLeftButtonDown="OnMouseLeftDown"
-                MouseLeftButtonUp="OnMouseLeftUp">
+                MouseLeftButtonDown="OnMouseLeftDown">
         </Canvas>
         <Canvas Height="480"
                 Width="367"
@@ -42,7 +42,8 @@
                               Click="BtnLoad_Click" />
                     <MenuItem Header="_Save"
                               Click="BtnSave_Click"/>
-                    <MenuItem Header="_Quit" />
+                    <MenuItem Header="_Quit"
+                              Click="BtnQuitClick"/>
                 </MenuItem>
                 <MenuItem Header="_Edit"
                           Style="{StaticResource menuParentStyle}"
@@ -90,6 +91,8 @@
                     <MenuItem Header="Random Change"
                               Click="AddRuleClick" />
                     <MenuItem Header="Virus"
+                              Click="AddRuleClick" />
+                    <MenuItem Header="Vincent"
                               Click="AddRuleClick" />
                 </MenuItem>
                 <MenuItem Header="Style"
