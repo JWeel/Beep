@@ -142,7 +142,7 @@
                                                   Canvas.Top="324"
                                                   ShowDropDownButton="False"
                                                   AdvancedButtonHeader="Specify"
-                                                  SelectedColor="Green" />
+                                                  SelectedColor="LightGreen" />
                             </Button>
                         </StackPanel>
 
@@ -158,7 +158,7 @@
                                        Text="Fixed Borders"/>
                             <CheckBox x:Name="CheckFixedBorderColor"
                                       Margin="10,13,0,10"
-                                      Content="joe"
+                                      IsChecked="False"
                                       Checked="FixedBorderColorChecked"
                                       Unchecked="FixedBorderColorUnchecked"/>
                             <TextBlock Margin="5,12,12,0"
@@ -178,7 +178,7 @@
                                               Canvas.Top="324"
                                               ShowDropDownButton="False"
                                               AdvancedButtonHeader="Specify"
-                                              SelectedColor="LightGreen" />
+                                              SelectedColor="Black" />
 
                         </StackPanel>
                         

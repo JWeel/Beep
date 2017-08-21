@@ -54,7 +54,7 @@ namespace Beep {
         private bool useMouseDownColorDrag = true;
         private bool isMouseDownColorDragging = false;
 
-        private bool useRelativeBorderColor = false;
+        private bool useRelativeBorderColor = true;
         private Color fixedBorderColor = (Color)ColorConverter.ConvertFromString("#FF000000");
 
         private List<string> registeredHexPolygons = new List<string>(); 
@@ -194,7 +194,10 @@ namespace Beep {
             foreach (Tile t in bw.tiles.Values) {
                 Polygon po = (Polygon)FindName(HexagonPointToName(t.Coordinates));
                 if ((po.Fill as SolidColorBrush).Color != t.Color) po.Fill = new SolidColorBrush(t.Color);
-                if (useRelativeBorderColor && (po.Stroke as SolidColorBrush).Color != t.Color) po.Stroke = po.Fill;
+                if (useRelativeBorderColor) {
+                    if ((po.Stroke as SolidColorBrush).Color != t.Color) po.Stroke = po.Fill;
+                }
+                else if ((po.Stroke as SolidColorBrush).Color != fixedBorderColor) po.Stroke = new SolidColorBrush(fixedBorderColor);
             }
         }
 
@@ -217,7 +220,10 @@ namespace Beep {
                     if ((po.Fill as SolidColorBrush).Color != MouseClickColor) {
                         bw.tiles[axialPoint].Color = MouseClickColor;
                         po.Fill = new SolidColorBrush(MouseClickColor);
-                        if (useRelativeBorderColor && (po.Stroke as SolidColorBrush).Color != MouseClickColor) po.Stroke = po.Fill;
+                        if (useRelativeBorderColor) {
+                            if ((po.Stroke as SolidColorBrush).Color != MouseClickColor) po.Stroke = po.Fill;
+                        }
+                        else if ((po.Stroke as SolidColorBrush).Color != fixedBorderColor) po.Stroke = new SolidColorBrush(fixedBorderColor);
                     }
                 } else {
                     if (po != highlightedHexPolygon) {
@@ -520,14 +526,17 @@ namespace Beep {
 
         private void clrPickBorderColor_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
             fixedBorderColor = (Color)clrPickBorderColor.SelectedColor;
+            Refresh();
         }
 
         private void FixedBorderColorChecked(object sender, RoutedEventArgs e) {
             useRelativeBorderColor = false;
             fixedBorderColor = (Color)clrPickBorderColor.SelectedColor;
+            Refresh();
         }
         private void FixedBorderColorUnchecked(object sender, RoutedEventArgs e) {
             useRelativeBorderColor = true;
+            Refresh();
         }
     }
 
