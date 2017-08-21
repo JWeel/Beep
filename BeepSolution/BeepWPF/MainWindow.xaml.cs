@@ -623,14 +623,14 @@ namespace Beep {
         }
 
         private void clrPickBorderColor_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
+            if(useRelativeBorderColor== false)
             fixedBorderColor = (Color)clrPickBorderColor.SelectedColor;
         }
-
-        
+      
 
         private void IsCheckedBorderColor(object sender, RoutedEventArgs e) {
             useRelativeBorderColor = false;
-            fixedBorderColor = (Color)clrPickBorderColor.SelectedColor;
+            //fixedBorderColor = (Color)clrPickBorderColor.SelectedColor;
         }
     }
 }
