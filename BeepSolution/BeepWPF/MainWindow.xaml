@@ -47,7 +47,21 @@
                           Style="{StaticResource menuParentStyle}"
                           ItemContainerStyle="{DynamicResource MenuItemStyle1}"
                           Template="{DynamicResource MenuItemControlTemplate2}">
-                    <MenuItem Header="_Size">
+                    <MenuItem Header="_Size"
+                              Style="{StaticResource menuParentStyle}"
+                              ItemContainerStyle="{DynamicResource MenuItemStyle1}"
+                              Template="{DynamicResource MenuItemControlTemplate2}"
+                              >
+                        <TextBox x:Name="Width_Beepworld" Width="50"
+                                 Height="20"
+                                 Text="Width"></TextBox>
+                        <TextBox x:Name="Heigth_Beepworld" Width="50"
+                                 Height="20"
+                                 Text="Heigth"></TextBox>
+                        <Button Width="50" Content="Set size"
+                                RenderTransformOrigin="-0.06,0.567" Click="BtnSize_Click">
+                            
+                        </Button>
                         <!--<MenuItem Header="Small"-->
                     </MenuItem>
                                
@@ -133,6 +147,7 @@
                           Canvas.Left="2"
                           Canvas.Top="58"
                           Width="363">
+                
                 <ListBox Name="lbRules"
                          FlowDirection="LeftToRight"
                          Background="WhiteSmoke"

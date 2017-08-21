@@ -44,7 +44,9 @@ namespace Beep {
             }
             PrepareColorList();
         }
-        public void Resize() {
+        public void Resize(Point newSize, bool b) {
+            this.Boxed = b;
+            this.Size = newSize;
             tiles = new Dictionary<Point, Tile>();
             for (int indexY = 0; indexY < Size.Y; indexY++) {
                 int startX = 0 - (indexY / 2);
@@ -58,6 +60,7 @@ namespace Beep {
                     tiles.Add(new Point(indexX, indexY), t);
                 }
             }
+            PrepareColorList();
         }
 
         private void PrepareColorList() {

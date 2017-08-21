@@ -507,5 +507,33 @@ namespace Beep {
         private void MouseColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
             MOUSE_CLICK_COLOR = (Color)clrPickMouse.SelectedColor;
         }
+
+        private void BtnSize_Click(object sender, RoutedEventArgs e) {
+            int result;
+            Point newSize = new Point();
+
+            bool isInt = int.TryParse(Width_Beepworld.Text, out result);
+            if(isInt)
+            newSize.X = result;
+
+            
+            bool isInt1 = int.TryParse(Width_Beepworld.Text, out result);
+            if (isInt)
+            newSize.Y = result;
+
+            bool boxedBool = true;
+
+            if(isInt && isInt1) {
+                bw.Resize(newSize, boxedBool);
+            }
+            else {
+                System.Windows.MessageBox.Show("Please enter valid dimensions");
+            }
+
+            
+            
+
+
+        }
     }
 }
