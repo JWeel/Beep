@@ -22,7 +22,8 @@
                 Height="480"
                 Width="593"
                 MouseMove="OnMouseMove"
-                MouseLeftButtonDown="OnMouseLeftClick">
+                MouseLeftButtonDown="OnMouseLeftDown"
+                MouseLeftButtonUp="OnMouseLeftUp">
         </Canvas>
         <Canvas Height="480"
                 Width="367"
