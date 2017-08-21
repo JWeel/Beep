@@ -61,6 +61,8 @@ namespace Beep {
 
         public List<string> RuleMenuItems { get; set; }
 
+       // public Brush CanvasBackgroundColor { get; set; }
+
         internal ObservableCollection<ColorItem> StandardColorItems = new ObservableCollection<ColorItem>() {
             new ColorItem((Color)ColorConverter.ConvertFromString("#FFFF0000"),"#FFFF0000"),
             new ColorItem((Color)ColorConverter.ConvertFromString("#FFFFA500"),"#FFFFA500"),
@@ -549,10 +551,13 @@ namespace Beep {
             //bool isInt1 = int.TryParse(Width_Beepworld.Text, out result);
             //if (isInt)
             //newSize.Y = result;
-
-            iudAmountPickerWidth.Value = newSize.X;
-            iudAmountPickerHeigth.Value = newSize.Y;
-
+            if(iudAmountPickerWidth != null && iudAmountPickerHeigth != null) {
+                newSize.X = (int)iudAmountPickerWidth.Value;
+                newSize.Y = (int)iudAmountPickerHeigth.Value;
+            }
+            
+            
+          
             bool boxedBool = true;
 
             //if(isInt && isInt1) {
@@ -609,6 +614,23 @@ namespace Beep {
             
 
 
+        }
+
+        private void clrPickBackground_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
+            canvas.Background = new SolidColorBrush((Color)clrPickBackground.SelectedColor);
+            //CanvasBackgroundColor
+            
+        }
+
+        private void clrPickBorderColor_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
+            fixedBorderColor = (Color)clrPickBorderColor.SelectedColor;
+        }
+
+        
+
+        private void IsCheckedBorderColor(object sender, RoutedEventArgs e) {
+            useRelativeBorderColor = false;
+            fixedBorderColor = (Color)clrPickBorderColor.SelectedColor;
         }
     }
 }
