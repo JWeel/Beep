@@ -522,11 +522,12 @@ namespace Beep {
             fixedBorderColor = (Color)clrPickBorderColor.SelectedColor;
         }
 
-        
-
-        private void IsCheckedBorderColor(object sender, RoutedEventArgs e) {
+        private void FixedBorderColorChecked(object sender, RoutedEventArgs e) {
             useRelativeBorderColor = false;
             fixedBorderColor = (Color)clrPickBorderColor.SelectedColor;
+        }
+        private void FixedBorderColorUnchecked(object sender, RoutedEventArgs e) {
+            useRelativeBorderColor = true;
         }
     }
 

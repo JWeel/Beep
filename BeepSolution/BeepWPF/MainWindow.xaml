@@ -154,12 +154,15 @@
                               Template="{DynamicResource MenuItemControlTemplate2}"
                               StaysOpenOnClick="true">
                         <StackPanel Orientation="Vertical">
-                            <TextBlock
-                                Margin="0,12,0,0">Fixed Borders</TextBlock>
+                            <TextBlock Margin="0,12,0,0"
+                                       Text="Fixed Borders"/>
                             <CheckBox x:Name="CheckFixedBorderColor"
                                       Margin="10,13,0,10"
-                                      Checked="IsCheckedBorderColor"></CheckBox>
-                            <TextBlock Margin="5,12,12,0"> Border Collie</TextBlock>
+                                      Content="joe"
+                                      Checked="FixedBorderColorChecked"
+                                      Unchecked="FixedBorderColorUnchecked"/>
+                            <TextBlock Margin="5,12,12,0"
+                                       Text="Border Collie" />
                             <xctk:ColorPicker x:Name="clrPickBorderColor"
                                               Height="20"
                                               Width="35"
@@ -175,7 +178,7 @@
                                               Canvas.Top="324"
                                               ShowDropDownButton="False"
                                               AdvancedButtonHeader="Specify"
-                                              SelectedColor="Green" />
+                                              SelectedColor="LightGreen" />
 
                         </StackPanel>
                         
