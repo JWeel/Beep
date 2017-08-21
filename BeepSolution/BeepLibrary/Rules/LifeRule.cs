@@ -30,8 +30,10 @@ namespace Beep.Rules {
                     if (tiles[p].Color == LifeColor) lifeNeighborsCount++;
                 }
                 if (t.Color == LifeColor && (lifeNeighborsCount == 3 || lifeNeighborsCount == 4)) ;
+                else if (t.Color == LifeColor) alteredTiles[t.Coordinates].Color = DeadColor;
                 else if (t.Color == DeadColor && lifeNeighborsCount == 2) alteredTiles[t.Coordinates].Color = LifeColor;
                 else alteredTiles[t.Coordinates].Color = DeadColor;
+                // TODO final else rule => depend on bool?
             }
 
             return alteredTiles;
