@@ -61,6 +61,8 @@ namespace Beep {
 
         public List<string> RuleMenuItems { get; set; }
 
+       // public Brush CanvasBackgroundColor { get; set; }
+
         internal ObservableCollection<ColorItem> StandardColorItems = new ObservableCollection<ColorItem>() {
             new ColorItem((Color)ColorConverter.ConvertFromString("#FFFF0000"),"#FFFF0000"),
             new ColorItem((Color)ColorConverter.ConvertFromString("#FFFFA500"),"#FFFFA500"),
@@ -420,7 +422,7 @@ namespace Beep {
             }
         }
 
-        private void BtnSave_Click(object sender, RoutedEventArgs e) {
+        private void BtnSaveClick(object sender, RoutedEventArgs e) {
             SaveFileDialog sfd = new SaveFileDialog() {
                 Filter = "Text Document|*.txt",
                 FileName = "Painting.txt",
@@ -438,7 +440,7 @@ namespace Beep {
             }
         }
 
-        private void BtnLoad_Click(object sender, RoutedEventArgs e) {
+        private void BtnLoadClick(object sender, RoutedEventArgs e) {
             OpenFileDialog open = new OpenFileDialog() { Filter = "Text Document|*.txt" };
             string line;
             bool? result = open.ShowDialog();
@@ -471,37 +473,60 @@ namespace Beep {
             int result;
             Point newSize = new Point();
 
-            bool isInt = int.TryParse(Width_Beepworld.Text, out result);
-            if(isInt)
-            newSize.X = result;
+            //bool isInt = int.TryParse(Width_Beepworld.Text, out result);
+            //if(isInt)
+            //newSize.X = result;
 
-            
-            bool isInt1 = int.TryParse(Width_Beepworld.Text, out result);
-            if (isInt)
-            newSize.Y = result;
+
+            //bool isInt1 = int.TryParse(Width_Beepworld.Text, out result);
+            //if (isInt)
+            //newSize.Y = result;
+            if (iudAmountPickerWidth != null && iudAmountPickerHeigth != null) {
+                newSize.X = (int)iudAmountPickerWidth.Value;
+                newSize.Y = (int)iudAmountPickerHeigth.Value;
+            }
+
+
 
             bool boxedBool = true;
 
-            if(isInt && isInt1) {
-                bw.Resize(newSize, boxedBool);
-                canvas.Children.Clear();
-                foreach (string name in registeredHexPolygons) UnregisterName(name);
-                registeredHexPolygons.Clear();
-                highlightedHexPolygon = null;
+            //if(isInt && isInt1) {
+            bw.Resize(newSize, boxedBool);
+            canvas.Children.Clear();
+            foreach (string name in registeredHexPolygons) UnregisterName(name);
+            registeredHexPolygons.Clear();
+            highlightedHexPolygon = null;
 
-                PrepareBeepWorldCanvas();
+            PrepareBeepWorldCanvas();
 
-                Refresh();
-                UpdateUsedColors();
-            }
-            else {
-                System.Windows.MessageBox.Show("Please enter valid dimensions");
-            }
+            Refresh();
+            UpdateUsedColors();
+
+            //foreach(UIElement c in canvas.Children) {
+            //    canvas.Children.Remove(c);
+            //}
         }
 
         // closes the application
         private void BtnQuitClick(object sender, RoutedEventArgs e) {
             this.Close();
+        }
+
+        private void clrPickBackground_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
+            canvas.Background = new SolidColorBrush((Color)clrPickBackground.SelectedColor);
+            //CanvasBackgroundColor
+            
+        }
+
+        private void clrPickBorderColor_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
+            fixedBorderColor = (Color)clrPickBorderColor.SelectedColor;
+        }
+
+        
+
+        private void IsCheckedBorderColor(object sender, RoutedEventArgs e) {
+            useRelativeBorderColor = false;
+            fixedBorderColor = (Color)clrPickBorderColor.SelectedColor;
         }
     }
 
