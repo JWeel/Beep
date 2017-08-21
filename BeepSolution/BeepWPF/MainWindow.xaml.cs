@@ -28,7 +28,7 @@ namespace Beep {
         //private static readonly Point BEEP_SIZE = new Point(8, 7); // best with 42.8
         //private static readonly Point BEEP_SIZE = new Point(23, 26); // best with 20
         //private static readonly Point BEEP_SIZE = new Point(23, 26); // 10
-        private static Point BEEP_SIZE = new Point(49, 45); // 7
+         // 7
         //private static readonly Point BEEP_SIZE = new Point(46, 53); // 5
 
         private const bool BEEP_BOXED = true;
@@ -49,6 +49,7 @@ namespace Beep {
         // point that is selected by user
         private List<Point> SelectedPointList = new List<Point>();
         private List<Point> ColouredPointList = new List<Point>();
+        private Point BEEP_SIZE = new Point(49, 45);
 
         private bool useMouseDownColorDrag = true;
         private bool isMouseDownColorDragging = false;
@@ -551,6 +552,45 @@ namespace Beep {
 
             if(isInt && isInt1) {
                 bw.Resize(newSize, boxedBool);
+                canvas.Children.Clear();
+
+                double relativeX = 0;
+                double relativeY = HEXAGON_VERTICAL_EDGE;
+
+                foreach (Tile t in bw.tiles.Values) {
+                    int xCoordinate = t.Coordinates.X;
+                    int yCoordinate = t.Coordinates.Y;
+
+                    // apply axial conversion
+                    double posX = HEXAGON_SIDE_LENGTH * Sqrt(3) * (xCoordinate + yCoordinate / 2);
+                    double posY = HEXAGON_SIDE_LENGTH * (3 / 2) * yCoordinate;
+
+                    // add offset
+                    posX += relativeX;
+                    posY += relativeY + (yCoordinate * relativeY);
+
+                    // apply odd row offset
+                    if (yCoordinate % 2 != 0) posX += HEXAGON_HORIZONTAL_HALF;
+
+                    // create polygon to be placed on canvas
+                    Polygon hexPolygon = MakeHexagon(posX, posY);
+                    string name = HexagonPointToName(t.Coordinates);
+                    hexPolygon.Name = name;
+                    RegisterName(name, hexPolygon);
+                    canvas.Children.Add(hexPolygon);
+
+                    continue;
+                    Label label = new Label() {
+                        Foreground = new SolidColorBrush(Colors.Indigo),
+                        Content = xCoordinate + "," + yCoordinate,
+                        FontSize = 6,
+                        RenderTransform = new TranslateTransform { X = posX - HEXAGON_SIDE_LENGTH / 8, Y = posY - HEXAGON_SIDE_LENGTH / 2 }
+                    };
+                    canvas.Children.Add(label);
+                }
+                //foreach(UIElement c in canvas.Children) {
+                //    canvas.Children.Remove(c);
+                //}
             }
             else {
                 System.Windows.MessageBox.Show("Please enter valid dimensions");
