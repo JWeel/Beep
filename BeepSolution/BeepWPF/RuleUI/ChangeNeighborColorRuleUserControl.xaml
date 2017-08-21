@@ -6,47 +6,63 @@
                            xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                            xmlns:beep="clr-namespace:Beep"
                            xmlns:local="clr-namespace:Beep.RuleUI"
-                           mc:Ignorable="d"
-                           d:DesignHeight="30"
-                           d:DesignWidth="363">
+                           Width="349">
 
     <Grid>
-        <StackPanel Name="pnlCollapsed"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    Orientation="Horizontal"
-                    Height="20"
-                    Visibility="Collapsed">
+        <DockPanel Name="pnlCollapsed"
+                   Height="20"
+                   HorizontalAlignment="Stretch"
+                   Visibility="Collapsed">
             <Button Name="btnExpand"
                     Content="+"
                     Width="20"
                     Height="20"
                     Margin="3,1,3,1"
+                    DockPanel.Dock="Left"
                     Click="BtnCollapseOrExpandClick" />
             <Label Content="Change Neighbor Color"
                    Height="20"
                    Padding="0,0,0,0"
+                   DockPanel.Dock="Left"
                    Margin="1,1,1,1" />
-        </StackPanel>
+            <Button Name="btnDrag"
+                    Content="O"
+                    Width="20"
+                    Height="20"
+                    Margin="2,1,3,1"
+                    DockPanel.Dock="Right"
+                    HorizontalAlignment="Right" />
+            <Button Name="btnDeleteCollapsed"
+                    Content="X"
+                    Width="20"
+                    Height="20"
+                    Margin="3,1,2,1"
+                    DockPanel.Dock="Right"
+                    HorizontalAlignment="Right"
+                    Click="DeleteButtonClick" />
+        </DockPanel>
         <StackPanel Name="pnlExpanded"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
-                     Orientation="Horizontal">
+                    Orientation="Horizontal"
+                    Height="100">
 
             <Button Name="btnCollapse"
                     Content="-"
                     Width="20"
                     Height="20"
                     Padding="0,0,0,4"
+                    VerticalAlignment="Top"
                     Click="BtnCollapseOrExpandClick" />
             <ComboBox Name="comboBoxRulePicker"
                       ItemsSource="{Binding RuleMenuItems, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Mode=OneWay}"
                       Height="20"
                       Width="100"
                       Text="{Binding RuleName, Mode=OneWay}"
-                      Margin="0,0,1,0"
+                      Margin="10,5,1,0"
                       IsReadOnly="True"
                       Cursor="None"
+                      VerticalAlignment="Top"
                       SelectionChanged="ComboBoxRuleSelected">
 
                 <!--
@@ -63,6 +79,7 @@
                                 Value="6"
                                 Maximum="6"
                                 Minimum="1"
+                                Margin="-200,0,0,0"
                                 Padding="0,0,9,0"
                                 VerticalAlignment="Center"
                                 ValueChanged="AmountChanged" />
@@ -72,18 +89,21 @@
                      Height="20"
                      HorizontalAlignment="Left"
                      VerticalAlignment="Center"
-                     Margin="1,0,1,0"
+                     Margin="-81,0,1,0"
                      IsReadOnly="True"
                      IsHitTestVisible="false" />
             <!-- TODO only select colors that are used in beepworld -->
             <xctk:ColorPicker Name="clrPickMatch"
                               Height="20"
-                              Width="36"
+                              Width="20"
                               Padding="0,0,0,1"
                               BorderThickness="0"
+                              AvailableColorsHeader="Canvas Colors"
                               DisplayColorAndName="False"
-                              ShowStandardColors="False"
-                              SelectedColorChanged="ClrPickMatchChanged" />
+                              SelectedColorChanged="ClrPickMatchChanged"
+                              ShowStandardColors="True"
+                              ShowDropDownButton="False"
+                              AdvancedButtonHeader="Specify" />
             <TextBox Name="txtRule3"
                      Text="become"
                      Height="20"
@@ -94,12 +114,36 @@
                      IsHitTestVisible="false" />
             <xctk:ColorPicker Name="clrPickTarget"
                               Height="20"
-                              Width="36"
+                              Width="20"
                               Padding="0,0,0,1"
-                              BorderThickness="0.5"
+                              BorderThickness="0"
+                              AvailableColorsHeader="Canvas Colors"
                               DisplayColorAndName="False"
-                              ShowStandardColors="False"
-                              SelectedColorChanged="ClrPickTargetChanged" />
+                              SelectedColorChanged="ClrPickTargetChanged"
+                              ShowStandardColors="True"
+                              ShowDropDownButton="False"
+                              AdvancedButtonHeader="Specify" />
+            <TextBox Name="txtRule4"
+                     Text="Ignore"
+                     Height="20"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Bottom"
+                     Margin="-161,0,1,5"
+                     IsReadOnly="True"
+                     IsHitTestVisible="false" />
+            <xctk:ColorPicker Name="clrPickIgnore"
+                              Height="20"
+                              Width="20"
+                              Padding="0,0,0,1"
+                              BorderThickness="0"
+                              VerticalAlignment="Bottom"
+                              Margin="-210,0,1,5"
+                              AvailableColorsHeader="Canvas Colors"
+                              DisplayColorAndName="False"
+                              SelectedColorChanged="ClrPickIgnoreChanged"
+                              ShowStandardColors="True"
+                              ShowDropDownButton="False"
+                              AdvancedButtonHeader="Specify" />
             <Button Name="btnDeleteRule"
                     Content="X"
                     FontSize="12"
@@ -108,9 +152,9 @@
                     Foreground="Red"
                     Height="20"
                     Width="16"
-                    Margin="1,0,0,0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
+                    Margin="91,5,0,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
                     Click="DeleteButtonClick" />
         </StackPanel>
     </Grid>

@@ -26,34 +26,9 @@ namespace Beep.Rules {
             this.tiles = tiles;
         }
 
-        //
-        public static BeepRule CreateBeepRule(string type, Dictionary<Point, Tile> bwTiles,
-            List<Color> colorArguments = null,
-            List<int> intArguments = null,
-            List<bool> boolArguments = null) {
-            switch (type) {
-                case RULE_CHANGE_COLOR:
-                    return new ChangeColorRule(bwTiles, colorArguments, intArguments, boolArguments);
-                case RULE_CHANGE_NEIGHBOR_COLOR:
-                    return new ChangeNeighborColorRule(bwTiles, colorArguments, intArguments, boolArguments);
-                case RULE_RANDOM_CHANGE:
-                    return new RandomChangeRule(bwTiles, colorArguments, intArguments, boolArguments);
-                case RULE_VIRUS:
-                    return new VirusRule(bwTiles, colorArguments, intArguments, boolArguments);
-                default:
-                    return null;
-            }
-        }
-
-        //BeepRule virus = BeepRule.CreateBeepRule(BeepRule.RULE_VIRUS, bw.tiles,
-        //    colorArguments: new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFA500"), (Color)ColorConverter.ConvertFromString("#FFF0FFFF"), (Color)ColorConverter.ConvertFromString("#FFF05E1C") },
-        //    intArguments: new List<int> { 1 },
-        //    boolArguments: new List<bool> { true, false }
-        //);
-
         //beepRules.Add(virus);
         //
-        public static BeepRule CreateBeepRule(string type, Dictionary<Point, Tile> bwTiles) {
+        public static BeepRule Create(string type, Dictionary<Point, Tile> bwTiles) {
             switch (type) {
                 case RULE_CHANGE_COLOR:
                     return new ChangeColorRule(bwTiles,
@@ -63,7 +38,7 @@ namespace Beep.Rules {
                     );
                 case RULE_CHANGE_NEIGHBOR_COLOR:
                     return new ChangeNeighborColorRule(bwTiles,
-                        new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFA500"), (Color)ColorConverter.ConvertFromString("#FFF0FFFF") },
+                        new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFA500"), (Color)ColorConverter.ConvertFromString("#FFF0FFFF"), (Color)ColorConverter.ConvertFromString("#FFFFFFFF") },
                         new List<int> { 6 },
                         new List<bool> { true }
                     );

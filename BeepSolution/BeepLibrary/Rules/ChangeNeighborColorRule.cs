@@ -21,6 +21,7 @@ namespace Beep.Rules {
         public ChangeNeighborColorRule(Dictionary<Point, Tile> tiles, List<Color> colorArguments = null, List<int> intArguments = null, List<bool> boolArguments = null) : base(tiles) {
             MatchColor = colorArguments[0];
             TargetColor = colorArguments[1];
+            IgnoreColor = colorArguments[2];
             AmountAffectedNeighbors = intArguments[0];
             ColorNeighboringMatchers = boolArguments[0];
         }
@@ -29,6 +30,7 @@ namespace Beep.Rules {
 
         public Color MatchColor { get; set; }
         public Color TargetColor { get; set; }
+        public Color IgnoreColor { get; set; } // TODO list, and listbox in usercontrol
         public int AmountAffectedNeighbors { get; set; }
         public bool ColorNeighboringMatchers { get; set; }
 
@@ -40,6 +42,7 @@ namespace Beep.Rules {
                     foreach (Point p in t.Neighbors) {
 
                         if (ColorNeighboringMatchers && tiles[p].Color == MatchColor) continue;
+                        if (tiles[p].Color == IgnoreColor) continue;
 
                         alteredTiles[p].Color = TargetColor;
                     }

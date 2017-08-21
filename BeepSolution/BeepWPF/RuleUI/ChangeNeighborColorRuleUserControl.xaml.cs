@@ -1,6 +1,8 @@
 ﻿using Beep.Rules;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Media;
+using Xceed.Wpf.Toolkit;
 
 namespace Beep.RuleUI {
     /// <summary>
@@ -10,6 +12,18 @@ namespace Beep.RuleUI {
 
         public override string SelectedRuleName {
             get { return comboBoxRulePicker.SelectedItem as string; }
+        }
+
+        public override void UpdateColorPickers(ObservableCollection<ColorItem> usedColorItems) {
+            clrPickMatch.AvailableColors = usedColorItems;
+            clrPickTarget.AvailableColors = usedColorItems;
+            clrPickIgnore.AvailableColors = usedColorItems;
+        }
+
+        public override void PrepareColorPickers(ObservableCollection<ColorItem> standardColorItems) {
+            clrPickMatch.StandardColors = standardColorItems;
+            clrPickTarget.StandardColors = standardColorItems;
+            clrPickIgnore.StandardColors = standardColorItems;
         }
 
         protected override void SetPanels() {
@@ -26,6 +40,7 @@ namespace Beep.RuleUI {
 
             clrPickMatch.SelectedColor = rule.MatchColor;
             clrPickTarget.SelectedColor = rule.TargetColor;
+            clrPickIgnore.SelectedColor = rule.IgnoreColor;
         }
         
         private void AmountChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {
@@ -37,7 +52,11 @@ namespace Beep.RuleUI {
         }
 
         private void ClrPickTargetChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
-            (Rule as ChangeNeighborColorRule).TargetColor = (Color) e.NewValue;
+            (Rule as ChangeNeighborColorRule).TargetColor = (Color)e.NewValue;
+        }
+
+        private void ClrPickIgnoreChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
+            (Rule as ChangeNeighborColorRule).IgnoreColor = (Color)e.NewValue;
         }
     }
 }
