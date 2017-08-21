@@ -34,7 +34,7 @@ namespace Beep {
         private const bool BEEP_BOXED = true;
 
         // hexagon length values. only change HEXAGON_SIDE_LENGTH 
-        private const double HEXAGON_SIDE_LENGTH = 7;
+        private const double HEXAGON_SIDE_LENGTH = 2; //7
         private static readonly double HEXAGON_HORIZONTAL_LENGTH = Sqrt(3) * HEXAGON_SIDE_LENGTH;
         private static readonly double HEXAGON_HORIZONTAL_HALF = HEXAGON_HORIZONTAL_LENGTH / 2;
         private static readonly double HEXAGON_VERTICAL_EDGE = HEXAGON_SIDE_LENGTH / 2;
