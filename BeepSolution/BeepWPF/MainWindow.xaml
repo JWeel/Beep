@@ -212,6 +212,8 @@
                               Click="AddRuleClick" />
                     <MenuItem Header="Vincent"
                               Click="AddRuleClick" />
+                    <MenuItem Header="Life"
+                              Click="AddRuleClick" />
                 </MenuItem>
                 <MenuItem Header="Style"
                           Style="{StaticResource menuParentStyle}"

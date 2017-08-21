@@ -14,6 +14,7 @@ namespace Beep.Rules {
         public const string RULE_RANDOM_CHANGE = "Random Change";
         public const string RULE_VIRUS = "Virus";
         public const string RULE_VINCENT = "Vincent";
+        public const string RULE_LIFE = "Life";
 
         public abstract string RuleName { get; }
 
@@ -51,6 +52,10 @@ namespace Beep.Rules {
                 case RULE_VINCENT:
                     return new VincentRule(bwTiles,
                         colorArguments: new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFA500"), (Color)ColorConverter.ConvertFromString("#FFABCDEF") }
+                    );
+                case RULE_LIFE:
+                    return new LifeRule(bwTiles,
+                        colorArguments: new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFFFFF"), (Color)ColorConverter.ConvertFromString("#FF000000") }
                     );
                 default:
                     return null;

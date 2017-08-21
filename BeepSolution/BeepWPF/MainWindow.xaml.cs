@@ -105,7 +105,8 @@ namespace Beep {
                 BeepRule.RULE_CHANGE_NEIGHBOR_COLOR,
                 BeepRule.RULE_RANDOM_CHANGE,
                 BeepRule.RULE_VIRUS,
-                BeepRule.RULE_VINCENT
+                BeepRule.RULE_VINCENT,
+                BeepRule.RULE_LIFE
             };
 
             Refresh();
@@ -384,6 +385,7 @@ namespace Beep {
                         bw.tiles = rule.Run();
                         UpdateRules();
                     }
+                    Thread.Sleep(20); // ¿¿¿????
                     this.Dispatcher.Invoke(() => {
                         Refresh();
                     });

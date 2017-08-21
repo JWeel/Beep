@@ -53,6 +53,7 @@
     <Compile Include="Point.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rules\BeepRule.cs" />
+    <Compile Include="Rules\LifeRule.cs" />
     <Compile Include="Rules\VincentRule.cs" />
     <Compile Include="Rules\RandomChangeRule.cs" />
     <Compile Include="Rules\VirusRule.cs" />

@@ -65,6 +65,9 @@
     <Compile Include="RuleUI\ChangeNeighborColorRuleUserControl.xaml.cs">
       <DependentUpon>ChangeNeighborColorRuleUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RuleUI\LifeRuleUserControl.xaml.cs">
+      <DependentUpon>LifeRuleUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RuleUI\RandomChangeRuleUserControl.xaml.cs">
       <DependentUpon>RandomChangeRuleUserControl.xaml</DependentUpon>
     </Compile>
@@ -93,6 +96,10 @@
     <Page Include="RuleUI\ChangeNeighborColorRuleUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="RuleUI\LifeRuleUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RuleUI\RandomChangeRuleUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -143,7 +143,7 @@
                     Foreground="Red"
                     Height="20"
                     Width="16"
-                    Margin="91,5,0,0"
+                    Margin="31,5,0,0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top"
                     Click="DeleteButtonClick" />

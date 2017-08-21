@@ -58,6 +58,8 @@ namespace Beep.RuleUI {
                     return new VirusRuleUserControl(rule as VirusRule);
                 case BeepRule.RULE_VINCENT:
                     return new VincentRuleUserControl(rule as VincentRule);
+                case BeepRule.RULE_LIFE:
+                    return new LifeRuleUserControl(rule as LifeRule);
                 default:
                     return null;
             }
