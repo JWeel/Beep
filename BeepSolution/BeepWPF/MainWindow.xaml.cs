@@ -539,18 +539,21 @@ namespace Beep {
             int result;
             Point newSize = new Point();
 
-            bool isInt = int.TryParse(Width_Beepworld.Text, out result);
-            if(isInt)
-            newSize.X = result;
+            //bool isInt = int.TryParse(Width_Beepworld.Text, out result);
+            //if(isInt)
+            //newSize.X = result;
 
-            
-            bool isInt1 = int.TryParse(Width_Beepworld.Text, out result);
-            if (isInt)
-            newSize.Y = result;
+
+            //bool isInt1 = int.TryParse(Width_Beepworld.Text, out result);
+            //if (isInt)
+            //newSize.Y = result;
+
+            iudAmountPickerWidth.Value = newSize.X;
+            iudAmountPickerHeigth.Value = newSize.Y;
 
             bool boxedBool = true;
 
-            if(isInt && isInt1) {
+            //if(isInt && isInt1) {
                 bw.Resize(newSize, boxedBool);
                 canvas.Children.Clear();
 
@@ -591,10 +594,7 @@ namespace Beep {
                 //foreach(UIElement c in canvas.Children) {
                 //    canvas.Children.Remove(c);
                 //}
-            }
-            else {
-                System.Windows.MessageBox.Show("Please enter valid dimensions");
-            }
+           
 
             
             

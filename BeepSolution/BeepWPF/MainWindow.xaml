@@ -41,32 +41,63 @@
                     <MenuItem Header="_Load"
                               Click="BtnLoad_Click" />
                     <MenuItem Header="_Save"
-                              Click="BtnSave_Click"/>
+                              Click="BtnSave_Click" />
                     <MenuItem Header="_Quit" />
                 </MenuItem>
                 <MenuItem Header="_Edit"
                           Style="{StaticResource menuParentStyle}"
                           ItemContainerStyle="{DynamicResource MenuItemStyle1}"
-                          Template="{DynamicResource MenuItemControlTemplate2}">
+                          Template="{DynamicResource MenuItemControlTemplate2}"
+                          StaysOpenOnClick="true">
                     <MenuItem Header="_Size"
                               Style="{StaticResource menuParentStyle}"
                               ItemContainerStyle="{DynamicResource MenuItemStyle1}"
                               Template="{DynamicResource MenuItemControlTemplate2}"
-                              >
-                        <TextBox x:Name="Width_Beepworld" Width="50"
-                                 Height="20"
-                                 Text="Width"></TextBox>
-                        <TextBox x:Name="Heigth_Beepworld" Width="50"
-                                 Height="20"
-                                 Text="Heigth"></TextBox>
-                        <Button Width="50" Content="Set size"
-                                RenderTransformOrigin="-0.06,0.567" Click="BtnSize_Click">
-                            
+                              StaysOpenOnClick="true">
+
+
+                        <xctk:IntegerUpDown Name="iudAmountPickerWidth"
+                                            Height="20"
+                                            Width="50"
+                                            FontSize="12"
+                                            Value="10"
+                                            Maximum="100"
+                                            Minimum="1"
+                                            Padding="0,0,9,0"
+                                            VerticalAlignment="Center"
+                                            ValueChanged="AmountChanged"
+                                            Canvas.Left="241"
+                                            Canvas.Top="369"
+                                            RenderTransformOrigin="4.307,11.068">
+
+                        </xctk:IntegerUpDown>
+
+                        <xctk:IntegerUpDown Name="iudAmountPickerHeigth"
+                                            Height="20"
+                                            Width="50"
+                                            FontSize="12"
+                                            Value="10"
+                                            Maximum="100"
+                                            Minimum="1"
+                                            Padding="0,0,9,0"
+                                            VerticalAlignment="Center"
+                                            ValueChanged="AmountChanged"
+                                            Canvas.Left="241"
+                                            Canvas.Top="369"
+                                            RenderTransformOrigin="4.307,11.068" />
+
+
+                        <Button Width="55"
+                                Content="Set size"
+                                RenderTransformOrigin="0.06,0.567"
+                                Click="BtnSize_Click"
+                                Margin="0,5">
+
                         </Button>
                         <!--<MenuItem Header="Small"-->
                     </MenuItem>
-                               
-                    
+
+
                 </MenuItem>
 
 
@@ -96,7 +127,7 @@
                           Style="{StaticResource menuParentStyle}"
                           ItemContainerStyle="{DynamicResource MenuItemStyle1}"
                           Template="{DynamicResource MenuItemControlTemplate2}" />
-                
+
 
 
 
@@ -106,7 +137,7 @@
 
 
 
-                <!--<Label Name="lblHeader"
+            <!--<Label Name="lblHeader"
                    Content="Beep Rules"
                    FontSize="18"
                    Canvas.Left="21"
@@ -148,7 +179,7 @@
                           Canvas.Left="2"
                           Canvas.Top="58"
                           Width="363">
-                
+
                 <ListBox Name="lbRules"
                          FlowDirection="LeftToRight"
                          Background="WhiteSmoke"
