@@ -57,6 +57,8 @@ namespace Beep {
         private bool useRelativeBorderColor = false;
         private Color fixedBorderColor = (Color)ColorConverter.ConvertFromString("#FF000000");
 
+        private List<string> registeredHexPolygons = new List<string>();
+
         public List<string> RuleMenuItems { get; set; }
 
         internal ObservableCollection<ColorItem> StandardColorItems = new ObservableCollection<ColorItem>() {
@@ -83,7 +85,7 @@ namespace Beep {
         private ObservableCollection<BeepRuleUserControl> BeepRulesUIComponents;
 
         private BeepWorld bw;
-        private Polygon selectedHexagon;
+        private Polygon highlightedHexPolygon;
 
         public MainWindow() {
             InitializeComponent();
@@ -118,6 +120,7 @@ namespace Beep {
                 string name = HexagonPointToName(t.Coordinates);
                 hexPolygon.Name = name;
                 RegisterName(name, hexPolygon);
+                registeredHexPolygons.Add(name);
                 canvas.Children.Add(hexPolygon);
 
                 continue;
@@ -220,21 +223,20 @@ namespace Beep {
                         if (useRelativeBorderColor && (po.Stroke as SolidColorBrush).Color != MouseClickColor) po.Stroke = po.Fill;
                     }
                 } else {
-                    if (po != selectedHexagon) {
+                    if (po != highlightedHexPolygon) {
                         po.Fill = Brushes.SlateGray;
                         po.Stroke = Brushes.SlateGray;
 
-                        if (selectedHexagon != null && (selectedHexagon.Fill as SolidColorBrush).Color == (Brushes.BlueViolet as SolidColorBrush).Color) {
-                            selectedHexagon = null;
-                            //return;
+                        if (highlightedHexPolygon != null && (highlightedHexPolygon.Fill as SolidColorBrush).Color == (Brushes.BlueViolet as SolidColorBrush).Color) {
+                            highlightedHexPolygon = null;
                         }
 
-                        if (selectedHexagon != null) {
-                            selectedHexagon.Fill = new SolidColorBrush(bw.tiles[HexagonNameToPoint(selectedHexagon.Name)].Color);
-                            if (useRelativeBorderColor) selectedHexagon.Stroke = selectedHexagon.Fill;
-                            else selectedHexagon.Stroke = new SolidColorBrush(fixedBorderColor);
+                        if (highlightedHexPolygon != null) {
+                            highlightedHexPolygon.Fill = new SolidColorBrush(bw.tiles[HexagonNameToPoint(highlightedHexPolygon.Name)].Color);
+                            if (useRelativeBorderColor) highlightedHexPolygon.Stroke = highlightedHexPolygon.Fill;
+                            else highlightedHexPolygon.Stroke = new SolidColorBrush(fixedBorderColor);
                         }
-                        selectedHexagon = po;
+                        highlightedHexPolygon = po;
                     }
                 }
             }
@@ -556,6 +558,10 @@ namespace Beep {
             //if(isInt && isInt1) {
                 bw.Resize(newSize, boxedBool);
                 canvas.Children.Clear();
+                foreach (string name in registeredHexPolygons) UnregisterName(name);
+                registeredHexPolygons.Clear();
+                highlightedHexPolygon = null;
+                //canvas = new Canvas();
 
                 double relativeX = 0;
                 double relativeY = HEXAGON_VERTICAL_EDGE;
@@ -580,6 +586,7 @@ namespace Beep {
                     string name = HexagonPointToName(t.Coordinates);
                     hexPolygon.Name = name;
                     RegisterName(name, hexPolygon);
+                    registeredHexPolygons.Add(name);
                     canvas.Children.Add(hexPolygon);
 
                     continue;
@@ -591,6 +598,8 @@ namespace Beep {
                     };
                     canvas.Children.Add(label);
                 }
+                Refresh();
+                UpdateUsedColors();
                 //foreach(UIElement c in canvas.Children) {
                 //    canvas.Children.Remove(c);
                 //}
