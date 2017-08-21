@@ -361,7 +361,7 @@
             <Setter Property="Background" 
                     Value="{StaticResource GradientBrush}"/>
             <Setter Property="Foreground"
-                    Value="Black" />
+                    Value="White" />
             <Setter Property="Width"
                     Value="80" />
             <Setter Property="Height"
