@@ -90,10 +90,10 @@ namespace Beep {
         private Polygon highlightedHexPolygon;
 
         public MainWindow() {
-            InitializeComponent();
-            
             bw = new BeepWorld(BEEP_SIZE, BEEP_BOXED);
             beepRules = new List<BeepRule>(); // TODO should be part of beepworld object
+
+            InitializeComponent();
 
             BeepRulesUIComponents = new ObservableCollection<BeepRuleUserControl>();
             lbRules.ItemsSource = BeepRulesUIComponents;
@@ -520,7 +520,7 @@ namespace Beep {
         private void clrPickBorderColor_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
             //if(useRelativeBorderColor== false)
             fixedBorderColor = (Color)clrPickBorderColor.SelectedColor;
-            Refresh();
+            //if (bw != null) Refresh();
         }
 
 
