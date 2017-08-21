@@ -473,14 +473,7 @@ namespace Beep {
             int result;
             Point newSize = new Point();
 
-            //bool isInt = int.TryParse(Width_Beepworld.Text, out result);
-            //if(isInt)
-            //newSize.X = result;
-
-
-            //bool isInt1 = int.TryParse(Width_Beepworld.Text, out result);
-            //if (isInt)
-            //newSize.Y = result;
+            
             if (iudAmountPickerWidth != null && iudAmountPickerHeigth != null) {
                 newSize.X = (int)iudAmountPickerWidth.Value;
                 newSize.Y = (int)iudAmountPickerHeigth.Value;
@@ -490,7 +483,7 @@ namespace Beep {
 
             bool boxedBool = true;
 
-            //if(isInt && isInt1) {
+            
             bw.Resize(newSize, boxedBool);
             canvas.Children.Clear();
             foreach (string name in registeredHexPolygons) UnregisterName(name);
@@ -519,7 +512,7 @@ namespace Beep {
         }
 
         private void clrPickBorderColor_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
-            if(useRelativeBorderColor== false)
+            //if(useRelativeBorderColor== false)
             fixedBorderColor = (Color)clrPickBorderColor.SelectedColor;
         }
 
