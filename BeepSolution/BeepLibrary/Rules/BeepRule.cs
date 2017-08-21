@@ -13,6 +13,7 @@ namespace Beep.Rules {
         public const string RULE_CHANGE_NEIGHBOR_COLOR = "Change Neighbor Color";
         public const string RULE_RANDOM_CHANGE = "Random Change";
         public const string RULE_VIRUS = "Virus";
+        public const string RULE_VINCENT = "Vincent";
 
         public abstract string RuleName { get; }
 
@@ -20,21 +21,17 @@ namespace Beep.Rules {
         protected List<Color> colorArguments;
         protected List<int> intArguments;
         protected List<bool> boolArguments;
-        // protected List<double> doubleArguments;
         
         public BeepRule(Dictionary<Point, Tile> tiles) {
             this.tiles = tiles;
         }
-
-        //beepRules.Add(virus);
+        
         //
         public static BeepRule Create(string type, Dictionary<Point, Tile> bwTiles) {
             switch (type) {
                 case RULE_CHANGE_COLOR:
                     return new ChangeColorRule(bwTiles,
-                        new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFA500"), (Color)ColorConverter.ConvertFromString("#FFF0FFFF") },
-                        null,
-                        null
+                        new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFA500"), (Color)ColorConverter.ConvertFromString("#FFF0FFFF") }
                     );
                 case RULE_CHANGE_NEIGHBOR_COLOR:
                     return new ChangeNeighborColorRule(bwTiles,
@@ -45,15 +42,16 @@ namespace Beep.Rules {
                 case RULE_RANDOM_CHANGE:
                     return new RandomChangeRule(bwTiles,
                         new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFA500") },
-                        new List<int> { 30 },
-                        null
+                        new List<int> { 5 }
                     );
                 case RULE_VIRUS:
-
                     return new VirusRule(bwTiles, 
                         colorArguments: new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFA500"), (Color)ColorConverter.ConvertFromString("#FFF0FFFF"), (Color)ColorConverter.ConvertFromString("#FFF05E1C") },
                         intArguments: new List<int> { 1 }, boolArguments: new List<bool> { true, false });
-
+                case RULE_VINCENT:
+                    return new VincentRule(bwTiles,
+                        colorArguments: new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFA500"), (Color)ColorConverter.ConvertFromString("#FFABCDEF") }
+                    );
                 default:
                     return null;
             }

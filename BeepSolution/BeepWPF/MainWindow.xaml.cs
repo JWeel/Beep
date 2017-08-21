@@ -57,7 +57,7 @@ namespace Beep {
         private bool useRelativeBorderColor = false;
         private Color fixedBorderColor = (Color)ColorConverter.ConvertFromString("#FF000000");
 
-        private List<string> registeredHexPolygons = new List<string>();
+        private List<string> registeredHexPolygons = new List<string>(); 
 
         public List<string> RuleMenuItems { get; set; }
 
@@ -93,15 +93,30 @@ namespace Beep {
             InitializeComponent();
             
             bw = new BeepWorld(BEEP_SIZE, BEEP_BOXED);
+            beepRules = new List<BeepRule>(); // TODO should be part of beepworld object
 
-            beepRules = new List<BeepRule>();
             BeepRulesUIComponents = new ObservableCollection<BeepRuleUserControl>();
-
             lbRules.ItemsSource = BeepRulesUIComponents;
 
+            PrepareBeepWorldCanvas();
+
+            RuleMenuItems = new List<String> {
+                BeepRule.RULE_CHANGE_COLOR, 
+                BeepRule.RULE_CHANGE_NEIGHBOR_COLOR,
+                BeepRule.RULE_RANDOM_CHANGE,
+                BeepRule.RULE_VIRUS,
+                BeepRule.RULE_VINCENT
+            };
+
+            Refresh();
+            UpdateUsedColors();
+            clrPickMouse.StandardColors = StandardColorItems;
+        }
+
+        // prepares hexpolygons corresponding to tiles in the beepworld on a canvas
+        private void PrepareBeepWorldCanvas() {
             double relativeX = 0;
             double relativeY = HEXAGON_VERTICAL_EDGE;
-
             foreach (Tile t in bw.tiles.Values) {
                 int xCoordinate = t.Coordinates.X;
                 int yCoordinate = t.Coordinates.Y;
@@ -124,27 +139,7 @@ namespace Beep {
                 RegisterName(name, hexPolygon);
                 registeredHexPolygons.Add(name);
                 canvas.Children.Add(hexPolygon);
-
-                continue;
-                Label label = new Label() {
-                    Foreground = new SolidColorBrush(Colors.Indigo),
-                    Content = xCoordinate + "," + yCoordinate,
-                    FontSize = 6,
-                    RenderTransform = new TranslateTransform { X = posX - HEXAGON_SIDE_LENGTH / 8, Y = posY - HEXAGON_SIDE_LENGTH / 2 }
-                };
-                canvas.Children.Add(label);
             }
-
-            RuleMenuItems = new List<String> {
-                BeepRule.RULE_CHANGE_COLOR, 
-                BeepRule.RULE_CHANGE_NEIGHBOR_COLOR,
-                BeepRule.RULE_RANDOM_CHANGE,
-                BeepRule.RULE_VIRUS
-            };
-
-            Refresh();
-            UpdateUsedColors();
-            clrPickMouse.StandardColors = StandardColorItems;
         }
 
         //private void UpdateUsedColors(object sender, ColorChangeEventArgs e) {
@@ -156,12 +151,13 @@ namespace Beep {
             UpdateColorPickers(ColorsToColorItems(usedColors));
         }
 
-        // TODO rename to UpdateUsedColorPickers
+        // forwards a new list of coloritems to the various colorpickers in the application
         private void UpdateColorPickers(ObservableCollection<ColorItem> usedColorItems) {
             clrPickMouse.AvailableColors = usedColorItems;
             foreach (BeepRuleUserControl bruc in BeepRulesUIComponents) bruc.UpdateColorPickers(usedColorItems);
         }
 
+        // converts a list of colors to a list of coloritems that a xctk colorpicker can use
         private ObservableCollection<ColorItem> ColorsToColorItems(List<Color> usedColors) {
             ObservableCollection<ColorItem> usedColorItems = new ObservableCollection<ColorItem>();
             usedColors.ForEach(color => usedColorItems.Add(new ColorItem(color, color.ToString())));
@@ -193,18 +189,17 @@ namespace Beep {
             };
         }
 
-        //
+        // updates the color of the hexpolygons corresponding to tiles in the beepworld
         private void Refresh() {
             foreach (Tile t in bw.tiles.Values) {
                 Polygon po = (Polygon)FindName(HexagonPointToName(t.Coordinates));
                 if ((po.Fill as SolidColorBrush).Color != t.Color) po.Fill = new SolidColorBrush(t.Color);
                 if (useRelativeBorderColor && (po.Stroke as SolidColorBrush).Color != t.Color) po.Stroke = po.Fill;
             }
-            //UpdateRules();
-            //UpdateColorPickers();
         }
 
-        //
+        // forwards the reference to the beepworld's tiles to the beeprules
+        // TODO shouldnt this be done by beepworld object? shouldnt beepworld object have the beeprules?
         private void UpdateRules() {
             foreach (BeepRule rule in beepRules) rule.Update(bw.tiles);
         }
@@ -241,6 +236,12 @@ namespace Beep {
                         highlightedHexPolygon = po;
                     }
                 }
+            } else {
+                if (highlightedHexPolygon != null) {
+                    highlightedHexPolygon.Fill = new SolidColorBrush(bw.tiles[HexagonNameToPoint(highlightedHexPolygon.Name)].Color);
+                    if (useRelativeBorderColor) highlightedHexPolygon.Stroke = highlightedHexPolygon.Fill;
+                    else highlightedHexPolygon.Stroke = new SolidColorBrush(fixedBorderColor);
+                }
             }
         }
 
@@ -258,7 +259,7 @@ namespace Beep {
             if (useMouseDownColorDrag) isMouseDownColorDragging = true;
         }
 
-        // 
+        // stops mouse drag functionality, but only if mouse up happened inside the application window
         private void OnMouseLeftUp(object sender, MouseButtonEventArgs e) {
             if (useMouseDownColorDrag && isMouseDownColorDragging) isMouseDownColorDragging = false;
         }
@@ -310,69 +311,24 @@ namespace Beep {
             else y = int.Parse(s[1]);
             return new Point(x, y);
         }
-        
-        //private void btnRandomizeClick(object sender, RoutedEventArgs e) {
-        //    Random rnd = new Random();
-        //    Random rnd2 = new Random();
-        //    int percentage = 50;
-        //    int numTiles = (BEEP_SIZE.X * BEEP_SIZE.Y)/2;
-        //    Brush randomColor = Brushes.HotPink;
-
-        //    List<Tile> ListTiles = new List<Tile>();
-
-        //    foreach (Tile t in bw.tiles.Values) {
-        //        int chooser = rnd.Next(0, 2);
-        //        if(chooser == 1) {
-        //            //t.Color = HEXAGON_FILL_COLOR;
-                                 
-        //        }
-        //        else {
-                  
-        //            t.Color = PickBrush();
-
-        //        }                         
-        //    }
-        //    Refresh();   
-        //}
-
-        //
-        private Brush PickBrush() {
-            Brush result = Brushes.Transparent;
-            
-            Type brushesType = typeof(Brushes);
-            PropertyInfo[] properties = brushesType.GetProperties();
-
-            int random = rand.Next(properties.Length);
-            result = (Brush)properties[random].GetValue(null, null);
-            return result;
-        }
 
         // sets the color property of all tiles to the default color
         private void BtnClearClick(object sender, RoutedEventArgs e) {
-            Parallel.ForEach(bw.tiles.Values, tile => { tile.Color = Tile.DEFAULT_COLOR; });
-            //foreach (Tile t in bw.tiles.Values) t.Color = Tile.DEFAULT_COLOR;
+            foreach (Tile t in bw.tiles.Values) t.Color = Tile.DEFAULT_COLOR;
             Refresh();
             //UpdateRules(); // <= not needed because tiles reference is shared with rules
             UpdateUsedColors();
         }
 
+        // opens a context menu from which a rule can be chosen
         private void BtnNewRuleClick(object sender, RoutedEventArgs e) {
-
             (sender as Button).ContextMenu.IsEnabled = true;
             (sender as Button).ContextMenu.PlacementTarget = (sender as Button);
             (sender as Button).ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
             (sender as Button).ContextMenu.IsOpen = true;
-
-            //BeepRule virus = BeepRule.CreateBeepRule(BeepRule.RULE_VIRUS, bw.tiles);
-            //beepRules.Add(virus);
-
-            //BeepRuleUserControl bruc = new VirusRuleUserControl(virus as VirusRule);
-
-            //bruc.SelectedRule += RuleUserControlRuleSelection;
-            //bruc.Deleting += DeleteRuleUserControl;
-            //BeepRulesUIComponents.Add(bruc);
         }
         
+        // adds a rule and matching UI component based on user selection
         private void AddRuleClick(object sender, RoutedEventArgs e) { 
             BeepRule br = BeepRule.Create((sender as MenuItem).Header.ToString(), bw.tiles);
             beepRules.Add(br);
@@ -388,7 +344,7 @@ namespace Beep {
         //
         private void RuleUserControlRuleSelection(object sender, EventArgs e) {
             BeepRuleUserControl bruc = sender as BeepRuleUserControl;
-            //return;
+
             // selected rule must be different
             if (bruc.SelectedRuleName == bruc.RuleName) return;
 
@@ -406,7 +362,7 @@ namespace Beep {
             BeepRulesUIComponents.Add(bruc);
         }
 
-        // deletes a rule
+        // deletes the UI component that corresponds to a rule
         private void DeleteRuleUserControl(object sender, EventArgs e) {
             BeepRuleUserControl bruc = sender as BeepRuleUserControl;
             beepRules.Remove(bruc.Rule);
@@ -418,25 +374,20 @@ namespace Beep {
             int? number = iudAmountPicker1.Value;
             await Task.Run(() => {
                 for (int i = 0; i < number; i++) {
-                    //Task.Run(() => {
-                        foreach (BeepRule rule in beepRules) {
-                            bw.tiles = rule.Run();
-                            UpdateRules();
-                        }
-                        //    Refresh();
-
-                    //});
+                    foreach (BeepRule rule in beepRules) {
+                        bw.tiles = rule.Run();
+                        UpdateRules();
+                    }
                     this.Dispatcher.Invoke(() => {
                         Refresh();
                     });
-                    //Task.WaitAll();
-                    // TODO async Refresh();
                 }
             });
-            //t.Wait();
             Refresh();
             UpdateUsedColors();
         }
+
+        // ???? what is this ¿¿¿¿
         private void AmountChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {
           
         }
@@ -471,8 +422,7 @@ namespace Beep {
             }
         }
 
-        private void BtnSave_Click(object sender, RoutedEventArgs e) {
-
+        private void BtnSaveClick(object sender, RoutedEventArgs e) {
             SaveFileDialog sfd = new SaveFileDialog() {
                 Filter = "Text Document|*.txt",
                 FileName = "Painting.txt",
@@ -481,54 +431,34 @@ namespace Beep {
             bool? result = sfd.ShowDialog();
             string createText = "" + Environment.NewLine;
             if (result.HasValue && result.Value) {
-                
                 foreach (Point Key in bw.tiles.Keys) {
-
                     createText = createText + String.Format("{0}:{1}", Key, bw.tiles[Key].Color) + Environment.NewLine;
                 }
                 Debug.WriteLine(createText);
                 string path = sfd.FileName;
-
                 File.WriteAllText(path, createText);
             }
-
         }
 
-        private void BtnLoad_Click(object sender, RoutedEventArgs e) {
-            OpenFileDialog open = new OpenFileDialog() {
-                Filter = "Text Document|*.txt"
-            };
+        private void BtnLoadClick(object sender, RoutedEventArgs e) {
+            OpenFileDialog open = new OpenFileDialog() { Filter = "Text Document|*.txt" };
             string line;
             bool? result = open.ShowDialog();
-
             if(result == true) {
-               
-
                 StreamReader file = new StreamReader(open.FileName);
                 while((line = file.ReadLine()) != null) {
-
                     foreach (Point Key in bw.tiles.Keys) {
                         line = file.ReadLine();
                         if (!string.IsNullOrWhiteSpace(line)) {
-
-
                             Debug.WriteLine(line);
-
                             string[] lines = line.Split(':');
-
-
-                            bw.tiles[Key].Color = (Color)ColorConverter.ConvertFromString(lines[1]); 
+                            bw.tiles[Key].Color = (Color)ColorConverter.ConvertFromString(lines[1]);
                         }
-
                     }
-                       
-
                 }
-                    Refresh();
+                Refresh();
                 file.Close();
             }
-               
-            
         }
 
         private void btnBeepSize_Click(object sender, RoutedEventArgs e) {
@@ -551,69 +481,35 @@ namespace Beep {
             //bool isInt1 = int.TryParse(Width_Beepworld.Text, out result);
             //if (isInt)
             //newSize.Y = result;
-            if(iudAmountPickerWidth != null && iudAmountPickerHeigth != null) {
+            if (iudAmountPickerWidth != null && iudAmountPickerHeigth != null) {
                 newSize.X = (int)iudAmountPickerWidth.Value;
                 newSize.Y = (int)iudAmountPickerHeigth.Value;
             }
-            
-            
-          
+
+
+
             bool boxedBool = true;
 
             //if(isInt && isInt1) {
-                bw.Resize(newSize, boxedBool);
-                canvas.Children.Clear();
-                foreach (string name in registeredHexPolygons) UnregisterName(name);
-                registeredHexPolygons.Clear();
-                highlightedHexPolygon = null;
-                //canvas = new Canvas();
+            bw.Resize(newSize, boxedBool);
+            canvas.Children.Clear();
+            foreach (string name in registeredHexPolygons) UnregisterName(name);
+            registeredHexPolygons.Clear();
+            highlightedHexPolygon = null;
 
-                double relativeX = 0;
-                double relativeY = HEXAGON_VERTICAL_EDGE;
+            PrepareBeepWorldCanvas();
 
-                foreach (Tile t in bw.tiles.Values) {
-                    int xCoordinate = t.Coordinates.X;
-                    int yCoordinate = t.Coordinates.Y;
+            Refresh();
+            UpdateUsedColors();
 
-                    // apply axial conversion
-                    double posX = HEXAGON_SIDE_LENGTH * Sqrt(3) * (xCoordinate + yCoordinate / 2);
-                    double posY = HEXAGON_SIDE_LENGTH * (3 / 2) * yCoordinate;
+            //foreach(UIElement c in canvas.Children) {
+            //    canvas.Children.Remove(c);
+            //}
+        }
 
-                    // add offset
-                    posX += relativeX;
-                    posY += relativeY + (yCoordinate * relativeY);
-
-                    // apply odd row offset
-                    if (yCoordinate % 2 != 0) posX += HEXAGON_HORIZONTAL_HALF;
-
-                    // create polygon to be placed on canvas
-                    Polygon hexPolygon = MakeHexagon(posX, posY);
-                    string name = HexagonPointToName(t.Coordinates);
-                    hexPolygon.Name = name;
-                    RegisterName(name, hexPolygon);
-                    registeredHexPolygons.Add(name);
-                    canvas.Children.Add(hexPolygon);
-
-                    continue;
-                    Label label = new Label() {
-                        Foreground = new SolidColorBrush(Colors.Indigo),
-                        Content = xCoordinate + "," + yCoordinate,
-                        FontSize = 6,
-                        RenderTransform = new TranslateTransform { X = posX - HEXAGON_SIDE_LENGTH / 8, Y = posY - HEXAGON_SIDE_LENGTH / 2 }
-                    };
-                    canvas.Children.Add(label);
-                }
-                Refresh();
-                UpdateUsedColors();
-                //foreach(UIElement c in canvas.Children) {
-                //    canvas.Children.Remove(c);
-                //}
-           
-
-            
-            
-
-
+        // closes the application
+        private void BtnQuitClick(object sender, RoutedEventArgs e) {
+            this.Close();
         }
 
         private void clrPickBackground_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
@@ -626,11 +522,28 @@ namespace Beep {
             if(useRelativeBorderColor== false)
             fixedBorderColor = (Color)clrPickBorderColor.SelectedColor;
         }
-      
 
-        private void IsCheckedBorderColor(object sender, RoutedEventArgs e) {
+
+        private void FixedBorderColorChecked(object sender, RoutedEventArgs e) {
+
             useRelativeBorderColor = false;
-            //fixedBorderColor = (Color)clrPickBorderColor.SelectedColor;
+            fixedBorderColor = (Color)clrPickBorderColor.SelectedColor;
+        }
+        private void FixedBorderColorUnchecked(object sender, RoutedEventArgs e) {
+            useRelativeBorderColor = true;
         }
     }
+
+    /*
+     * 
+     * 
+            if (k) {
+                var watch = Stopwatch.StartNew();
+                Parallel.ForEach(bw.tiles.Values, tile => { tile.Color = Tile.DEFAULT_COLOR; });
+                watch.Stop();
+                Debug.WriteLine(watch.ElapsedTicks);
+            }
+     * 
+     * 
+     */
 }

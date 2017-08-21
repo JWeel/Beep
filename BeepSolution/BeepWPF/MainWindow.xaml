@@ -13,7 +13,9 @@
     <Grid Height="480"
           Width="960"
           HorizontalAlignment="Left"
-          VerticalAlignment="Top">
+          VerticalAlignment="Top"
+          MouseMove="OnMouseMove"
+          MouseLeftButtonUp="OnMouseLeftUp">
 
         <Canvas Name="canvas"
                 
@@ -21,9 +23,7 @@
                 VerticalAlignment="Top"
                 Height="480"
                 Width="593"
-                MouseMove="OnMouseMove"
-                MouseLeftButtonDown="OnMouseLeftDown"
-                MouseLeftButtonUp="OnMouseLeftUp">
+                MouseLeftButtonDown="OnMouseLeftDown">
         </Canvas>
         <Canvas Height="480"
                 Width="367"
@@ -39,11 +39,12 @@
                           ItemContainerStyle="{DynamicResource MenuItemStyle1}"
                           Template="{DynamicResource MenuItemControlTemplate2}">
                     <MenuItem Header="_Load"
-                              Click="BtnLoad_Click" />
+                              Click="BtnLoadClick" />
                     <MenuItem Header="_Save"
-                              Click="BtnSave_Click" />
-                    <MenuItem Header="_Quit" />
-                </MenuItem>
+                              Click="BtnSaveClick"/>
+                    <MenuItem Header="_Quit"
+                              Click="BtnQuitClick" />
+                    </MenuItem>
                 <MenuItem Header="_Edit"
                           Style="{StaticResource menuParentStyle}"
                           ItemContainerStyle="{DynamicResource MenuItemStyle1}"
@@ -153,12 +154,15 @@
                               Template="{DynamicResource MenuItemControlTemplate2}"
                               StaysOpenOnClick="true">
                         <StackPanel Orientation="Vertical">
-                            <TextBlock
-                                Margin="0,12,0,0">Fixed Borders</TextBlock>
+                            <TextBlock Margin="0,12,0,0"
+                                       Text="Fixed Borders"/>
                             <CheckBox x:Name="CheckFixedBorderColor"
                                       Margin="10,13,0,10"
-                                      Checked="IsCheckedBorderColor"></CheckBox>
-                            <TextBlock Margin="5,12,12,0"> Border Collie</TextBlock>
+                                      Content="joe"
+                                      Checked="FixedBorderColorChecked"
+                                      Unchecked="FixedBorderColorUnchecked"/>
+                            <TextBlock Margin="5,12,12,0"
+                                       Text="Border Collie" />
                             <xctk:ColorPicker x:Name="clrPickBorderColor"
                                               Height="20"
                                               Width="35"
@@ -174,7 +178,7 @@
                                               Canvas.Top="324"
                                               ShowDropDownButton="False"
                                               AdvancedButtonHeader="Specify"
-                                              SelectedColor="Green" />
+                                              SelectedColor="LightGreen" />
 
                         </StackPanel>
                         
@@ -205,6 +209,8 @@
                     <MenuItem Header="Random Change"
                               Click="AddRuleClick" />
                     <MenuItem Header="Virus"
+                              Click="AddRuleClick" />
+                    <MenuItem Header="Vincent"
                               Click="AddRuleClick" />
                 </MenuItem>
                 <MenuItem Header="Style"
