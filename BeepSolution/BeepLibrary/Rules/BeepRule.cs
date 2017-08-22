@@ -55,7 +55,8 @@ namespace Beep.Rules {
                     );
                 case RULE_LIFE:
                     return new LifeRule(bwTiles,
-                        colorArguments: new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFFFFF"), (Color)ColorConverter.ConvertFromString("#FF000000") }
+                        colorArguments: new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFFFFF"), (Color)ColorConverter.ConvertFromString("#FF000000") },
+                        boolArguments: new List<bool> { false }
                     );
                 default:
                     return null;

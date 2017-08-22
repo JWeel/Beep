@@ -114,15 +114,30 @@
                               ShowStandardColors="True"
                               ShowDropDownButton="False"
                               AdvancedButtonHeader="Specify" />
-            
+            <TextBox Name="txtRule4"
+                     Text="Ignore unrelated cells"
+                     Height="20"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Bottom"
+                     Margin="-222,0,0,5"
+                     IsReadOnly="True"
+                     IsHitTestVisible="false" />
+            <CheckBox Name="chkIgnoreUnrelated"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Bottom"
+                      Height="20"
+                      Width="20"
+                      Margin="-100,0,0,3"
+                      IsChecked="{Binding Rule.(Rules:LifeRule).ConvertUnrelatedCells}"
+                />
+
             <Button Name="btnDeleteRule"
                     Content="X"
                     FontSize="12"
                     FontWeight="Bold"
-                    Background="Gray"
-                    Foreground="Red"
                     Height="20"
                     Width="16"
+                    Padding="1,0,0,0"
                     Margin="31,5,0,0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top"

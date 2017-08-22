@@ -34,10 +34,12 @@ namespace Beep {
         private const bool BEEP_BOXED = true;
 
         // hexagon length values. only change HEXAGON_SIDE_LENGTH 
+
         private  double HEXAGON_SIDE_LENGTH = 7; //7
         private  double HEXAGON_HORIZONTAL_LENGTH;
         private  double HEXAGON_HORIZONTAL_HALF;
         private  double HEXAGON_VERTICAL_EDGE;
+
         
         //
         private static readonly Color HEXAGON_BORDER_COLOR = (Color)ColorConverter.ConvertFromString("#FF89FB89");
@@ -193,8 +195,8 @@ namespace Beep {
                     new PixelPoint(posX + HEXAGON_HORIZONTAL_HALF, posY - HEXAGON_VERTICAL_EDGE)
                 },
                 Fill = Brushes.Black,
-                Stroke = Brushes.Black,
-                StrokeThickness = 0.5
+                Stroke = Brushes.Black
+                //,StrokeThickness = 0.5
             };
         }
 

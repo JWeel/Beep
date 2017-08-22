@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows.Media;
 
 namespace Beep.Rules {
@@ -14,9 +9,8 @@ namespace Beep.Rules {
         //  -two colors in colorArguments
         //      -first color specifies matches tiles
         //      -second color is given to tiles that neighbor the matching tile
-        //  -one int [0 < i < 6] in intArguments specifying number of tiles to change TODO
+        //  -one int [0 < i < 6] in intArguments specifying number of tiles to change
         //  -one bool argument specifying whether to not affect neigbhors that are also matchers
-        // TODO change neighbors of COLOR1 that are not COLOR3 to COLOR2
 
         public ChangeNeighborColorRule(Dictionary<Point, Tile> tiles, List<Color> colorArguments = null, List<int> intArguments = null, List<bool> boolArguments = null) : base(tiles) {
             MatchColor = colorArguments[0];
@@ -39,10 +33,15 @@ namespace Beep.Rules {
 
             foreach (Tile t in tiles.Values) {
                 if (t.Color == MatchColor) {
+                    int amountColorsChanged = 0;
                     foreach (Point p in t.Neighbors) {
 
                         if (ColorNeighboringMatchers && tiles[p].Color == MatchColor) continue;
                         if (tiles[p].Color == IgnoreColor) continue;
+                        // TODO? bool foundIgnore; foreach(Color c in IgnoreColors) if (tiles[p].Color == c)  { foundIgnore = true; break; } if(foundIgnore) continue;
+
+                        if (amountColorsChanged >= AmountAffectedNeighbors) break;
+                        amountColorsChanged++;
 
                         alteredTiles[p].Color = TargetColor;
                     }
