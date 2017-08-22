@@ -34,10 +34,12 @@ namespace Beep {
         private const bool BEEP_BOXED = true;
 
         // hexagon length values. only change HEXAGON_SIDE_LENGTH 
-        private const double HEXAGON_SIDE_LENGTH = 7;
-        private static readonly double HEXAGON_HORIZONTAL_LENGTH = Sqrt(3) * HEXAGON_SIDE_LENGTH;
-        private static readonly double HEXAGON_HORIZONTAL_HALF = HEXAGON_HORIZONTAL_LENGTH / 2;
-        private static readonly double HEXAGON_VERTICAL_EDGE = HEXAGON_SIDE_LENGTH / 2;
+
+        private  double HEXAGON_SIDE_LENGTH = 7; //7
+        private  double HEXAGON_HORIZONTAL_LENGTH;
+        private  double HEXAGON_HORIZONTAL_HALF;
+        private  double HEXAGON_VERTICAL_EDGE;
+
         
         //
         private static readonly Color HEXAGON_BORDER_COLOR = (Color)ColorConverter.ConvertFromString("#FF89FB89");
@@ -93,7 +95,9 @@ namespace Beep {
         private Polygon highlightedHexPolygon;
 
         public MainWindow() {
+            
             InitializeComponent();
+            CalculateHexPolygonSize();
 
             bw = new BeepWorld(BEEP_SIZE, BEEP_BOXED);
             beepRules = new List<BeepRule>(); // TODO should be part of beepworld object
@@ -117,6 +121,12 @@ namespace Beep {
             clrPickMouse.StandardColors = StandardColorItems;
         }
 
+        private void CalculateHexPolygonSize() {
+         HEXAGON_HORIZONTAL_LENGTH = Sqrt(3) * HEXAGON_SIDE_LENGTH;
+         HEXAGON_HORIZONTAL_HALF = HEXAGON_HORIZONTAL_LENGTH / 2;
+         HEXAGON_VERTICAL_EDGE = HEXAGON_SIDE_LENGTH / 2;
+
+    }
         // prepares hexpolygons corresponding to tiles in the beepworld on a canvas
         private void PrepareBeepWorldCanvas() {
             double relativeX = 0;
@@ -500,6 +510,13 @@ namespace Beep {
             MouseClickColor = (Color)clrPickMouse.SelectedColor;
         }
 
+        private void UnprepareBeepWorldCanvas() {
+            canvas.Children.Clear();
+            foreach (string name in registeredHexPolygons) UnregisterName(name);
+            registeredHexPolygons.Clear();
+            highlightedHexPolygon = null;
+        }
+
         private void BtnSize_Click(object sender, RoutedEventArgs e) {
             int result;
             Point newSize = new Point();
@@ -516,10 +533,7 @@ namespace Beep {
 
             
             bw.Resize(newSize, boxedBool);
-            canvas.Children.Clear();
-            foreach (string name in registeredHexPolygons) UnregisterName(name);
-            registeredHexPolygons.Clear();
-            highlightedHexPolygon = null;
+            UnprepareBeepWorldCanvas();
 
             PrepareBeepWorldCanvas();
 
@@ -555,6 +569,7 @@ namespace Beep {
             fixedBorderColor = (Color)clrPickBorderColor.SelectedColor;
             Refresh();
         }
+
         private void FixedBorderColorUnchecked(object sender, RoutedEventArgs e) {
             useRelativeBorderColor = true;
             Refresh();
@@ -570,6 +585,15 @@ namespace Beep {
             isPaintingIndefinitely = false;
             btnPaint.Content = "Paint";
             iudAmountPicker1.IsEnabled = true;
+        }
+        private void AmountHexSizeChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {
+            if (bw != null) {
+                HEXAGON_SIDE_LENGTH = (double)iudAmountPickerHexagonSize.Value;
+                CalculateHexPolygonSize();
+                UnprepareBeepWorldCanvas();
+                PrepareBeepWorldCanvas();
+                Refresh();
+            }
         }
     }
 
