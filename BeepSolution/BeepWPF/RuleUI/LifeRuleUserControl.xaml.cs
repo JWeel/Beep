@@ -48,5 +48,7 @@ namespace Beep.RuleUI {
         private void ClrPickDeadChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
             (Rule as LifeRule).DeadColor = (Color)e.NewValue;
         }
+
+
     }
 }
