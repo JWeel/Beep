@@ -128,8 +128,10 @@
                       Height="20"
                       Width="20"
                       Margin="-100,0,0,3"
-                      IsChecked="{Binding Rule.(Rules:LifeRule).ConvertUnrelatedCells}"
+                      Checked="OnIgnoreChecked"
+                      Unchecked="OnIgnoreUnchecked"
                 />
+            <!--IsChecked="{Binding Path=Rule.(Beep.Rules:LifeRule).ConvertUnrelatedCells, RelativeSource={beep:LifeRule}}"-->
 
             <Button Name="btnDeleteRule"
                     Content="X"

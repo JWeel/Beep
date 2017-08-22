@@ -49,6 +49,12 @@ namespace Beep.RuleUI {
             (Rule as LifeRule).DeadColor = (Color)e.NewValue;
         }
 
+        private void OnIgnoreChecked(object sender, RoutedEventArgs e) {
+            (Rule as LifeRule).ConvertUnrelatedCells = false;
+        }
 
+        private void OnIgnoreUnchecked(object sender, RoutedEventArgs e) {
+            (Rule as LifeRule).ConvertUnrelatedCells = true;
+        }
     }
 }

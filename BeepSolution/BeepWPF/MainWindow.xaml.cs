@@ -54,6 +54,9 @@ namespace Beep {
         private bool useMouseDownColorDrag = true;
         private bool isMouseDownColorDragging = false;
 
+        private bool paintIndefinitely = false;
+        private bool isPaintingIndefinitely = false;
+
         private bool useRelativeBorderColor = true;
         private Color fixedBorderColor = (Color)ColorConverter.ConvertFromString("#FF000000");
 
@@ -378,17 +381,37 @@ namespace Beep {
 
         // paints according to defined rules
         private async void BtnPaintClick(object sender, RoutedEventArgs e) {
+            if (isPaintingIndefinitely) {
+                isPaintingIndefinitely = false;
+                btnPaint.Content = "Paint";
+                return;
+            }
             int? number = iudAmountPicker1.Value;
             await Task.Run(() => {
-                for (int i = 0; i < number; i++) {
-                    foreach (BeepRule rule in beepRules) {
-                        bw.tiles = rule.Run();
-                        UpdateRules();
+                if (paintIndefinitely) {
+                    isPaintingIndefinitely = true;
+                    Dispatcher.Invoke(() => { btnPaint.Content = "Pause"; });
+                    while (isPaintingIndefinitely) {
+                        foreach (BeepRule rule in beepRules) {
+                            bw.tiles = rule.Run();
+                            UpdateRules();
+                        }
+                        Thread.Sleep(20); // ¿¿¿????
+                        this.Dispatcher.Invoke(() => {
+                            Refresh();
+                        });
                     }
-                    Thread.Sleep(20); // ¿¿¿????
-                    this.Dispatcher.Invoke(() => {
-                        Refresh();
-                    });
+                } else {
+                    for (int i = 0; i < number; i++) {
+                        foreach (BeepRule rule in beepRules) {
+                            bw.tiles = rule.Run();
+                            UpdateRules();
+                        }
+                        Thread.Sleep(20); // ¿¿¿????
+                        this.Dispatcher.Invoke(() => {
+                            Refresh();
+                        });
+                    }
                 }
             });
             Refresh();
@@ -535,6 +558,18 @@ namespace Beep {
         private void FixedBorderColorUnchecked(object sender, RoutedEventArgs e) {
             useRelativeBorderColor = true;
             Refresh();
+        }
+
+        private void IsCheckedIndefinite(object sender, RoutedEventArgs e) {
+            paintIndefinitely = true;
+            iudAmountPicker1.IsEnabled = false;
+        }
+
+        private void IsUncheckedIndefinite(object sender, RoutedEventArgs e) {
+            paintIndefinitely = false;
+            isPaintingIndefinitely = false;
+            btnPaint.Content = "Paint";
+            iudAmountPicker1.IsEnabled = true;
         }
     }
 

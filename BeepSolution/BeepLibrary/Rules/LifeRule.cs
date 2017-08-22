@@ -26,7 +26,6 @@ namespace Beep.Rules {
 
         public override Dictionary<Point, Tile> Run() {
             Dictionary<Point, Tile> alteredTiles = DeepCopyDict(tiles);
-            Debug.WriteLine(ConvertUnrelatedCells);
             foreach(Tile t in tiles.Values) {
                 List<Point> neighborCoordinates = t.Neighbors;
                 int lifeNeighborsCount = 0;
@@ -37,7 +36,6 @@ namespace Beep.Rules {
                 else if (t.Color == LifeColor) alteredTiles[t.Coordinates].Color = DeadColor;
                 else if (t.Color == DeadColor && lifeNeighborsCount == 2) alteredTiles[t.Coordinates].Color = LifeColor;
                 else if (ConvertUnrelatedCells) alteredTiles[t.Coordinates].Color = DeadColor;
-                // TODO final else rule => depend on bool?
             }
 
             return alteredTiles;
