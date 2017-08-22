@@ -466,25 +466,25 @@ namespace Beep {
 
         private void BtnSaveClick(object sender, RoutedEventArgs e) {
 
-            using (var db = new BeepWorldContext()) {
+            //using (var db = new BeepWorldContext()) {
 
-                var v = new SavableBeepWorld() {
-                    Name = "Joe"
-                };
-                db.SavedBeepWorlds.Add(v);
+            //    var v = new SavableBeepWorld() {
+            //        Name = "Joe"
+            //    };
+            //    db.SavedBeepWorlds.Add(v);
 
-                db.SaveChanges();
+            //    db.SaveChanges();
 
-                var query = from b in db.SavedBeepWorlds
-                            orderby b.Name
-                            select b;
+            //    var query = from b in db.SavedBeepWorlds
+            //                orderby b.Name
+            //                select b;
                 
-                foreach (var item in query) {
-                    Debug.WriteLine(item.Name);
-                }
-            }
+            //    foreach (var item in query) {
+            //        Debug.WriteLine(item.Name);
+            //    }
+            //}
 
-            /*
+            ///*
             SaveFileDialog sfd = new SaveFileDialog() {
                 Filter = "Text Document|*.txt",
                 FileName = "Painting.txt",
@@ -499,7 +499,8 @@ namespace Beep {
                 Debug.WriteLine(createText);
                 string path = sfd.FileName;
                 File.WriteAllText(path, createText);
-            }*/
+            }
+            //*/
         }
 
         private void BtnLoadClick(object sender, RoutedEventArgs e) {
