@@ -51,7 +51,7 @@
                           Template="{DynamicResource MenuItemControlTemplate2}"
                           StaysOpenOnClick="true">
 
-                    <MenuItem Header="_Size"
+                    <MenuItem Header="_Canvas Size"
                               Style="{StaticResource menuParentStyle}"
                               ItemContainerStyle="{DynamicResource MenuItemStyle1}"
                               Template="{DynamicResource MenuItemControlTemplate2}"
@@ -183,7 +183,30 @@
                         </StackPanel>
                         
                     </MenuItem>
+                    <MenuItem Header="_Hexagon Size"
+                              Style="{StaticResource menuParentStyle}"
+                              ItemContainerStyle="{DynamicResource MenuItemStyle1}"
+                              Template="{DynamicResource MenuItemControlTemplate2}"
+                              StaysOpenOnClick="true">
+                        <StackPanel Orientation="Vertical" >
+                            <TextBlock Margin="4,3,2,1"> Select Hexagon side length </TextBlock>
 
+                            <xctk:IntegerUpDown Name="iudAmountPickerHexagonSize"
+                                                Height="20"
+                                                Width="50"
+                                                FontSize="12"
+                                                Value="7"
+                                                Maximum="20"
+                                                Minimum="1"
+                                                Padding="0,0,9,0"
+                                                VerticalAlignment="Center"
+                                                ValueChanged="AmountHexSizeChanged"
+                                                Canvas.Left="241"
+                                                Canvas.Top="369"
+                                                RenderTransformOrigin="4.307,11.068" />
+                        </StackPanel>
+                        
+                    </MenuItem>
                 </MenuItem>
 
                
