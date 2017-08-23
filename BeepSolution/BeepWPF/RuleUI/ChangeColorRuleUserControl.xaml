@@ -29,7 +29,7 @@
                     Content="O"
                     Width="20"
                     Height="20"
-                    Margin="2,1,3,1"
+                    Margin="0,1,0,1"
                     DockPanel.Dock="Right"
                     HorizontalAlignment="Right"
                     PreviewMouseDown="BtnDragMouseDown" />
@@ -37,39 +37,63 @@
                     Content="X"
                     Width="20"
                     Height="20"
-                    Margin="3,1,2,1"
+                    Margin="1,1,5,0"
                     DockPanel.Dock="Right"
                     HorizontalAlignment="Right"
                     Click="DeleteButtonClick" />
         </DockPanel>
-        <StackPanel Name="pnlExpanded"
+        <Grid Name="pnlExpanded"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
-                    Orientation="Horizontal"
                     Height="100"
                     >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="1.5*" />
+                <RowDefinition Height="1.5*" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
 
             <Button Name="btnCollapse"
+                    Grid.Column="0"
+                    Grid.Row="0"
                     Content="-"
                     Width="20"
                     Height="20"
+                    Margin="5,1,0,0"
                     Padding="0,0,0,4"
+                    HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Click="BtnCollapseOrExpandClick" />
+
             <ComboBox Name="comboBoxRulePicker"
+                      Grid.Column="1"
+                      Grid.Row="0"
+                      Padding="0,0,0,1"
                       ItemsSource="{Binding RuleMenuItems, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Mode=OneWay}"
                       Height="20"
                       Width="100"
                       Text="{Binding RuleName, Mode=OneWay}"
-                      Margin="0,0,1,0"
                       IsReadOnly="True"
                       Cursor="None"
+                      Margin="5,1,0,0"
+                      HorizontalAlignment="Left"
                       SelectionChanged="ComboBoxRuleSelected" />
 
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        Grid.Column="1"
+                        Grid.Row="2">
             <xctk:ColorPicker Name="clrPickMatch"
                               Height="20"
                               Width="20"
                               Padding="0,0,0,1"
+                              Margin="1,0,0,0"
                               BorderThickness="0"
                               AvailableColorsHeader="Canvas Colors"
                               DisplayColorAndName="False"
@@ -78,38 +102,52 @@
                               ShowDropDownButton="False"
                               AdvancedButtonHeader="Specify"                          
                           />
-        <TextBox Name="txtRule1"
-                 Text="becomes"
-                 Height="20"
-                 HorizontalAlignment="Left"
+            <TextBox Name="txtRule1"
+                     Text="becomes"
+                         Height="20"
+                         Margin="1,0,0,0"
+                         HorizontalAlignment="Left"
                  VerticalAlignment="Center"
-                 Margin="1,0,1,0"
                  IsReadOnly="True"
                  IsHitTestVisible="false" />
-        
+
             <xctk:ColorPicker Name="clrPickTarget"
                               Height="20"
-                              Width="20"
-                              Padding="0,0,0,1"
+                                  Width="20"
+                                  Margin="1,0,0,0"
+                                  Padding="0,0,0,1"
                               BorderThickness="0"
                               AvailableColorsHeader="Canvas Colors"
                               DisplayColorAndName="False"
                               SelectedColorChanged="ClrPickTargetChanged"
                               ShowStandardColors="True"
                               ShowDropDownButton="False"
-                              AdvancedButtonHeader="Specify" />
-        
-        <Button Name="btnDeleteRule"
-                Content="X"
+                                  AdvancedButtonHeader="Specify" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal"
+                        Grid.Column="4"
+                        HorizontalAlignment="Right"
+                        Grid.Row="0">
+                <Button Name="btnDeleteRule"
+                    Content="X"
                 FontSize="12"
                 FontWeight="Bold"
                 Height="20"
-                Width="16"
-                Margin="1,0,0,0"
-                HorizontalAlignment="Left"
+                Width="20"
+                Margin="0,1,1,0"
+                HorizontalAlignment="Right"
                 VerticalAlignment="Center"
-                Click="DeleteButtonClick" />
-        </StackPanel>
+                    Click="DeleteButtonClick" />
+            <Button Name="btnDrag2"
+                    Content="O"
+                    Width="20"
+                        Height="20"
+                        Margin="1,1,5,0"
+                        HorizontalAlignment="Right"
+                    PreviewMouseDown="BtnDragMouseDown" />
+            </StackPanel>
+        </Grid>
     </Grid>
     <!--
     <local:BeepRuleUserControl.Style>

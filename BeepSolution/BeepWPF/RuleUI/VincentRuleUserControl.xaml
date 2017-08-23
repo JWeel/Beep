@@ -42,11 +42,10 @@
                     HorizontalAlignment="Right"
                     Click="DeleteButtonClick" />
         </DockPanel>
-        <StackPanel Name="pnlExpanded"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    Orientation="Horizontal"
-                    Height="100">
+        <Grid Name="pnlExpanded"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Stretch"
+              Height="100">
 
             <Button Name="btnCollapse"
                     Content="-"
@@ -146,6 +145,6 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top"
                     Click="DeleteButtonClick" />
-        </StackPanel>
+        </Grid>
     </Grid>
 </local:BeepRuleUserControl>

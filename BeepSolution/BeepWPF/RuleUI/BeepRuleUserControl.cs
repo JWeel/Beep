@@ -13,7 +13,7 @@ namespace Beep.RuleUI {
         public event EventHandler Deleting;
         public event EventHandler<MouseEventArgs> Dragging;
 
-        protected StackPanel panelExpanded;
+        protected Grid panelExpanded;
         protected DockPanel panelCollapsed;
 
         protected abstract void SetPanels();
