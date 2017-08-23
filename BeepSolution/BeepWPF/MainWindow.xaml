@@ -5,318 +5,292 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:beepRuleUI="clr-namespace:Beep.RuleUI"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        mc:Ignorable="d"      
+        mc:Ignorable="d"
         Title="Beep"
         SizeChanged="OnSizeChanged">
     <!--SizeToContent="WidthAndHeight"-->
     <!-- SizeToContent="WidthAndHeight" is required to make screen size be exactly as defined below -->
     <!--Height="480"
           Width="960"-->
+    <!--HorizontalAlignment="Left"
+          VerticalAlignment="Top"-->
     <Grid Name="ParentGrid"
         Width="{Binding ActualWidth, RelativeSource= {RelativeSource AncestorType={x:Type Window}}}"
           Height="{Binding ActualWidth, RelativeSource= {RelativeSource AncestorType={x:Type Window}}}"
-          HorizontalAlignment="Left"
-          VerticalAlignment="Top"
+          
           MouseMove="OnMouseMove"
           MouseLeftButtonUp="OnMouseLeftUp">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.618*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <!--Height="480"
-                Width="593"-->
-        <!--HorizontalAlignment="Left"
-                VerticalAlignment="Top"-->
-        <Grid Name="CanvasGrid"
-            >
-        <Canvas Name="canvas"
-              MouseLeftButtonDown="OnMouseLeftDown">
-            
         
-        </Canvas>
+       
+        <Grid Name="CanvasGrid"
+              HorizontalAlignment="Left"
+              Grid.Column="0"
+            >
+            <Canvas Name="canvas"
+                    MouseLeftButtonDown="OnMouseLeftDown">
+            </Canvas>
         </Grid>
-        <!--Height="480"
-                Width="367"-->
-        <!--HorizontalAlignment="Right"-->
+        
         <Grid
             Name="ControlMenuGrid"
-            HorizontalAlignment="Left"
-              >
-        <Canvas Name="ControlMenuCanvas"
-                
-                Background="FloralWhite">
-            <Menu Height="20"
-                  HorizontalAlignment="Right"
-                  Name="ControlMenu"
-                  VerticalAlignment="Top"
-                  >
-                <MenuItem Header="_File"
-                          Style="{StaticResource menuParentStyle}"
-                          ItemContainerStyle="{DynamicResource MenuItemStyle1}"
-                          Template="{DynamicResource MenuItemControlTemplate2}">
-                    <MenuItem Header="_Load"
-                              Click="BtnLoadClick" />
-                    <MenuItem Header="_Save"
-                              Click="BtnSaveClick" />
-                    <MenuItem Header="_Quit"
-                              Click="BtnQuitClick" />
-                </MenuItem>
-                <MenuItem Header="_Edit"
-                          Style="{StaticResource menuParentStyle}"
-                          ItemContainerStyle="{DynamicResource MenuItemStyle1}"
-                          Template="{DynamicResource MenuItemControlTemplate2}"
-                          StaysOpenOnClick="true">
+           
+            
+             Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*" />
+                <RowDefinition Height="95*" />
+            </Grid.RowDefinitions>
+            
 
-                    <MenuItem Header="_Canvas Size"
+            <StackPanel
+                Grid.Row="0"
+                
+                HorizontalAlignment="Right"
+                Orientation="Horizontal"
+                ClipToBounds="False"
+                Panel.ZIndex="3">
+                <Menu Height="20"
+                      HorizontalAlignment="Right"
+                      Name="ControlMenu"
+                      VerticalAlignment="Top"
+                      Grid.Row="0">
+                    <MenuItem Header="_File"
+                              Style="{StaticResource menuParentStyle}"
+                              ItemContainerStyle="{DynamicResource MenuItemStyle1}"
+                              Template="{DynamicResource MenuItemControlTemplate2}">
+                        <MenuItem Header="_Load"
+                                  Click="BtnLoadClick" />
+                        <MenuItem Header="_Save"
+                                  Click="BtnSaveClick" />
+                        <MenuItem Header="_Quit"
+                                  Click="BtnQuitClick" />
+                    </MenuItem>
+                    <MenuItem Header="_Edit"
                               Style="{StaticResource menuParentStyle}"
                               ItemContainerStyle="{DynamicResource MenuItemStyle1}"
                               Template="{DynamicResource MenuItemControlTemplate2}"
                               StaysOpenOnClick="true">
 
+                        <MenuItem Header="_Canvas Size"
+                                  Style="{StaticResource menuParentStyle}"
+                                  ItemContainerStyle="{DynamicResource MenuItemStyle1}"
+                                  Template="{DynamicResource MenuItemControlTemplate2}"
+                                  StaysOpenOnClick="true">
 
-                        <Button Width="157"
-                                RenderTransformOrigin="0.06,0.567"
-                                Margin="0,5"
-                                Height="178">
-                            <MenuItem StaysOpenOnClick="true">
+
+                            <Button Width="157"
+                                    RenderTransformOrigin="0.06,0.567"
+                                    Margin="0,5"
+                                    Height="178">
+                                <MenuItem StaysOpenOnClick="true">
 
 
-                                <MenuItem.Header>
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBlock>
+                                    <MenuItem.Header>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock>
                                     Boxed
-                                        </TextBlock>
-                                        <CheckBox x:Name="CheckIsBoxed"
+                                            </TextBlock>
+                                            <CheckBox x:Name="CheckIsBoxed"
                                                       IsChecked="True"
                                                       Checked="IsBoxedChecked"
-                                                      Unchecked="IsBoxedUnchecked"
-                                                  >
+                                                      Unchecked="IsBoxedUnchecked">
 
-                                        </CheckBox>
-                                        <TextBlock>Width</TextBlock>
+                                            </CheckBox>
+                                            <TextBlock>Width</TextBlock>
 
-                                        <xctk:IntegerUpDown Name="iudAmountPickerWidth"
-                                                            Height="20"
-                                                            Width="50"
-                                                            FontSize="12"
-                                                            Value="10"
-                                                            Maximum="1000"
-                                                            Minimum="1"
-                                                            Padding="0,0,9,0"
-                                                            VerticalAlignment="Center"
-                                                            ValueChanged="AmountChanged"
-                                                            Canvas.Left="241"
-                                                            Canvas.Top="369"
-                                                            RenderTransformOrigin="4.307,11.068">
+                                            <xctk:IntegerUpDown Name="iudAmountPickerWidth"
+                                                                Height="20"
+                                                                Width="50"
+                                                                FontSize="12"
+                                                                Value="10"
+                                                                Maximum="1000"
+                                                                Minimum="1"
+                                                                Padding="0,0,9,0"
+                                                                VerticalAlignment="Center"
+                                                                ValueChanged="AmountChanged"
+                                                                RenderTransformOrigin="4.307,11.068">
 
-                                        </xctk:IntegerUpDown>
-                                        <TextBlock>Heigth</TextBlock>
+                                            </xctk:IntegerUpDown>
+                                            <TextBlock>Heigth</TextBlock>
 
-                                        <xctk:IntegerUpDown Name="iudAmountPickerHeigth"
-                                                            Height="20"
-                                                            Width="50"
-                                                            FontSize="12"
-                                                            Value="10"
-                                                            Maximum="1000"
-                                                            Minimum="1"
-                                                            Padding="0,0,9,0"
-                                                            VerticalAlignment="Center"
-                                                            ValueChanged="AmountChanged"
-                                                            Canvas.Left="241"
-                                                            Canvas.Top="369"
-                                                            RenderTransformOrigin="4.307,11.068" />
+                                            <xctk:IntegerUpDown Name="iudAmountPickerHeigth"
+                                                                Height="20"
+                                                                Width="50"
+                                                                FontSize="12"
+                                                                Value="10"
+                                                                Maximum="1000"
+                                                                Minimum="1"
+                                                                Padding="0,0,9,0"
+                                                                VerticalAlignment="Center"
+                                                                ValueChanged="AmountChanged"
+                                                                RenderTransformOrigin="4.307,11.068" />
 
-                                        <Button Content="Set size"
-                                                Click="BtnSize_Click">
-                                        </Button>
-                                    </StackPanel>
-                                </MenuItem.Header>
+                                            <Button Content="Set size"
+                                                    Click="BtnSize_Click">
+                                            </Button>
+                                        </StackPanel>
+                                    </MenuItem.Header>
 
-                            </MenuItem>
+                                </MenuItem>
 
-                        </Button>
+                            </Button>
 
 
-                        <!--<MenuItem Header="Small"-->
-                    </MenuItem>
-                    <MenuItem Header="_Background"
-                              Style="{StaticResource menuParentStyle}"
-                              ItemContainerStyle="{DynamicResource MenuItemStyle1}"
-                              Template="{DynamicResource MenuItemControlTemplate2}"
-                              StaysOpenOnClick="true">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock>Choose Background Color</TextBlock>
-                            <Button Width="55">
+                            <!--<MenuItem Header="Small"-->
+                        </MenuItem>
+                        <MenuItem Header="_Background"
+                                  Style="{StaticResource menuParentStyle}"
+                                  ItemContainerStyle="{DynamicResource MenuItemStyle1}"
+                                  Template="{DynamicResource MenuItemControlTemplate2}"
+                                  StaysOpenOnClick="true">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock>Choose Background Color</TextBlock>
+                                <Button Width="55">
 
-                                <xctk:ColorPicker x:Name="clrPickBackground"
+                                    <xctk:ColorPicker x:Name="clrPickBackground"
+                                                      Height="20"
+                                                      Width="35"
+                                                      Padding="0,0,0,1"
+                                                      BorderThickness="0"
+                                                      DisplayColorAndName="False"
+                                                      AvailableColorsHeader="Canvas Colors"
+                                                      ShowStandardColors="True"
+                                                      SelectedColorChanged="clrPickBackground_SelectedColorChanged"
+                                                      ShowDropDownButton="False"
+                                                      AdvancedButtonHeader="Specify"
+                                                      SelectedColor="LightGreen" />
+                                </Button>
+                            </StackPanel>
+
+
+                        </MenuItem>
+                        <MenuItem Header="_Borders"
+                                  Style="{StaticResource menuParentStyle}"
+                                  ItemContainerStyle="{DynamicResource MenuItemStyle1}"
+                                  Template="{DynamicResource MenuItemControlTemplate2}"
+                                  StaysOpenOnClick="true">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Margin="0,12,0,0"
+                                           Text="Fixed Borders" />
+                                <CheckBox x:Name="CheckFixedBorderColor"
+                                          Margin="10,13,0,10"
+                                          IsChecked="False"
+                                          Checked="FixedBorderColorChecked"
+                                          Unchecked="FixedBorderColorUnchecked" />
+                                <TextBlock Margin="5,12,12,0"
+                                           Text="Border Collie" />
+                                <xctk:ColorPicker x:Name="clrPickBorderColor"
                                                   Height="20"
                                                   Width="35"
-                                                  Padding="0,0,0,1"
+                                                  Padding="0,0,0,2"
+                                                  Margin="10,10,0,10"
                                                   BorderThickness="0"
                                                   DisplayColorAndName="False"
                                                   AvailableColorsHeader="Canvas Colors"
                                                   ShowStandardColors="True"
-                                                  SelectedColorChanged="clrPickBackground_SelectedColorChanged"
-                                                  Canvas.Left="173"
-                                                  Canvas.Top="324"
+                                                  SelectedColorChanged="clrPickBorderColor_SelectedColorChanged"
                                                   ShowDropDownButton="False"
                                                   AdvancedButtonHeader="Specify"
-                                                  SelectedColor="LightGreen" />
-                            </Button>
-                        </StackPanel>
+                                                  SelectedColor="Black" />
 
+                            </StackPanel>
 
+                        </MenuItem>
+                        <MenuItem Header="_Hexagon Size"
+                                  Style="{StaticResource menuParentStyle}"
+                                  ItemContainerStyle="{DynamicResource MenuItemStyle1}"
+                                  Template="{DynamicResource MenuItemControlTemplate2}"
+                                  StaysOpenOnClick="true">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Margin="4,3,2,1"> Select Hexagon side length</TextBlock>
+
+                                <xctk:IntegerUpDown Name="iudAmountPickerHexagonSize"
+                                                    Height="20"
+                                                    Width="50"
+                                                    FontSize="12"
+                                                    Value="7"
+                                                    Maximum="20"
+                                                    Minimum="1"
+                                                    Padding="0,0,9,0"
+                                                    VerticalAlignment="Center"
+                                                    ValueChanged="AmountHexSizeChanged"
+                                                    RenderTransformOrigin="4.307,11.068" />
+                            </StackPanel>
+
+                        </MenuItem>
                     </MenuItem>
-                    <MenuItem Header="_Borders"
+
+
+
+
+
+                    <MenuItem Header="_View"
                               Style="{StaticResource menuParentStyle}"
                               ItemContainerStyle="{DynamicResource MenuItemStyle1}"
-                              Template="{DynamicResource MenuItemControlTemplate2}"
-                              StaysOpenOnClick="true">
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock Margin="0,12,0,0"
-                                       Text="Fixed Borders" />
-                            <CheckBox x:Name="CheckFixedBorderColor"
-                                      Margin="10,13,0,10"
-                                      IsChecked="False"
-                                      Checked="FixedBorderColorChecked"
-                                      Unchecked="FixedBorderColorUnchecked" />
-                            <TextBlock Margin="5,12,12,0"
-                                       Text="Border Collie" />
-                            <xctk:ColorPicker x:Name="clrPickBorderColor"
-                                              Height="20"
-                                              Width="35"
-                                              Padding="0,0,0,2"
-                                              Margin="10,10,0,10"
-                                              BorderThickness="0"
-                                              DisplayColorAndName="False"
-                                              AvailableColorsHeader="Canvas Colors"
-                                              ShowStandardColors="True"
-                                              SelectedColorChanged="clrPickBorderColor_SelectedColorChanged"
-                                              Canvas.Left="173"
-                                              Canvas.Top="324"
-                                              ShowDropDownButton="False"
-                                              AdvancedButtonHeader="Specify"
-                                              SelectedColor="Black" />
-
-                        </StackPanel>
+                              Template="{DynamicResource MenuItemControlTemplate2}">
+                        <MenuItem Header="Full Screen"
+                                  Click="SetFullscreenClick" />
 
                     </MenuItem>
-                    <MenuItem Header="_Hexagon Size"
+
+                    <MenuItem Name="mnuAddRule"
+                              Header="_Add Rule"
                               Style="{StaticResource menuParentStyle}"
                               ItemContainerStyle="{DynamicResource MenuItemStyle1}"
-                              Template="{DynamicResource MenuItemControlTemplate2}"
-                              StaysOpenOnClick="true">
-                        <StackPanel Orientation="Vertical" >
-                            <TextBlock Margin="4,3,2,1"> Select Hexagon side length </TextBlock>
-
-                            <xctk:IntegerUpDown Name="iudAmountPickerHexagonSize"
-                                                Height="20"
-                                                Width="50"
-                                                FontSize="12"
-                                                Value="7"
-                                                Maximum="20"
-                                                Minimum="1"
-                                                Padding="0,0,9,0"
-                                                VerticalAlignment="Center"
-                                                ValueChanged="AmountHexSizeChanged"
-                                                Canvas.Left="241"
-                                                Canvas.Top="369"
-                                                RenderTransformOrigin="4.307,11.068" />
-                        </StackPanel>
-                        
+                              Template="{DynamicResource MenuItemControlTemplate2}">
                     </MenuItem>
-                </MenuItem>
+                    <MenuItem Header="Style"
+                              Style="{StaticResource menuParentStyle}"
+                              ItemContainerStyle="{DynamicResource MenuItemStyle1}"
+                              Template="{DynamicResource MenuItemControlTemplate2}" />
 
 
 
 
+                </Menu>
+            </StackPanel>
 
-                <MenuItem Header="_View"
-                          Style="{StaticResource menuParentStyle}"
-                          ItemContainerStyle="{DynamicResource MenuItemStyle1}"
-                          Template="{DynamicResource MenuItemControlTemplate2}">
-                    <MenuItem Header="Full Screen"
-                              Click="SetFullscreenClick"/>
+            <Grid
+                Grid.Row="1"
+                >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="90*" />
+                <ColumnDefinition Width="5*" />
+            </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
-                </MenuItem>
-
-                <MenuItem Name="mnuAddRule"
-                          Header="_Add Rule"
-                          Style="{StaticResource menuParentStyle}"
-                          ItemContainerStyle="{DynamicResource MenuItemStyle1}"
-                          Template="{DynamicResource MenuItemControlTemplate2}">
-                </MenuItem>
-                <MenuItem Header="Style"
-                          Style="{StaticResource menuParentStyle}"
-                          ItemContainerStyle="{DynamicResource MenuItemStyle1}"
-                          Template="{DynamicResource MenuItemControlTemplate2}" />
-
-
-
-
-            </Menu>
-
-
-
-
-
-            <!--<Label Name="lblHeader"
-                   Content="Beep Rules"
-                   FontSize="18"
-                   Canvas.Left="21"
-                   Canvas.Top="9"
-                   Height="44"
-                   Width="171" />-->
-            <!--<Button Name="btnNewRule"
-                    Content="Add Rule"
-                    Canvas.Left="226"
-                    Canvas.Top="13"
-                    Click="BtnNewRuleClick"
-                    Margin="0"
-                    ContextMenuService.IsEnabled="False">
-                <Button.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="Change Color"
-                                  Click="AddRuleClick" />
-                        <MenuItem Header="Change Neighbor Color"
-                                  Click="AddRuleClick" />
-                        <MenuItem Header="Random Change"
-                                  Click="AddRuleClick" />
-                        <MenuItem Header="Virus"
-                                  Click="AddRuleClick" />
-                    </ContextMenu>
-                </Button.ContextMenu>
-            </Button>-->
-            <!--<Button Name="btnBeepSize"
-                    Content="Size"
-                    Canvas.Left="320"
-                    Canvas.Top="13"
-                    Width="36"
-                    Margin="0"
-                    Click="btnBeepSize_Click" />-->
+            
                 
                 <ScrollViewer FlowDirection="RightToLeft"
-                          CanContentScroll="False"
+                          CanContentScroll="True"
                           VerticalScrollBarVisibility="Auto"
-                          Height="240"
-                              Width="370"
-                    Canvas.Left="2"
-                          Canvas.Top="58"
+                              VerticalAlignment="Stretch"
+                              HorizontalAlignment="Stretch"
+                              Margin="0"
+                          
+                              
+                              Grid.Row="0"
+                              Grid.Column="1"
+                    
 
                     >
  
                 <ListBox Name="lbRules"
                          FlowDirection="LeftToRight"
                          Background="WhiteSmoke"
-                         ItemsSource="{Binding BeepRulesUIComponents}">
-                    <!-- ItemsSource="{Binding}"> -->
-
-                    <!--
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <beepRuleUI:ChangeNeighborColorUserControl /> 
-                    </DataTemplate>
-                </ListBox.ItemTemplate> -->
+                         ItemsSource="{Binding BeepRulesUIComponents}"
+                         
+                         
+                        >
+                   
                     <ListBox.ItemContainerStyle>
                         <Style>
                             <Setter Property="ListBoxItem.AllowDrop"
@@ -327,35 +301,38 @@
                     </ListBox.ItemContainerStyle>
                 </ListBox>
             </ScrollViewer>
+                <Grid
+                    Grid.Row="1"
+                    Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="10*" />
+                        <ColumnDefinition Width="78*" />
+                        <ColumnDefinition Width="10*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25*" />
+                        <RowDefinition Height="25*" />
+                        <RowDefinition Height="25*" />
+                        <RowDefinition Height="25*" />
+                        
+                    </Grid.RowDefinitions>
 
-            <!--<Button Name="BtnSave"
-                    Content="Save Painting"
-                    HorizontalAlignment="Center"
-                    Canvas.Left="30"
-                    Canvas.Top="446"
-                    Margin="0"
-                    Click="BtnSave_Click"></Button>
-            <Button Name="BtnLoad"
-                    Content="Load Painting"
-                    HorizontalAlignment="Center"
-                    Canvas.Left="30"
-                    Canvas.Top="413"
-                    Margin="0"
-                    Click="BtnLoad_Click">-->
-            <!--</Button>-->
-            <Button Name="BtnClear"
+
+                    <Button Name="BtnClear"
                     Content="Clear"
                     HorizontalAlignment="Center"
-                    Canvas.Left="142"
-                    Margin="0"
-                    Canvas.Top="405"
-                    Click="BtnClearClick">
+                    
+                    Click="BtnClearClick"
+                    Grid.Row="3"
+                    Grid.Column="2">
 
             </Button>
-            <Button Canvas.Left="142"
-                    Margin="0"
-                    Canvas.Top="317"
+            <Button 
                     Click="ClrPickMouseButtonClick"
+                Grid.Row="2"
+                Grid.Column="2"
                     >
                 <xctk:ColorPicker Name="clrPickMouse"
                                   Height="20"
@@ -366,23 +343,29 @@
                                   AvailableColorsHeader="Canvas Colors"
                                   ShowStandardColors="True"
                                   SelectedColorChanged="MouseColorChanged"
-                                  Canvas.Left="173"
-                                  Canvas.Top="324"
+                                  
                                   ShowDropDownButton="False"
                                   AdvancedButtonHeader="Specify"
                                   SelectedColor="Orange" />
             </Button>
 
 
-
+                    <StackPanel
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Grid.Row="1"
+                        Grid.Column="2">
+                        
             <Button Name="btnPaint"
                     Content="Paint"
                     HorizontalAlignment="Center"
-                    Canvas.Top="364"
+                   
                     Click="BtnPaintClick"
-                    RenderTransformOrigin="3.744,0.76"
-                    Canvas.Left="142"
-                    Margin="0" />
+                    
+                    RenderTransformOrigin="-0.171,3.889" 
+                    Grid.Row="1"
+                    Grid.Column="2"/>
+                    
             <xctk:IntegerUpDown Name="iudAmountPicker1"
                                 Height="30"
                                 Width="70"
@@ -393,31 +376,34 @@
                                 Padding="0,0,9,0"
                                 VerticalAlignment="Center"
                                 ValueChanged="AmountChanged"
-                                Canvas.Left="227"
-                                Canvas.Top="364"
-                                RenderTransformOrigin="4.307,11.068" />
-            <TextBox Text="Indefinite:"
-                     Canvas.Left="302"
-                     Canvas.Top="364" />
-            <CheckBox Name="chkIndefinite"
-                      Canvas.Left="321"
-                      Canvas.Top="383"
-                      Checked="IsCheckedIndefinite"
-                      Unchecked="IsUncheckedIndefinite"
-                      />
-            
-            <TextBox Name="MouseText"
-                     Canvas.Left="297"
-                     Canvas.Top="448"
-                     TextWrapping="NoWrap"
-                     Text="TextBox" />
-            <TextBox x:Name="MouseTextCopy"
-                     TextWrapping="NoWrap"
-                     Text="TextBox"
-                     Canvas.Left="297"
-                     Canvas.Top="425" />
+                                
+                                
+                                RenderTransformOrigin="4.307,11.068"
+                                 />
+                    </StackPanel>
+                    <StackPanel
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal"
+                        Grid.Row="0"
+                        Grid.Column="2">
+                        <TextBox Text="Indefinite:"
+                                 Width="60"
+                                 Height="30"
+                                  />
 
-        </Canvas>
+                        <CheckBox Name="chkIndefinite"
+                                  Width="20"
+                                  Height="20"
+                                  Checked="IsCheckedIndefinite"
+                                  Unchecked="IsUncheckedIndefinite"
+                                   />
+
+                    </StackPanel>
+                   
+                    
+                </Grid>
+            </Grid>
+            
         </Grid>
     </Grid>
 

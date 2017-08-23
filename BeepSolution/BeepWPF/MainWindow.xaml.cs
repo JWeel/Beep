@@ -33,7 +33,7 @@ namespace Beep {
         //private static readonly Point BEEP_SIZE = new Point(46, 53); // 5
 
         private bool isBoxed = true;
-       
+        private bool isBoxedCheckboxControl = false;
 
         // hexagon length values. only change HEXAGON_SIDE_LENGTH 
 
@@ -250,7 +250,7 @@ namespace Beep {
             Point axialPoint = MouseCoordinatesToAxialCoordinates(p.X, p.Y);
             Polygon po = (Polygon)this.FindName(HexagonPointToName(axialPoint));
 
-            MouseText.Text = (int)(p.X) + " , " + (int)(p.Y);
+            //MouseText.Text = (int)(p.X) + " , " + (int)(p.Y);
 
             if (po != null) {
                 if (useMouseDownColorDrag && isMouseDownColorDragging) {
@@ -297,7 +297,7 @@ namespace Beep {
                 UpdateRules();
                 UpdateUsedColors();
             }
-            MouseTextCopy.Text = axialPoint.X + " , " + axialPoint.Y;
+            //MouseTextCopy.Text = axialPoint.X + " , " + axialPoint.Y;
 
             if (useMouseDownColorDrag) isMouseDownColorDragging = true;
         }
@@ -686,7 +686,7 @@ namespace Beep {
         
 
         private void IsBoxedChecked(object sender, RoutedEventArgs e) {
-
+            
 
             if (bw != null) {
                 if (!bw.Boxed) {
@@ -703,7 +703,11 @@ namespace Beep {
                         UpdateUsedColors(); ;
                     }
                     else {
+                        CheckIsBoxed.Checked -= IsBoxedChecked;
+                        CheckIsBoxed.Unchecked -= IsBoxedUnchecked;
                         CheckIsBoxed.IsChecked = false;
+                        CheckIsBoxed.Unchecked += IsBoxedUnchecked;
+                        CheckIsBoxed.Checked += IsBoxedChecked;
 
                     }
 
@@ -732,8 +736,12 @@ namespace Beep {
                
             }
             else {
+                CheckIsBoxed.Checked -= IsBoxedChecked;
+                CheckIsBoxed.Unchecked -= IsBoxedUnchecked;
                 CheckIsBoxed.IsChecked = true;
-                //isBoxedCheckboxControl = true;
+                CheckIsBoxed.Checked += IsBoxedChecked;
+                CheckIsBoxed.Unchecked += IsBoxedUnchecked;
+                // isBoxedCheckboxControl = true;
             }
             
             
