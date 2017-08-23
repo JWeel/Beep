@@ -354,12 +354,18 @@ namespace Beep {
             BeepRule br = BeepRule.Create((sender as MenuItem).Header.ToString(), bw.tiles);
             beepRules.Add(br);
 
-            BeepRuleUserControl bruc = BeepRuleUserControl.Create(br);
+            BeepRulesUIComponents.Add(CreateBeepRuleUserControl(br));
+        }
+
+        //
+        private BeepRuleUserControl CreateBeepRuleUserControl(BeepRule rule) {
+            BeepRuleUserControl bruc = BeepRuleUserControl.Create(rule);
             bruc.SelectedRule += RuleUserControlRuleSelection;
             bruc.Deleting += DeleteRuleUserControl;
+            bruc.Dragging += RuleUserControlDragPreviewMouseDown;
             bruc.PrepareColorPickers(StandardColorItems);
             bruc.UpdateColorPickers(clrPickMouse.AvailableColors);
-            BeepRulesUIComponents.Add(bruc);
+            return bruc;
         }
 
         //
@@ -370,17 +376,14 @@ namespace Beep {
             if (bruc.SelectedRuleName == bruc.RuleName) return;
 
             beepRules.Remove(bruc.Rule);
+
+            int index = BeepRulesUIComponents.IndexOf(bruc);
             BeepRulesUIComponents.Remove(bruc);
 
             BeepRule br = BeepRule.Create(bruc.SelectedRuleName, bw.tiles);
             beepRules.Add(br);
 
-            bruc = BeepRuleUserControl.Create(br);
-            bruc.SelectedRule += RuleUserControlRuleSelection;
-            bruc.Deleting += DeleteRuleUserControl;
-            bruc.PrepareColorPickers(StandardColorItems);
-            bruc.UpdateColorPickers(clrPickMouse.AvailableColors);
-            BeepRulesUIComponents.Add(bruc);
+            BeepRulesUIComponents.Insert(index, CreateBeepRuleUserControl(br));
         }
 
         // deletes the UI component that corresponds to a rule
@@ -435,30 +438,27 @@ namespace Beep {
         }
 
         // experimental drag drop code
-        private void ListBoxPreviewMouseMoved(object sender, MouseEventArgs e) {
-            return;
-            if (sender is ListBoxItem && e.LeftButton == MouseButtonState.Pressed) {
-                ListBoxItem draggedItem = sender as ListBoxItem;
-                DragDrop.DoDragDrop(draggedItem, new DataObject("abc", draggedItem.DataContext), DragDropEffects.Move);
-                draggedItem.IsSelected = true;
+        private void RuleUserControlDragPreviewMouseDown(object sender, MouseEventArgs e) {
+            if (sender is BeepRuleUserControl && e.LeftButton == MouseButtonState.Pressed) {
+                BeepRuleUserControl draggedItem = sender as BeepRuleUserControl;
+                DragDrop.DoDragDrop(draggedItem, new DataObject("drag", draggedItem.DataContext), DragDropEffects.Move);
             }
         }
-        private void ListBoxRuleDropped(object sender, DragEventArgs e) {
-            return;
-            BeepRuleUserControl droppedData = e.Data.GetData("abc") as BeepRuleUserControl;
-            BeepRuleUserControl target = ((ListBoxItem)(sender)).DataContext as BeepRuleUserControl;
 
-            int removedIdx = lbRules.Items.IndexOf(droppedData);
-            int targetIdx = lbRules.Items.IndexOf(target);
+        private void RuleUserControlDragDropped(object sender, DragEventArgs e) {
+            BeepRuleUserControl draggedBruc = e.Data.GetData("drag") as BeepRuleUserControl;
+            BeepRuleUserControl targetBruc = ((ListBoxItem)(sender)).DataContext as BeepRuleUserControl;
+
+            int removedIdx = lbRules.Items.IndexOf(draggedBruc);
+            int targetIdx = lbRules.Items.IndexOf(targetBruc);
 
             if (removedIdx < targetIdx) {
-                BeepRulesUIComponents.Insert(targetIdx + 1, droppedData);
+                BeepRulesUIComponents.Insert(targetIdx + 1, draggedBruc);
                 BeepRulesUIComponents.RemoveAt(removedIdx);
-            }
-            else {
+            } else {
                 int remIdx = removedIdx + 1;
                 if (BeepRulesUIComponents.Count + 1 > remIdx) {
-                    BeepRulesUIComponents.Insert(targetIdx, droppedData);
+                    BeepRulesUIComponents.Insert(targetIdx, draggedBruc);
                     BeepRulesUIComponents.RemoveAt(remIdx);
                 }
             }
@@ -507,9 +507,9 @@ namespace Beep {
             OpenFileDialog open = new OpenFileDialog() { Filter = "Text Document|*.txt" };
             string line;
             bool? result = open.ShowDialog();
-            if(result == true) {
+            if (result == true) {
                 StreamReader file = new StreamReader(open.FileName);
-                while((line = file.ReadLine()) != null) {
+                while ((line = file.ReadLine()) != null) {
                     foreach (Point Key in bw.tiles.Keys) {
                         line = file.ReadLine();
                         if (!string.IsNullOrWhiteSpace(line)) {
@@ -522,10 +522,6 @@ namespace Beep {
                 Refresh();
                 file.Close();
             }
-        }
-
-        private void btnBeepSize_Click(object sender, RoutedEventArgs e) {
-            
         }
 
         private void MouseColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
@@ -631,12 +627,4 @@ namespace Beep {
      * 
      * 
      */
-    public class SavableBeepWorld {
-        public int SavableBeepWorldId { get; set; }
-        public string Name { get; set; }
-    }
-
-    public class BeepWorldContext : DbContext {
-        public DbSet<SavableBeepWorld> SavedBeepWorlds { get; set; }
-    }
 }

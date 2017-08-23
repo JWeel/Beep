@@ -3,6 +3,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Xceed.Wpf.Toolkit;
 
 namespace Beep.RuleUI {
@@ -10,6 +11,7 @@ namespace Beep.RuleUI {
 
         public event EventHandler SelectedRule;
         public event EventHandler Deleting;
+        public event EventHandler<MouseEventArgs> Dragging;
 
         protected StackPanel panelExpanded;
         protected DockPanel panelCollapsed;
@@ -65,14 +67,24 @@ namespace Beep.RuleUI {
             }
         }
 
-        protected void ComboBoxRuleSelected(object sender, RoutedEventArgs e) {
-            SelectedRule?.Invoke(this, e);
+        // reverse the state of the Collapsed property, which has a setter that handles UI visibility
+        protected void BtnCollapseOrExpandClick(object sender, RoutedEventArgs e) {
+            Collapsed = !Collapsed;
         }
+
+        //
+        protected void ComboBoxRuleSelected(object sender, RoutedEventArgs e) {
+            if (SelectedRuleName != null) SelectedRule?.Invoke(this, e);
+        }
+
+        //
         protected void DeleteButtonClick(object sender, RoutedEventArgs e) {
             Deleting?.Invoke(this, e);
         }
-        protected void BtnCollapseOrExpandClick(object sender, RoutedEventArgs e) {
-            Collapsed = !Collapsed;
+
+        //
+        protected void BtnDragMouseDown(object sender, MouseEventArgs e) {
+            Dragging?.Invoke(this, e);
         }
     }
 }

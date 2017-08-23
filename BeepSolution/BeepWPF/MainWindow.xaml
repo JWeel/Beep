@@ -310,10 +310,8 @@
                         <Style>
                             <Setter Property="ListBoxItem.AllowDrop"
                                     Value="True" />
-                            <EventSetter Event="ListBoxItem.PreviewMouseMove"
-                                         Handler="ListBoxPreviewMouseMoved" />
                             <EventSetter Event="ListBoxItem.Drop"
-                                         Handler="ListBoxRuleDropped" />
+                                         Handler="RuleUserControlDragDropped" />
                         </Style>
                     </ListBox.ItemContainerStyle>
                 </ListBox>
