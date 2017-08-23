@@ -86,7 +86,11 @@
                                         <TextBlock>
                                     Boxed
                                         </TextBlock>
-                                        <CheckBox>
+                                        <CheckBox x:Name="CheckIsBoxed"
+                                                      IsChecked="True"
+                                                      Checked="IsBoxedChecked"
+                                                      Unchecked="IsBoxedUnchecked"
+                                                  >
 
                                         </CheckBox>
                                         <TextBlock>Width</TextBlock>

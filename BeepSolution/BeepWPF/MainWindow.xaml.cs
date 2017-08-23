@@ -32,7 +32,8 @@ namespace Beep {
          // 7
         //private static readonly Point BEEP_SIZE = new Point(46, 53); // 5
 
-        private const bool BEEP_BOXED = true;
+        private bool isBoxed = true;
+       
 
         // hexagon length values. only change HEXAGON_SIDE_LENGTH 
 
@@ -61,6 +62,7 @@ namespace Beep {
         private bool isPaintingIndefinitely = false;
 
         private bool useRelativeBorderColor = true;
+        
         private Color fixedBorderColor = (Color)ColorConverter.ConvertFromString("#FF000000");
 
         private List<string> registeredHexPolygons = new List<string>();
@@ -111,7 +113,7 @@ namespace Beep {
             InitializeComponent();
             CalculateHexPolygonSize();
 
-            bw = new BeepWorld(BEEP_SIZE, BEEP_BOXED);
+            bw = new BeepWorld(BEEP_SIZE, isBoxed);
             beepRules = new List<BeepRule>(); // TODO should be part of beepworld object
 
             BeepRulesUIComponents = new ObservableCollection<BeepRuleUserControl>();
@@ -586,10 +588,10 @@ namespace Beep {
 
 
 
-            bool boxedBool = true;
+            
 
             
-            bw.Resize(newSize, boxedBool);
+            bw.Resize(newSize, isBoxed);
             UnprepareBeepWorldCanvas();
 
             PrepareBeepWorldCanvas();
@@ -666,6 +668,65 @@ namespace Beep {
         private void OnSizeChanged(object sender, SizeChangedEventArgs e) {
             Debug.WriteLine(e.NewSize);
         }
+
+        
+
+        private void IsBoxedChecked(object sender, RoutedEventArgs e) {
+
+
+            if (bw != null) {
+                if (!bw.Boxed) {
+                    var result = System.Windows.MessageBox.Show("Be careful, by boxing the canvas you will lose your current painting. Would you like to proceed?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+                    if (result == MessageBoxResult.Yes) {
+                        isBoxed = true;
+                        bw.Resize(bw.Size, isBoxed);
+                        UnprepareBeepWorldCanvas();
+
+                        PrepareBeepWorldCanvas();
+
+                        Refresh();
+                        UpdateUsedColors(); ;
+                    }
+                    else {
+                        CheckIsBoxed.IsChecked = false;
+
+                    }
+
+                }
+
+            }
+           
+
+
+
+        }
+
+
+
+        private void IsBoxedUnchecked(object sender, RoutedEventArgs e) {
+            var result = System.Windows.MessageBox.Show("Be careful, by unboxing the canvas you will lose your current painting. Would you like to proceed?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+            if(result == MessageBoxResult.Yes) {
+                isBoxed = false;
+                bw.Resize(bw.Size, isBoxed);
+                UnprepareBeepWorldCanvas();
+
+                PrepareBeepWorldCanvas();
+                Refresh();
+                UpdateUsedColors();
+               
+            }
+            else {
+                CheckIsBoxed.IsChecked = true;
+                //isBoxedCheckboxControl = true;
+            }
+            
+            
+
+        }
+
+      
         //private void SwitchFullScreen() {
         //    var window = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
         //    if(window!= null) {
