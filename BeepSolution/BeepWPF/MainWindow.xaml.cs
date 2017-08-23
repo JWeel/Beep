@@ -748,7 +748,9 @@ namespace Beep {
 
         }
 
-      
+        
+
+
 
         //private void SwitchFullScreen() {
         //    var window = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);

@@ -37,7 +37,7 @@
         
         <Grid
             Name="ControlMenuGrid"
-           
+          
             
              Grid.Column="1">
             <Grid.RowDefinitions>
@@ -272,10 +272,10 @@
                 <ScrollViewer FlowDirection="RightToLeft"
                           CanContentScroll="True"
                           VerticalScrollBarVisibility="Auto"
-                              VerticalAlignment="Stretch"
-                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Top"
                               Margin="0"
-                          
+                          Height="230"
+                              Width="200"
                               
                               Grid.Row="0"
                               Grid.Column="1"
@@ -287,9 +287,7 @@
                          FlowDirection="LeftToRight"
                          Background="WhiteSmoke"
                          ItemsSource="{Binding BeepRulesUIComponents}"
-                         
-                         
-                        >
+                             >
                    
                     <ListBox.ItemContainerStyle>
                         <Style>
@@ -303,7 +301,8 @@
             </ScrollViewer>
                 <Grid
                     Grid.Row="1"
-                    Grid.Column="1">
+                    Grid.Column="1"
+                    VerticalAlignment="Top">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="10*" />

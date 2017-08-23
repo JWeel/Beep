@@ -329,9 +329,9 @@
         <LinearGradientBrush x:Key="GradientBrush"
                              StartPoint="0,0"
                              EndPoint="1,1">
-            <GradientStop Color="#0B1013"
+            <GradientStop Color="#F75C2F"
                           Offset="0.0" />
-            <GradientStop Color="#FF1C26F0"
+            <GradientStop Color="#F7C242"
                           Offset="0.25" />
 
         </LinearGradientBrush>
@@ -339,9 +339,9 @@
         <LinearGradientBrush x:Key="HoverGradientBrush"
                              StartPoint="0,0"
                              EndPoint="1,1">
-            <GradientStop Color="#0B1013"
+            <GradientStop Color="#F75C2F"
                           Offset="0.25" />
-            <GradientStop Color="#FFF0E21C"
+            <GradientStop Color="#F7C242"
                           Offset="0.75" />
 
         </LinearGradientBrush>
@@ -349,12 +349,17 @@
         <LinearGradientBrush x:Key="ClickGradientBrush"
                              StartPoint="1,1"
                              EndPoint="0,0">
-            <GradientStop Color="#0B1013"
+            <GradientStop Color="#F75C2F"
                           Offset="0.0" />
-            <GradientStop Color="#FFF0E21C"
+            <GradientStop Color="#F7C242"
                           Offset="0.25" />
 
         </LinearGradientBrush>
+        <CornerRadius x:Key="CornerRadius"
+                      TopLeft="3"
+                      TopRight="5" />
+
+
 
         <Style TargetType="{x:Type Button}">
             
@@ -369,6 +374,9 @@
             <Setter Property="Margin"
                     Value="5" />
             <Setter Property="BorderBrush" Value="Black"/>
+           
+            
+
 
             <Setter Property="Template">
                 <Setter.Value>
@@ -376,6 +384,7 @@
                         <Border Name="border"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 Background="{TemplateBinding Background}"
+                         
                                 
                                >
                             <ContentPresenter HorizontalAlignment="Center"
