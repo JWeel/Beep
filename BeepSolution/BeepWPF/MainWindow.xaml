@@ -5,27 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:beepRuleUI="clr-namespace:Beep.RuleUI"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        mc:Ignorable="d"
-        SizeToContent="WidthAndHeight"
+        mc:Ignorable="d"      
         Title="Beep">
+    <!--SizeToContent="WidthAndHeight"-->
     <!-- SizeToContent="WidthAndHeight" is required to make screen size be exactly as defined below -->
-
-    <Grid Height="480"
-          Width="960"
+    <!--Height="480"
+          Width="960"-->
+    <Grid Width="{Binding ActualWidth, RelativeSource= {RelativeSource AncestorType={x:Type Window}}}"
+          Height="{Binding ActualWidth, RelativeSource= {RelativeSource AncestorType={x:Type Window}}}"
           HorizontalAlignment="Left"
           VerticalAlignment="Top"
           MouseMove="OnMouseMove"
           MouseLeftButtonUp="OnMouseLeftUp">
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.618*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <!--Height="480"
+                Width="593"-->
+        <!--HorizontalAlignment="Left"
+                VerticalAlignment="Top"-->
+        <Grid>
         <Canvas Name="canvas"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Height="480"
-                Width="593"
-                MouseLeftButtonDown="OnMouseLeftDown">
+              MouseLeftButtonDown="OnMouseLeftDown">
+            
+        
         </Canvas>
-        <Canvas Height="480"
-                Width="367"
+        </Grid>
+        <!--Height="480"
+                Width="367"-->
+        <!--HorizontalAlignment="Right"-->
+        <Grid>
+        <Canvas Name="ControlMenuCanvas"
                 HorizontalAlignment="Right"
                 Background="FloralWhite">
             <Menu Height="20"
@@ -216,7 +227,8 @@
                           Style="{StaticResource menuParentStyle}"
                           ItemContainerStyle="{DynamicResource MenuItemStyle1}"
                           Template="{DynamicResource MenuItemControlTemplate2}">
-                    <MenuItem Header="Full Screen" />
+                    <MenuItem Header="Full Screen"
+                              Click="SetFullscreenClick"/>
 
                 </MenuItem>
 
@@ -395,7 +407,7 @@
                       Checked="IsCheckedIndefinite"
                       Unchecked="IsUncheckedIndefinite"
                       />
-
+            
             <TextBox Name="MouseText"
                      Canvas.Left="297"
                      Canvas.Top="448"
@@ -408,6 +420,7 @@
                      Canvas.Top="425" />
 
         </Canvas>
+        </Grid>
     </Grid>
 
 </Window>
