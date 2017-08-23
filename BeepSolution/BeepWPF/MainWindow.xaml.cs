@@ -613,6 +613,28 @@ namespace Beep {
                 Refresh();
             }
         }
+
+        private void SetFullscreenClick(object sender, RoutedEventArgs e) {
+            //SwitchFullScreen();
+
+        }
+        //private void SwitchFullScreen() {
+        //    var window = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+        //    if(window!= null) {
+        //        if(window.WindowStyle== WindowStyle.None) {
+        //            window.WindowStyle = WindowStyle.SingleBorderWindow;
+        //            window.WindowState = WindowState;
+
+        //        }
+        //        else {
+        //            WindowState = window.WindowState;
+        //            window.WindowStyle = WindowStyle.None;
+        //            window.WindowState = System.Windows.WindowState.Maximized;
+        //            window.Topmost = true;
+                    
+        //        }
+        //    }
+        //}
     }
 
     /*
