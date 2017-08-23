@@ -127,6 +127,11 @@ namespace Beep {
                 BeepRule.RULE_VINCENT,
                 BeepRule.RULE_LIFE
             };
+            foreach (string ruleMenuItem in RuleMenuItems) {
+                MenuItem mi = new MenuItem { Header = ruleMenuItem };
+                mi.Click += AddRuleClick;
+                mnuAddRule.Items.Add(mi);
+            }
 
             Refresh();
             UpdateUsedColors();
@@ -663,9 +668,18 @@ namespace Beep {
 
         }
 
+        // 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e) {
-            Debug.WriteLine(e.NewSize);
+            Debug.WriteLine(string.Format("{0},{1}", e.NewSize.Width, ControlMenuGrid.ActualWidth));
+            if (e.NewSize.Width < ControlMenuGrid.ActualWidth) ControlMenuGrid.Visibility = Visibility.Collapsed;
+            else ControlMenuGrid.Visibility = Visibility.Visible;
         }
+
+        // opens the color picker window, allowing a user to click anywhere in the button to open it
+        private void ClrPickMouseButtonClick(object sender, RoutedEventArgs e) {
+            clrPickMouse.IsOpen = true;
+        }
+
         //private void SwitchFullScreen() {
         //    var window = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
         //    if(window!= null) {
