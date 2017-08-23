@@ -15,16 +15,18 @@
     <!--HorizontalAlignment="Left"
           VerticalAlignment="Top"-->
     <Grid Name="ParentGrid"
-        Width="{Binding ActualWidth, RelativeSource= {RelativeSource AncestorType={x:Type Window}}}"
-          Height="{Binding ActualWidth, RelativeSource= {RelativeSource AncestorType={x:Type Window}}}"
-          
           MouseMove="OnMouseMove"
           MouseLeftButtonUp="OnMouseLeftUp">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.618*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+        <!--
         
+        Width="{Binding ActualWidth, RelativeSource= {RelativeSource AncestorType={x:Type Window}}}"
+          Height="{Binding ActualWidth, RelativeSource= {RelativeSource AncestorType={x:Type Window}}}"
+          
+        -->
        
         <Grid Name="CanvasGrid"
               HorizontalAlignment="Left"
@@ -254,25 +256,27 @@
                 </Menu>
             </StackPanel>
 
-            <Grid
+            <UniformGrid
                 Grid.Row="1"
+                Rows="2"
                 >
-            <Grid.ColumnDefinitions>
+            <!--<Grid.ColumnDefinitions>
                 <ColumnDefinition Width="5*" />
                 <ColumnDefinition Width="90*" />
                 <ColumnDefinition Width="5*" />
             </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+                    <RowDefinition Height="10*" />
+                </Grid.RowDefinitions>-->
 
             
                 
                 <ScrollViewer FlowDirection="RightToLeft"
                           CanContentScroll="True"
                           VerticalScrollBarVisibility="Auto"
-                              VerticalAlignment="Top"
+
+
                               Margin="0"
                           Height="230"
                               Width="200"
@@ -401,7 +405,7 @@
                    
                     
                 </Grid>
-            </Grid>
+            </UniformGrid>
             
         </Grid>
     </Grid>
