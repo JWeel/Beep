@@ -535,6 +535,30 @@ namespace Beep {
             highlightedHexPolygon = null;
         }
 
+        //private void ResizeCanvasToFullScreen() {
+        //    Point newSize = new Point();
+
+        //    bool b = true;
+
+
+        //    newSize.X = (int)CanvasGrid.ActualWidth;
+        //    newSize.Y = (int)CanvasGrid.ActualHeight;
+        //    ResizeCanvas(newSize, b);
+
+
+        //}
+
+        //private void ResizeCanvas(Point p, bool b) {
+        //    Point newSize = new Point();
+        //    bw.Resize(newSize, b);
+        //    UnprepareBeepWorldCanvas();
+
+        //    PrepareBeepWorldCanvas();
+
+        //    Refresh();
+        //    UpdateUsedColors();
+        //}
+
         private void BtnSize_Click(object sender, RoutedEventArgs e) {
             int result;
             Point newSize = new Point();
@@ -615,7 +639,12 @@ namespace Beep {
         }
 
         private void SetFullscreenClick(object sender, RoutedEventArgs e) {
-            //SwitchFullScreen();
+            ControlMenuGrid.Visibility = Visibility.Collapsed;
+            ParentGrid.ColumnDefinitions.RemoveAt(0);
+            //ResizeCanvasToFullScreen();
+           
+            
+           
 
         }
         //private void SwitchFullScreen() {

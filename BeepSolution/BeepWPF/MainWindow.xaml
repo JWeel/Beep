@@ -11,7 +11,8 @@
     <!-- SizeToContent="WidthAndHeight" is required to make screen size be exactly as defined below -->
     <!--Height="480"
           Width="960"-->
-    <Grid Width="{Binding ActualWidth, RelativeSource= {RelativeSource AncestorType={x:Type Window}}}"
+    <Grid Name="ParentGrid"
+        Width="{Binding ActualWidth, RelativeSource= {RelativeSource AncestorType={x:Type Window}}}"
           Height="{Binding ActualWidth, RelativeSource= {RelativeSource AncestorType={x:Type Window}}}"
           HorizontalAlignment="Left"
           VerticalAlignment="Top"
@@ -25,7 +26,8 @@
                 Width="593"-->
         <!--HorizontalAlignment="Left"
                 VerticalAlignment="Top"-->
-        <Grid>
+        <Grid Name="CanvasGrid"
+            >
         <Canvas Name="canvas"
               MouseLeftButtonDown="OnMouseLeftDown">
             
@@ -35,15 +37,18 @@
         <!--Height="480"
                 Width="367"-->
         <!--HorizontalAlignment="Right"-->
-        <Grid>
+        <Grid
+            Name="ControlMenuGrid"
+            HorizontalAlignment="Right"
+              >
         <Canvas Name="ControlMenuCanvas"
-                HorizontalAlignment="Right"
+                
                 Background="FloralWhite">
             <Menu Height="20"
                   HorizontalAlignment="Right"
                   Name="ControlMenu"
                   VerticalAlignment="Top"
-                  Width="367">
+                  >
                 <MenuItem Header="_File"
                           Style="{StaticResource menuParentStyle}"
                           ItemContainerStyle="{DynamicResource MenuItemStyle1}"
@@ -297,15 +302,17 @@
                     Width="36"
                     Margin="0"
                     Click="btnBeepSize_Click" />-->
-
-            <ScrollViewer FlowDirection="RightToLeft"
+                
+                <ScrollViewer FlowDirection="RightToLeft"
                           CanContentScroll="False"
                           VerticalScrollBarVisibility="Auto"
                           Height="240"
-                          Canvas.Left="2"
+                              Width="370"
+                    Canvas.Left="2"
                           Canvas.Top="58"
-                          Width="363">
 
+                    >
+ 
                 <ListBox Name="lbRules"
                          FlowDirection="LeftToRight"
                          Background="WhiteSmoke"
