@@ -113,8 +113,6 @@
                     Content="X"
                     FontSize="12"
                     FontWeight="Bold"
-                    Background="Black"
-                    Foreground="Red"
                     Height="20"
                     Width="25"
                     Margin="1,0,0,0"

@@ -6,7 +6,8 @@
         xmlns:beepRuleUI="clr-namespace:Beep.RuleUI"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"      
-        Title="Beep">
+        Title="Beep"
+        SizeChanged="OnSizeChanged">
     <!--SizeToContent="WidthAndHeight"-->
     <!-- SizeToContent="WidthAndHeight" is required to make screen size be exactly as defined below -->
     <!--Height="480"

@@ -7,7 +7,7 @@ namespace Beep.Rules {
         // this rule changes tiles matching first color in colorArguments to second color in colorArguments
         // required: 
         //  -two colors in colorArguments
-        //      -first color specifies matches tiles
+        //      -first color specifies the color that tiles must match
         //      -second color is given to tiles that neighbor the matching tile
         //  -one int [0 < i < 6] in intArguments specifying number of tiles to change
         //  -one bool argument specifying whether to not affect neigbhors that are also matchers
