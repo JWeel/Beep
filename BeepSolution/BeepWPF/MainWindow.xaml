@@ -40,7 +40,7 @@
         <!--HorizontalAlignment="Right"-->
         <Grid
             Name="ControlMenuGrid"
-            HorizontalAlignment="Right"
+            HorizontalAlignment="Left"
               >
         <Canvas Name="ControlMenuCanvas"
                 
@@ -157,7 +157,6 @@
                                                   AvailableColorsHeader="Canvas Colors"
                                                   ShowStandardColors="True"
                                                   SelectedColorChanged="clrPickBackground_SelectedColorChanged"
-                                                  StandardColors="{Binding StandardColorItems, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}"
                                                   Canvas.Left="173"
                                                   Canvas.Top="324"
                                                   ShowDropDownButton="False"
@@ -193,7 +192,6 @@
                                               AvailableColorsHeader="Canvas Colors"
                                               ShowStandardColors="True"
                                               SelectedColorChanged="clrPickBorderColor_SelectedColorChanged"
-                                              StandardColors="{Binding StandardColorItems, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}"
                                               Canvas.Left="173"
                                               Canvas.Top="324"
                                               ShowDropDownButton="False"
@@ -242,22 +240,11 @@
 
                 </MenuItem>
 
-                <MenuItem Header="_Add Rule"
+                <MenuItem Name="mnuAddRule"
+                          Header="_Add Rule"
                           Style="{StaticResource menuParentStyle}"
                           ItemContainerStyle="{DynamicResource MenuItemStyle1}"
                           Template="{DynamicResource MenuItemControlTemplate2}">
-                    <MenuItem Header="Change Color"
-                              Click="AddRuleClick" />
-                    <MenuItem Header="Change Neighbor Color"
-                              Click="AddRuleClick" />
-                    <MenuItem Header="Random Change"
-                              Click="AddRuleClick" />
-                    <MenuItem Header="Virus"
-                              Click="AddRuleClick" />
-                    <MenuItem Header="Vincent"
-                              Click="AddRuleClick" />
-                    <MenuItem Header="Life"
-                              Click="AddRuleClick" />
                 </MenuItem>
                 <MenuItem Header="Style"
                           Style="{StaticResource menuParentStyle}"
@@ -367,7 +354,9 @@
             </Button>
             <Button Canvas.Left="142"
                     Margin="0"
-                    Canvas.Top="317">
+                    Canvas.Top="317"
+                    Click="ClrPickMouseButtonClick"
+                    >
                 <xctk:ColorPicker Name="clrPickMouse"
                                   Height="20"
                                   Width="35"
@@ -377,7 +366,6 @@
                                   AvailableColorsHeader="Canvas Colors"
                                   ShowStandardColors="True"
                                   SelectedColorChanged="MouseColorChanged"
-                                  StandardColors="{Binding StandardColorItems, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Mode=OneWay}"
                                   Canvas.Left="173"
                                   Canvas.Top="324"
                                   ShowDropDownButton="False"
