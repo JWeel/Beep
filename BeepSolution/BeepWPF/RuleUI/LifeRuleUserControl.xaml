@@ -76,11 +76,11 @@
             </ComboBox>
 
             <TextBox Name="txtRule1"
-                     Text="Create lines between"
+                     Text="Simulate life"
                      Height="20"
                      HorizontalAlignment="Left"
                      VerticalAlignment="Center"
-                     Margin="-91,0,1,0"
+                     Margin="-71,0,1,0"
                      IsReadOnly="True"
                      IsHitTestVisible="false" />
             <!-- TODO only select colors that are used in beepworld -->
@@ -88,7 +88,7 @@
                               Height="20"
                               Width="20"
                               Padding="0,0,0,1"
-                              Margin="-1,0,0,0"
+                              Margin="0,0,0,0"
                               BorderThickness="0"
                               AvailableColorsHeader="Canvas Colors"
                               DisplayColorAndName="False"
@@ -97,7 +97,7 @@
                               ShowDropDownButton="False"
                               AdvancedButtonHeader="Specify" />
             <TextBox Name="txtRule3"
-                     Text="and make them"
+                     Text="and death"
                      Height="20"
                      HorizontalAlignment="Left"
                      VerticalAlignment="Center"
@@ -120,7 +120,7 @@
                      Height="20"
                      HorizontalAlignment="Left"
                      VerticalAlignment="Bottom"
-                     Margin="-222,0,0,5"
+                     Margin="-152,0,0,5"
                      IsReadOnly="True"
                      IsHitTestVisible="false" />
             <CheckBox Name="chkIgnoreUnrelated"
@@ -128,7 +128,7 @@
                       VerticalAlignment="Bottom"
                       Height="20"
                       Width="20"
-                      Margin="-100,0,0,3"
+                      Margin="-31,0,0,3"
                       Checked="OnIgnoreChecked"
                       Unchecked="OnIgnoreUnchecked"
                 />

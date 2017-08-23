@@ -11,6 +11,8 @@ namespace Beep.Rules {
         // this rule changes tiles matching first color in colorArguments to second color in colorArguments
         // required: 
         //  -two colors in colorArguments
+        //      -first color specifies the color that tiles must match
+        //      -second color is what the matching tiles become
 
         // TODO possible extension: percentage reliability, percentage of tiles to change
 

@@ -9,9 +9,10 @@ using System.Windows.Media;
 namespace Beep.Rules {
     public class RandomChangeRule : BeepRule {
 
-        // this rule changes tiles matching first color in colorArguments to second color in colorArguments
+        // this rule randomly selects tiles and assigns them a defined color
         // required: 
-        //  - TODO
+        // -one color argument specifying what color the random tiles are changed to
+        // -one int argument specifying what permillage (1/1000) of tiles is affected
 
         public RandomChangeRule(Dictionary<Point, Tile> tiles, List<Color> colorArguments = null, List<int> intArguments = null, List<bool> boolArguments = null) : base(tiles) {
             TargetColor = colorArguments[0];

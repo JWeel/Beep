@@ -79,7 +79,18 @@ namespace Beep {
             new ColorItem((Color)ColorConverter.ConvertFromString("#FFFF00FF"),"#FFFF00FF"),
             new ColorItem((Color)ColorConverter.ConvertFromString("#FFFFFFFF"),"#FFFFFFFF"),
             new ColorItem((Color)ColorConverter.ConvertFromString("#FF888888"),"#FF888888"),
-            new ColorItem((Color)ColorConverter.ConvertFromString("#FF000000"),"#FF000000")
+            new ColorItem((Color)ColorConverter.ConvertFromString("#FF000000"),"#FF000000"),
+
+            new ColorItem((Color)ColorConverter.ConvertFromString("#FF880000"),"#FF880000"),
+            new ColorItem((Color)ColorConverter.ConvertFromString("#FF885200"),"#FF885200"),
+            new ColorItem((Color)ColorConverter.ConvertFromString("#FF888800"),"#FF888800"),
+            new ColorItem((Color)ColorConverter.ConvertFromString("#FF008800"),"#FF008800"),
+            new ColorItem((Color)ColorConverter.ConvertFromString("#FF008888"),"#FF008888"),
+            new ColorItem((Color)ColorConverter.ConvertFromString("#FF000088"),"#FF000088"),
+            new ColorItem((Color)ColorConverter.ConvertFromString("#FF880088"),"#FF880088"),
+            new ColorItem((Color)ColorConverter.ConvertFromString("#FFBBBBBB"),"#FFBBBBBB"),
+            new ColorItem((Color)ColorConverter.ConvertFromString("#FF444444"),"#FF444444"),
+            new ColorItem((Color)ColorConverter.ConvertFromString("#00FFFFFF"),"#00FFFFFF")
         };
 
         //private List<Color> UsedColors;
@@ -120,6 +131,8 @@ namespace Beep {
             Refresh();
             UpdateUsedColors();
             clrPickMouse.StandardColors = StandardColorItems;
+            clrPickBackground.StandardColors = StandardColorItems;
+            clrPickBorderColor.StandardColors = StandardColorItems;
         }
 
         private void CalculateHexPolygonSize() {
@@ -169,6 +182,8 @@ namespace Beep {
         // forwards a new list of coloritems to the various colorpickers in the application
         private void UpdateColorPickers(ObservableCollection<ColorItem> usedColorItems) {
             clrPickMouse.AvailableColors = usedColorItems;
+            clrPickBackground.AvailableColors = usedColorItems;
+            clrPickBorderColor.AvailableColors = usedColorItems;
             foreach (BeepRuleUserControl bruc in BeepRulesUIComponents) bruc.UpdateColorPickers(usedColorItems);
         }
 
@@ -618,6 +633,10 @@ namespace Beep {
             //SwitchFullScreen();
 
         }
+
+        private void OnSizeChanged(object sender, SizeChangedEventArgs e) {
+            Debug.WriteLine(e.NewSize);
+        }
         //private void SwitchFullScreen() {
         //    var window = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
         //    if(window!= null) {
@@ -631,7 +650,7 @@ namespace Beep {
         //            window.WindowStyle = WindowStyle.None;
         //            window.WindowState = System.Windows.WindowState.Maximized;
         //            window.Topmost = true;
-                    
+
         //        }
         //    }
         //}

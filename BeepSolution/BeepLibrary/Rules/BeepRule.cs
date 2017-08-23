@@ -51,7 +51,7 @@ namespace Beep.Rules {
                         intArguments: new List<int> { 1 }, boolArguments: new List<bool> { true, false });
                 case RULE_VINCENT:
                     return new VincentRule(bwTiles,
-                        colorArguments: new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFA500"), (Color)ColorConverter.ConvertFromString("#FFABCDEF") }
+                        colorArguments: new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFA500"), (Color)ColorConverter.ConvertFromString("#FFABCDEF"), (Color)ColorConverter.ConvertFromString("#FFFFFFFF") }
                     );
                 case RULE_LIFE:
                     return new LifeRule(bwTiles,

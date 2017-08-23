@@ -7,11 +7,11 @@ using System.Windows;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("BeepWPF")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("BeepWorld")]
+[assembly: AssemblyDescription("Rule-based procedural painting generation.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("BeepWPF")]
+[assembly: AssemblyProduct("BeepWorld")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

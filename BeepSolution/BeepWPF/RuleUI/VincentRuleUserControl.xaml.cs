@@ -52,7 +52,7 @@ namespace Beep.RuleUI {
         }
 
         private void ClrPickIgnoreChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
-            //(Rule as VincentRule).IgnoreColor = (Color)e.NewValue;
+            (Rule as VincentRule).IgnoreColor = (Color)e.NewValue;
         }
     }
 }
