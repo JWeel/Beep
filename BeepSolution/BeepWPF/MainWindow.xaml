@@ -280,36 +280,32 @@
 
 
 
-                    <ScrollViewer FlowDirection="RightToLeft"
-                          CanContentScroll="True"
-                          VerticalScrollBarVisibility="Auto"
-
-
+                <ScrollViewer FlowDirection="RightToLeft"
+                              CanContentScroll="True"
+                              VerticalScrollBarVisibility="Visible"
                               Margin="0"
-
-                              
                               Grid.Row="0"
-                              Grid.Column="1"
-                    
-
-                    >
- 
-                <ListBox Name="lbRules"
+                              Grid.Column="1">
+                    <ListBox Name="lbRules"
                          FlowDirection="LeftToRight"
                          Background="WhiteSmoke"
                          HorizontalContentAlignment="Stretch"
-                         ItemsSource="{Binding BeepRulesUIComponents}"
-                             >
-                   
-                    <ListBox.ItemContainerStyle>
-                        <Style>
-                            <Setter Property="ListBoxItem.AllowDrop"
-                                    Value="True" />
-                            <EventSetter Event="ListBoxItem.Drop"
-                                         Handler="RuleUserControlDragDropped" />
-                        </Style>
-                    </ListBox.ItemContainerStyle>
-                </ListBox>
+                         ItemsSource="{Binding BeepRulesUIComponents}">
+                        <ListBox.Template>
+                            <ControlTemplate>
+                                <ItemsPresenter></ItemsPresenter>
+                            </ControlTemplate>
+                        </ListBox.Template>
+
+                        <ListBox.ItemContainerStyle>
+                            <Style>
+                                <Setter Property="ListBoxItem.AllowDrop"
+                                        Value="True" />
+                                <EventSetter Event="ListBoxItem.Drop"
+                                             Handler="RuleUserControlDragDropped" />
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
             </ScrollViewer>
                 <Grid
                     Grid.Row="1"
