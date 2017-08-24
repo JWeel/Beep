@@ -43,5 +43,33 @@ namespace Beep.RuleUI {
         private void ClrPickTargetChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
             (Rule as RandomChangeRule).TargetColor = (Color)e.NewValue;
         }
+
+        private void OnFullRandomUnchecked(object sender, RoutedEventArgs e) {
+            (Rule as RandomChangeRule).FullyRandomizeColors = false;
+        }
+
+        private void OnFullRandomChecked(object sender, RoutedEventArgs e) {
+            (Rule as RandomChangeRule).FullyRandomizeColors = true;
+        }
+
+        private void OnAlwaysSameUnchecked(object sender, RoutedEventArgs e) {
+            if (this.IsInitialized) {
+                (Rule as RandomChangeRule).UseFixedColor = false;
+                txtRule3.Visibility = Visibility.Collapsed;
+                clrPickTarget.Visibility = Visibility.Collapsed;
+                txtRule4.Visibility = Visibility.Visible;
+                chkFullRandom.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void OnAlwaysSameChecked(object sender, RoutedEventArgs e) {
+            if (this.IsInitialized) {
+                (Rule as RandomChangeRule).UseFixedColor = true;
+                txtRule3.Visibility = Visibility.Visible;
+                clrPickTarget.Visibility = Visibility.Visible;
+                txtRule4.Visibility = Visibility.Collapsed;
+                chkFullRandom.Visibility = Visibility.Collapsed;
+            }
+        }
     }
 }

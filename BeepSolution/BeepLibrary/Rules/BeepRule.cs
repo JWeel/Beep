@@ -43,7 +43,8 @@ namespace Beep.Rules {
                 case RULE_RANDOM_CHANGE:
                     return new RandomChangeRule(bwTiles,
                         new List<Color> { (Color)ColorConverter.ConvertFromString("#FFFFA500") },
-                        new List<int> { 5 }
+                        new List<int> { 5 },
+                        new List<bool> { true, false }
                     );
                 case RULE_VIRUS:
                     return new VirusRule(bwTiles, 
