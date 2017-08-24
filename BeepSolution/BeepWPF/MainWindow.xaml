@@ -40,7 +40,7 @@
         <Grid
             Name="ControlMenuGrid"
             MinWidth="200"
-            Background="Black"
+            Background="#FF112131"
           
             
              Grid.Column="1">
@@ -241,14 +241,14 @@
 
 
 
-                    <MenuItem Header="_View"
+                    <!--<MenuItem Header="_View"
                               Style="{StaticResource menuParentStyle}"
                               ItemContainerStyle="{DynamicResource MenuItemStyle1}"
                               Template="{DynamicResource MenuItemControlTemplate2}">
                         <MenuItem Header="Full Screen"
                                   Click="SetFullscreenClick" />
 
-                    </MenuItem>
+                    </MenuItem>-->
 
                     <MenuItem Name="mnuAddRule"
                               Header="_Add Rule"
@@ -297,6 +297,7 @@
                 <ListBox Name="lbRules"
                          FlowDirection="LeftToRight"
                          Background="WhiteSmoke"
+                         HorizontalContentAlignment="Stretch"
                          ItemsSource="{Binding BeepRulesUIComponents}"
                              >
                    

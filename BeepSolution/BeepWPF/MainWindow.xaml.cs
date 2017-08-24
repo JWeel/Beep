@@ -674,8 +674,9 @@ namespace Beep {
 
         }
 
-        // 
+        // hides or shows the rules part of the window depending on overall window size
         private void OnSizeChanged(object sender, SizeChangedEventArgs e) {
+            // size must be at least: golden ratio (1.618) * controlgrid.minwidth + controlgrid.minwidth
             if (e.NewSize.Width < WINDOW_MIN_WIDTH) ControlMenuGrid.Visibility = Visibility.Collapsed;
             else ControlMenuGrid.Visibility = Visibility.Visible;
         }
