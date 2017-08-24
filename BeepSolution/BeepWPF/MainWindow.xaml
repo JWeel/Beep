@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Background="#FFFBF0DA"
+        Background="#9A5034"
         Title="Beep"
         SizeChanged="OnSizeChanged">
     <!--SizeToContent="WidthAndHeight"-->
@@ -40,7 +40,7 @@
         <Grid
             Name="ControlMenuGrid"
             MinWidth="200"
-            Background="#FF112131"
+              Background="#9A5034"
           
             
              Grid.Column="1">

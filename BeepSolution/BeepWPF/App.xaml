@@ -329,30 +329,30 @@
         <LinearGradientBrush x:Key="GradientBrush"
                              StartPoint="0,0"
                              EndPoint="1,1">
-            <GradientStop Color="#F75C2F"
+            <GradientStop Color="#08192D"
                           Offset="0.0" />
-            <GradientStop Color="#F7C242"
-                          Offset="0.25" />
+            <GradientStop Color="#0F2540"
+                          Offset="0.15" />
 
         </LinearGradientBrush>
 
         <LinearGradientBrush x:Key="HoverGradientBrush"
                              StartPoint="0,0"
                              EndPoint="1,1">
-            <GradientStop Color="#F75C2F"
-                          Offset="0.25" />
-            <GradientStop Color="#F7C242"
-                          Offset="0.75" />
+            <GradientStop Color="#268785"
+                          Offset="0.85" />
+            <GradientStop Color="#66BAB7"
+                          Offset="0.95" />
 
         </LinearGradientBrush>
 
         <LinearGradientBrush x:Key="ClickGradientBrush"
                              StartPoint="1,1"
                              EndPoint="0,0">
-            <GradientStop Color="#F75C2F"
+            <GradientStop Color="#268785"
                           Offset="0.0" />
-            <GradientStop Color="#F7C242"
-                          Offset="0.25" />
+            <GradientStop Color="#0089A7"
+                          Offset="0.15" />
 
         </LinearGradientBrush>
         <CornerRadius x:Key="CornerRadius"
@@ -385,6 +385,7 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 Background="{TemplateBinding Background}"
                                 Opacity="1"
+                                BorderThickness="0"
                          
                                 
                                >
