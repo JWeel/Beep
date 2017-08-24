@@ -288,7 +288,8 @@
                               VerticalScrollBarVisibility="Visible"
                               Margin="0"
                               Grid.Row="0"
-                              Grid.Column="1">
+                              Grid.Column="1"
+                              Background="WhiteSmoke">
                     <ListBox Name="lbRules"
                          FlowDirection="LeftToRight"
                          Background="WhiteSmoke"
