@@ -3,9 +3,8 @@
                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                           xmlns:local="clr-namespace:Beep.RuleUI"
                            xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-                           Width="349">
+                           xmlns:local="clr-namespace:Beep.RuleUI">
 
     <Grid>
         <DockPanel Name="pnlCollapsed"
@@ -58,19 +57,25 @@
             </Grid.RowDefinitions>
 
             <Button Name="btnCollapse"
+                    Grid.Column="0"
+                    Grid.Row="0"
                     Content="-"
                     Width="20"
                     Height="20"
+                    Margin="5,1,0,0"
                     Padding="0,0,0,4"
+                    HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Click="BtnCollapseOrExpandClick"
-                    Margin="10,0,319,0" />
+                    Click="BtnCollapseOrExpandClick" />
             <ComboBox Name="comboBoxRulePicker"
                       ItemsSource="{Binding RuleMenuItems, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Mode=OneWay}"
                       Height="20"
                       Width="100"
                       Text="{Binding RuleName, Mode=OneWay}"
-                      Margin="219,0,30,80"
+                      Grid.Column="1"
+                      Grid.Row="0"
+                      Padding="0,0,0,1"
+                      Margin="5,1,0,0"
                       IsReadOnly="True"
                       Cursor="None"
                       SelectionChanged="ComboBoxRuleSelected">
@@ -83,12 +88,16 @@
             -->
 
             </ComboBox>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        Grid.Column="1"
+                        Grid.Row="2">
             <TextBox Name="txtRule1"
                      Text="contagion rate"
-                     Height="20"
-                     HorizontalAlignment="Left"
+                         Height="20"
+                         Margin="1,0,0,0"
+                         HorizontalAlignment="Left"
                      VerticalAlignment="Center"
-                     Margin="178,41,0,39"
                      IsReadOnly="True"
                      IsHitTestVisible="false" />
             <xctk:IntegerUpDown Name="iudAmountPickerContagionRate"
@@ -97,31 +106,32 @@
                                 Value="6"
                                 Maximum="6"
                                 Minimum="1"
-                                Padding="0,0,9,0"
-                                VerticalAlignment="Center"
-                                ValueChanged="AmountChanged"
-                                Margin="266,40,51,40" />
+                                    Padding="0,0,9,0"
+                                    Margin="1,0,0,0"
+                                    VerticalAlignment="Center"
+                                ValueChanged="AmountChanged"/>
             <TextBox Name="txtRule2"
                      Text="virus color"
                      Height="20"
-                     Width="64"
-                     HorizontalAlignment="Left"
+                         Width="64"
+                         Margin="1,0,0,0"
+                         HorizontalAlignment="Left"
                      VerticalAlignment="Center"
-                     Margin="84,41,0,39"
                      IsReadOnly="True"
                      IsHitTestVisible="false" />
             <xctk:ColorPicker Name="clrPickMatch"
                               Height="20"
                               Width="20"
-                              Padding="0,0,0,1"
-                              BorderThickness="0"
+                                  Padding="0,0,0,1"
+                                  Margin="1,0,0,0"
+                                  BorderThickness="0"
                               AvailableColorsHeader="Canvas Colors"
                               DisplayColorAndName="False"
                               SelectedColorChanged="ClrPickMatchChanged"
                               ShowStandardColors="True"
                               ShowDropDownButton="False"
-                              AdvancedButtonHeader="Specify"
-                              Margin="153,41,176,39" />
+                              AdvancedButtonHeader="Specify"/>
+            </StackPanel>
             <StackPanel Orientation="Horizontal"
                         Grid.Column="4"
                         HorizontalAlignment="Right"
