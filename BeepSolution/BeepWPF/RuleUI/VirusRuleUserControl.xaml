@@ -80,7 +80,7 @@
                      Margin="178,41,0,39"
                      IsReadOnly="True"
                      IsHitTestVisible="false" />
-            <xctk:IntegerUpDown Name="iudAmountPicker1"
+            <xctk:IntegerUpDown Name="iudAmountPickerContagionRate"
                                 Height="20"
                                 Width="32"
                                 Value="6"

@@ -48,6 +48,8 @@ namespace Beep {
         private static readonly Color HEXAGON_FILL_COLOR = (Color)ColorConverter.ConvertFromString("#FFDEAD"); // NavajoWhite LOL
         private static readonly Color HEXAGON_FUN_COLOR = (Color)ColorConverter.ConvertFromString("#FFFFD700");
 
+        private readonly double WINDOW_MIN_WIDTH;
+
         public static Color MouseClickColor = (Color)ColorConverter.ConvertFromString("#FFFFD700");
 
         // point that is selected by user
@@ -140,6 +142,8 @@ namespace Beep {
             clrPickMouse.StandardColors = StandardColorItems;
             clrPickBackground.StandardColors = StandardColorItems;
             clrPickBorderColor.StandardColors = StandardColorItems;
+
+            WINDOW_MIN_WIDTH = ControlMenuGrid.MinWidth * 1.618 + ControlMenuGrid.MinWidth;
         }
 
         private void CalculateHexPolygonSize() {
@@ -672,8 +676,7 @@ namespace Beep {
 
         // 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e) {
-            Debug.WriteLine(string.Format("{0},{1}", e.NewSize.Width, ControlMenuGrid.ActualWidth));
-            if (e.NewSize.Width < ControlMenuGrid.ActualWidth) ControlMenuGrid.Visibility = Visibility.Collapsed;
+            if (e.NewSize.Width < WINDOW_MIN_WIDTH) ControlMenuGrid.Visibility = Visibility.Collapsed;
             else ControlMenuGrid.Visibility = Visibility.Visible;
         }
 
