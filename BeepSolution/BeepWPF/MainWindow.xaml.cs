@@ -493,7 +493,7 @@ namespace Beep {
                 foreach (Point Key in bw.tiles.Keys) {
                     createText = createText + String.Format("{0}:{1}", Key, bw.tiles[Key].Color) + Environment.NewLine;
                 }
-                string name = sfd.FileName.Substring(0, sfd.FileName.Length -4);
+                string name = sfd.FileName.Substring(0, sfd.FileName.Length -5);
                 if (name.Contains("-")) throw new ArgumentException();
                 string path = String.Format("{0}-w{1}h{2}b{3}.beep", name, bw.Size.X, bw.Size.Y, bw.Boxed ? "1" : "0");
 
@@ -513,7 +513,6 @@ namespace Beep {
                 int y = int.Parse(matches[1].Value);
                 Point newSize = new Point(x, y);
                 bool b = int.Parse(matches[2].Value) == 1;
-                Debug.WriteLine("" + x + "," +  y + " " + b);
 
                 // if size and b are equal dont resize
                 if (bw.Size != newSize || bw.Boxed != b) {
