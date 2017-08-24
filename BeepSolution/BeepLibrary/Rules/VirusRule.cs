@@ -46,19 +46,56 @@ namespace Beep.Rules {
         public bool IsAbleToInfect { get; set; }
         public bool ColorNeighboringMatchers { get; set; }
 
-        
+        int counter = 0;
+        bool brightnessUp = true;
+
 
         public override Dictionary<Point, Tile> Run() {
             Dictionary<Point, Tile> alteredTiles = DeepCopyDict(tiles);
+           if(brightnessUp) {
+                alteredTiles = CalculateVirus(alteredTiles, brightnessUp);
+                counter++;
+                brightnessUp = brightnessCheck();
+            }
+            else {
+
+                alteredTiles= CalculateVirus(alteredTiles, brightnessUp);
+                counter--;
+                brightnessUp = brightnessCheck();
+            }
+
+            
+            
+            
+            return alteredTiles;
+        }
+
+        public bool brightnessCheck() {
+            bool b = true;
+            if (counter > 20 && counter <60) {
+                 b = !b;
+                counter = 100;
+                return b;
+            }
+            else if(counter<80) {
+
+                return b = !b;
+            }
+            else {
+                return b;
+            }
+        }
+
+        public Dictionary<Point,Tile> CalculateVirus(Dictionary<Point,Tile> alteredTiles, bool b) {
 
             foreach (Tile t in tiles.Values) {
-                if(t.Color == MouseColor) {
+                if (t.Color == MouseColor) {
                     t.Color = MatchColor;
-                    
+
 
                 }
             }
-           
+
             List<Tile> TileList = new List<Tile>();
             List<Color> PreviousColors = new List<Color>();
 
@@ -66,31 +103,31 @@ namespace Beep.Rules {
             foreach (Tile t in tiles.Values) {
                 if (t.Color == MatchColor) {
                     //add a contagionrate randomizer here
-                    for(int i = 1; i< ContagionRate+1; i++) {
-                   
-                    Point p = t.Neighbors[rand.Next(0, t.Neighbors.Count)];
+                    for (int i = 1; i < ContagionRate + 1; i++) {
+
+                        Point p = t.Neighbors[rand.Next(0, t.Neighbors.Count)];
 
                         if (tiles[p].Color == MatchColor || PreviousColors.Contains(tiles[p].Color)) {
                             //Debug.WriteLine("previous color hit");
                             continue;
                         }
                         TileList.Add(tiles[p]);
-                    alteredTiles[p].Color = MatchColor;
+                        alteredTiles[p].Color = MatchColor;
                     }
                 }
             }
             PreviousColors.Add(MatchColor);
-            MatchColor = ChangeColorBrightness(MatchColor, -0.010F);
+            if (b) MatchColor = ChangeColorBrightness(MatchColor, 0.010F);
+            else {
+                MatchColor = ChangeColorBrightness(MatchColor, -0.010F);
+            }
             foreach (Tile t in TileList) {
 
                 alteredTiles[t.Coordinates].Color = MatchColor;
             }
             TileList.Clear();
-            
             return alteredTiles;
         }
-
-
 
         public static Color ChangeColorBrightness(Color c, float correctionFactor) {
             float red = (float)c.R;
