@@ -1,14 +1,9 @@
 ﻿<local:BeepRuleUserControl x:Class="Beep.RuleUI.ChangeColorRuleUserControl"
                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                            xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-                           xmlns:beep="clr-namespace:Beep"
                            xmlns:local="clr-namespace:Beep.RuleUI"
-                           HorizontalAlignment="Stretch"
-                           >
-
+                           HorizontalAlignment="Stretch">
     <Grid>
         <DockPanel Name="pnlCollapsed"
                    Height="20"
@@ -44,10 +39,9 @@
                     Click="DeleteButtonClick" />
         </DockPanel>
         <Grid Name="pnlExpanded"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    Height="100"
-                    >
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Stretch"
+              Height="100">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="3*" />
@@ -90,79 +84,62 @@
                         HorizontalAlignment="Left"
                         Grid.Column="1"
                         Grid.Row="2">
-            <xctk:ColorPicker Name="clrPickMatch"
-                              Height="20"
-                              Width="20"
-                              Padding="0,0,0,1"
-                              Margin="1,0,0,0"
-                              BorderThickness="0"
-                              AvailableColorsHeader="Canvas Colors"
-                              DisplayColorAndName="False"
-                              SelectedColorChanged="ClrPickMatchChanged"
-                              ShowStandardColors="True"
-                              ShowDropDownButton="False"
-                              AdvancedButtonHeader="Specify"                          
-                          />
-            <TextBox Name="txtRule1"
-                     Text="becomes"
+                <xctk:ColorPicker Name="clrPickMatch"
+                                  Height="20"
+                                  Width="20"
+                                  Padding="0,0,0,1"
+                                  Margin="1,0,0,0"
+                                  BorderThickness="0"
+                                  AvailableColorsHeader="Canvas Colors"
+                                  DisplayColorAndName="False"
+                                  SelectedColorChanged="ClrPickMatchChanged"
+                                  ShowStandardColors="True"
+                                  ShowDropDownButton="False"
+                                  AdvancedButtonHeader="Specify" />
+                <TextBox Name="txtRule1"
+                         Text="becomes"
                          Height="20"
                          Margin="1,0,0,0"
                          HorizontalAlignment="Left"
-                 VerticalAlignment="Center"
-                 IsReadOnly="True"
-                 IsHitTestVisible="false" />
+                         VerticalAlignment="Center"
+                         IsReadOnly="True"
+                         IsHitTestVisible="false" />
 
-            <xctk:ColorPicker Name="clrPickTarget"
-                              Height="20"
+                <xctk:ColorPicker Name="clrPickTarget"
+                                  Height="20"
                                   Width="20"
                                   Margin="1,0,0,0"
                                   Padding="0,0,0,1"
-                              BorderThickness="0"
-                              AvailableColorsHeader="Canvas Colors"
-                              DisplayColorAndName="False"
-                              SelectedColorChanged="ClrPickTargetChanged"
-                              ShowStandardColors="True"
-                              ShowDropDownButton="False"
+                                  BorderThickness="0"
+                                  AvailableColorsHeader="Canvas Colors"
+                                  DisplayColorAndName="False"
+                                  SelectedColorChanged="ClrPickTargetChanged"
+                                  ShowStandardColors="True"
+                                  ShowDropDownButton="False"
                                   AdvancedButtonHeader="Specify" />
             </StackPanel>
 
-            
+
             <StackPanel Orientation="Horizontal"
                         Grid.Column="4"
                         HorizontalAlignment="Right"
                         Grid.Row="0">
                 <Button Name="btnDeleteRule"
-                    Content="X"
-                Height="20"
-                Width="20"
-                Margin="0,1,1,0"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Center"
-                    Click="DeleteButtonClick" />
-            <Button Name="btnDrag2"
-                    Content="O"
-                    Width="20"
+                        Content="X"
+                        Height="20"
+                        Width="20"
+                        Margin="0,1,1,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Click="DeleteButtonClick" />
+                <Button Name="btnDrag2"
+                        Content="O"
+                        Width="20"
                         Height="20"
                         Margin="0,1,5,0"
                         HorizontalAlignment="Right"
-                    PreviewMouseDown="BtnDragMouseDown" />
+                        PreviewMouseDown="BtnDragMouseDown" />
             </StackPanel>
         </Grid>
     </Grid>
-    <!--
-    <local:BeepRuleUserControl.Style>
-        <Style TargetType="local:BeepRuleUserControl">
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding ViewType}"
-                             Value="1">
-                    <Setter Property="View"
-                            Value="{StaticResource expand}" />
-                </DataTrigger>
-            </Style.Triggers>
-            <Setter Property="View"
-                    Value="{StaticResource expand}" />
-        </Style>
-    </local:BeepRuleUserControl.Style>
-    <local:BeepRuleUserControl.Resources>
-    -->
 </local:BeepRuleUserControl>
