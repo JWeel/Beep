@@ -5,8 +5,7 @@
                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                            xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                            xmlns:beep="clr-namespace:Beep"
-                           xmlns:local="clr-namespace:Beep.RuleUI"
-                           Width="349">
+                           xmlns:local="clr-namespace:Beep.RuleUI">
 
     <Grid>
         <DockPanel Name="pnlCollapsed"
@@ -43,8 +42,8 @@
                     Click="DeleteButtonClick" />
         </DockPanel>
         <Grid Name="pnlExpanded"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Stretch"
               Height="100">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
@@ -59,10 +58,14 @@
             </Grid.RowDefinitions>
 
             <Button Name="btnCollapse"
+                    Grid.Column="0"
+                    Grid.Row="0"
                     Content="-"
                     Width="20"
                     Height="20"
+                    Margin="5,1,0,0"
                     Padding="0,0,0,4"
+                    HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Click="BtnCollapseOrExpandClick" />
             <ComboBox Name="comboBoxRulePicker"
@@ -70,92 +73,96 @@
                       Height="20"
                       Width="150"
                       Text="{Binding RuleName, Mode=OneWay}"
-                      Margin="10,5,1,0"
+                      Grid.Column="1"
+                      Grid.Row="0"
+                      Padding="0,0,0,1"
+                      Margin="5,1,0,0"
                       IsReadOnly="True"
                       Cursor="None"
                       VerticalAlignment="Top"
                       SelectionChanged="ComboBoxRuleSelected">
-
-                <!--
-            xmlns:sys="clr-namespace:System;assembly=mscorlib">
-            <ComboBox.Resources>
-                <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">0</sys:Double>
-            </ComboBox.Resources>
-            -->
-
             </ComboBox>
-            <xctk:IntegerUpDown Name="iudAmountPicker1"
-                                Height="20"
-                                Width="32"
-                                Value="6"
-                                Maximum="6"
-                                Minimum="1"
-                                Margin="-250,0,0,0"
-                                Padding="0,0,9,0"
-                                VerticalAlignment="Center"
-                                ValueChanged="AmountChanged" />
-
-            <TextBox Name="txtRule1"
-                     Text="neighbors of"
-                     Height="20"
-                     HorizontalAlignment="Left"
-                     VerticalAlignment="Center"
-                     Margin="-106,0,1,0"
-                     IsReadOnly="True"
-                     IsHitTestVisible="false" />
-            <!-- TODO only select colors that are used in beepworld -->
-            <xctk:ColorPicker Name="clrPickMatch"
-                              Height="20"
-                              Width="20"
-                              Margin="-42,0,0,0"
-                              Padding="0,0,0,1"
-                              BorderThickness="0"
-                              AvailableColorsHeader="Canvas Colors"
-                              DisplayColorAndName="False"
-                              SelectedColorChanged="ClrPickMatchChanged"
-                              ShowStandardColors="True"
-                              ShowDropDownButton="False"
-                              AdvancedButtonHeader="Specify" />
-            <TextBox Name="txtRule3"
-                     Text="become"
-                     Height="20"
-                     HorizontalAlignment="Left"
-                     VerticalAlignment="Center"
-                     Margin="-9,0,1,0"
-                     IsReadOnly="True"
-                     IsHitTestVisible="false" />
-            <xctk:ColorPicker Name="clrPickTarget"
-                              Height="20"
-                              Width="20"
-                              Padding="0,0,0,1"
-                              BorderThickness="0"
-                              AvailableColorsHeader="Canvas Colors"
-                              DisplayColorAndName="False"
-                              SelectedColorChanged="ClrPickTargetChanged"
-                              ShowStandardColors="True"
-                              ShowDropDownButton="False"
-                              AdvancedButtonHeader="Specify" />
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        Grid.Column="1"
+                        Grid.Row="2">
+                <xctk:IntegerUpDown Name="iudAmountPicker1"
+                                    Height="20"
+                                    Width="32"
+                                    Value="6"
+                                    Maximum="6"
+                                    Minimum="1"
+                                    Padding="0,0,9,0"
+                                    Margin="1,0,0,0"
+                                    VerticalAlignment="Center"
+                                    ValueChanged="AmountChanged" />
+                <TextBox Name="txtRule1"
+                         Text="neighbors of"
+                         Height="20"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Center"
+                         Margin="1,0,0,0"
+                         IsReadOnly="True"
+                         IsHitTestVisible="false" />
+                <xctk:ColorPicker Name="clrPickMatch"
+                                  Height="20"
+                                  Width="20"
+                                  Padding="0,0,0,1"
+                                  Margin="1,0,0,0"
+                                  BorderThickness="0"
+                                  AvailableColorsHeader="Canvas Colors"
+                                  DisplayColorAndName="False"
+                                  SelectedColorChanged="ClrPickMatchChanged"
+                                  ShowStandardColors="True"
+                                  ShowDropDownButton="False"
+                                  AdvancedButtonHeader="Specify" />
+                <TextBox Name="txtRule3"
+                         Text="become"
+                         Height="20"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Center"
+                         Margin="1,0,0,0"
+                         IsReadOnly="True"
+                         IsHitTestVisible="false" />
+                <xctk:ColorPicker Name="clrPickTarget"
+                                  Height="20"
+                                  Width="20"
+                                  Padding="0,0,0,1"
+                                  Margin="1,0,0,0"
+                                  BorderThickness="0"
+                                  AvailableColorsHeader="Canvas Colors"
+                                  DisplayColorAndName="False"
+                                  SelectedColorChanged="ClrPickTargetChanged"
+                                  ShowStandardColors="True"
+                                  ShowDropDownButton="False"
+                                  AdvancedButtonHeader="Specify" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Grid.Column="1"
+                        Grid.Row="3">
             <TextBox Name="txtRule4"
                      Text="Ignore"
                      Height="20"
                      HorizontalAlignment="Left"
-                     VerticalAlignment="Bottom"
-                     Margin="-161,0,1,5"
-                     IsReadOnly="True"
+                         VerticalAlignment="Bottom"
+                         Margin="1,0,0,0"
+                         IsReadOnly="True"
                      IsHitTestVisible="false" />
             <xctk:ColorPicker Name="clrPickIgnore"
                               Height="20"
                               Width="20"
-                              Padding="0,0,0,1"
-                              BorderThickness="0"
+                                  Padding="0,0,0,1"
+                                  Margin="1,0,0,0"
+                                  BorderThickness="0"
                               VerticalAlignment="Bottom"
-                              Margin="-210,0,1,5"
                               AvailableColorsHeader="Canvas Colors"
                               DisplayColorAndName="False"
                               SelectedColorChanged="ClrPickIgnoreChanged"
                               ShowStandardColors="True"
                               ShowDropDownButton="False"
                               AdvancedButtonHeader="Specify" />
+            </StackPanel>
             <StackPanel Orientation="Horizontal"
                         Grid.Column="4"
                         HorizontalAlignment="Right"

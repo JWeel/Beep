@@ -5,8 +5,7 @@
                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                            xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                            xmlns:beep="clr-namespace:Beep"
-                           xmlns:local="clr-namespace:Beep.RuleUI"
-                           Width="349">
+                           xmlns:local="clr-namespace:Beep.RuleUI">
 
     <Grid>
         <DockPanel Name="pnlCollapsed"
@@ -59,10 +58,14 @@
             </Grid.RowDefinitions>
 
             <Button Name="btnCollapse"
+                    Grid.Column="0"
+                    Grid.Row="0"
                     Content="-"
                     Width="20"
                     Height="20"
+                    Margin="5,1,0,0"
                     Padding="0,0,0,4"
+                    HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Click="BtnCollapseOrExpandClick" />
             <ComboBox Name="comboBoxRulePicker"
@@ -70,7 +73,10 @@
                       Height="20"
                       Width="100"
                       Text="{Binding RuleName, Mode=OneWay}"
-                      Margin="10,5,1,0"
+                      Grid.Column="1"
+                      Grid.Row="0"
+                      Padding="0,0,0,1"
+                      Margin="5,1,0,0"
                       IsReadOnly="True"
                       Cursor="None"
                       VerticalAlignment="Top"

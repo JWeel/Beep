@@ -70,13 +70,13 @@
                       Grid.Column="1"
                       Grid.Row="0"
                       Padding="0,0,0,1"
+                      Margin="5,1,0,0"
                       ItemsSource="{Binding RuleMenuItems, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Mode=OneWay}"
                       Height="20"
                       Width="100"
                       Text="{Binding RuleName, Mode=OneWay}"
                       IsReadOnly="True"
                       Cursor="None"
-                      Margin="5,1,0,0"
                       HorizontalAlignment="Left"
                       SelectionChanged="ComboBoxRuleSelected" />
 
