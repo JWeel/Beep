@@ -202,12 +202,20 @@
                             </StackPanel>
 
                         </MenuItem>
+                        
+                            
+                        
                         <MenuItem Header="_Hexagon Size"
                                   Style="{StaticResource menuParentStyle}"
                                   ItemContainerStyle="{DynamicResource MenuItemStyle1}"
                                   Template="{DynamicResource MenuItemControlTemplate2}"
                                   StaysOpenOnClick="true">
-                            <StackPanel Orientation="Vertical">
+                            <Button Width="157"
+                                    RenderTransformOrigin="0.06,0.567"
+                                    Margin="0,5"
+                                    Height="140"
+                                    >
+                                <StackPanel Orientation="Vertical">
                                 <TextBlock Margin="4,3,2,1"> Select Hexagon side length</TextBlock>
 
                                 <xctk:IntegerUpDown Name="iudAmountPickerHexagonSize"
@@ -222,8 +230,9 @@
                                                     ValueChanged="AmountHexSizeChanged"
                                                     RenderTransformOrigin="4.307,11.068" />
                             </StackPanel>
-
+                            </Button>
                         </MenuItem>
+                        
                     </MenuItem>
 
 
@@ -278,8 +287,7 @@
 
 
                               Margin="0"
-                          Height="230"
-                              Width="200"
+                          
                               
                               Grid.Row="0"
                               Grid.Column="1"

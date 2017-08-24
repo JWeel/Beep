@@ -651,7 +651,7 @@ namespace Beep {
             iudAmountPicker1.IsEnabled = true;
         }
         private void AmountHexSizeChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {
-            if (bw != null) {
+            if (bw != null && iudAmountPickerHexagonSize.Value != null && iudAmountPickerHexagonSize.Value <= iudAmountPickerHexagonSize.Maximum) {
                 HEXAGON_SIDE_LENGTH = (double)iudAmountPickerHexagonSize.Value;
                 CalculateHexPolygonSize();
                 UnprepareBeepWorldCanvas();
