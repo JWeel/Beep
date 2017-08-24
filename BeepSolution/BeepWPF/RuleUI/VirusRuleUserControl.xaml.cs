@@ -22,7 +22,7 @@ namespace Beep.RuleUI {
             clrPickMatch.StandardColors = standardColorItems;
         }
 
-        protected override void SetPanels() {
+        protected override void SetInheritedComponents() {
             panelCollapsed = pnlCollapsed;
             panelExpanded = pnlExpanded;
         }
@@ -32,7 +32,7 @@ namespace Beep.RuleUI {
             this.ruleName = rule.RuleName;
                        
             InitializeComponent();
-            SetPanels();
+            SetInheritedComponents();
             clrPickMatch.SelectedColor = rule.MatchColor;
             rule.MouseColor = MainWindow.MouseClickColor;
         }

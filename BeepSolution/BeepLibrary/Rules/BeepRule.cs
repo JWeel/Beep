@@ -18,6 +18,8 @@ namespace Beep.Rules {
 
         public abstract string RuleName { get; }
 
+        public bool IsEnabled { get; set; }
+
         protected Dictionary<Point, Tile> tiles;
         protected List<Color> colorArguments;
         protected List<int> intArguments;
@@ -25,6 +27,7 @@ namespace Beep.Rules {
         
         public BeepRule(Dictionary<Point, Tile> tiles) {
             this.tiles = tiles;
+            this.IsEnabled = true;
         }
         
         //

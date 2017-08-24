@@ -24,7 +24,7 @@ namespace Beep.RuleUI {
             clrPickDead.StandardColors = standardColorItems;
         }
 
-        protected override void SetPanels() {
+        protected override void SetInheritedComponents() {
             panelCollapsed = pnlCollapsed;
             panelExpanded = pnlExpanded;
         }
@@ -34,7 +34,7 @@ namespace Beep.RuleUI {
             this.ruleName = rule.RuleName;
 
             InitializeComponent();
-            SetPanels();
+            SetInheritedComponents();
 
             clrPickLife.SelectedColor = rule.LifeColor;
             clrPickDead.SelectedColor = rule.DeadColor;

@@ -423,6 +423,7 @@ namespace Beep {
                     Dispatcher.Invoke(() => { btnPaint.Content = "Pause"; });
                     while (isPaintingIndefinitely) {
                         foreach (BeepRule rule in beepRules) {
+                            if (!rule.IsEnabled) continue;
                             bw.tiles = rule.Run();
                             UpdateRules();
                         }
@@ -434,6 +435,7 @@ namespace Beep {
                 } else {
                     for (int i = 0; i < number; i++) {
                         foreach (BeepRule rule in beepRules) {
+                            if (!rule.IsEnabled) continue;
                             bw.tiles = rule.Run();
                             UpdateRules();
                         }

@@ -23,16 +23,19 @@ namespace Beep.RuleUI {
             clrPickTarget.StandardColors = standardColorItems;
         }
 
-        protected override void SetPanels() {
+        protected override void SetInheritedComponents() {
             panelCollapsed = pnlCollapsed;
             panelExpanded = pnlExpanded;
+            panelOptions = pnlOptions;
+            checkEnabledCollapsed = chkEnabled1;
+            checkEnabledExpanded = chkEnabled2;
         }
 
         public RandomChangeRuleUserControl(RandomChangeRule rule) {
             this.Rule = rule;
             this.ruleName = rule.RuleName;
             InitializeComponent();
-            SetPanels();
+            SetInheritedComponents();
             clrPickTarget.SelectedColor = rule.TargetColor;
         }
 

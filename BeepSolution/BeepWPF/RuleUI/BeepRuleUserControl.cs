@@ -15,8 +15,11 @@ namespace Beep.RuleUI {
 
         protected Grid panelExpanded;
         protected DockPanel panelCollapsed;
+        protected Grid panelOptions;
+        protected CheckBox checkEnabledExpanded;
+        protected CheckBox checkEnabledCollapsed;
 
-        protected abstract void SetPanels();
+        protected abstract void SetInheritedComponents();
 
         private bool collapsed;
 
@@ -70,6 +73,16 @@ namespace Beep.RuleUI {
         // reverse the state of the Collapsed property, which has a setter that handles UI visibility
         protected void BtnCollapseOrExpandClick(object sender, RoutedEventArgs e) {
             Collapsed = !Collapsed;
+        }
+
+        //
+        protected void BtnEnableClick(object sender, RoutedEventArgs e) {
+            if (this.IsInitialized) {
+                Rule.IsEnabled = !Rule.IsEnabled;
+                panelOptions.IsEnabled = Rule.IsEnabled;
+                checkEnabledCollapsed.IsChecked = Rule.IsEnabled;
+                checkEnabledExpanded.IsChecked = Rule.IsEnabled;
+            }
         }
 
         //
