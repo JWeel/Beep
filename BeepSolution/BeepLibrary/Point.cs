@@ -19,5 +19,22 @@ namespace Beep {
         public override string ToString() {
             return string.Format("({0},{1})", X, Y);
         }
+        
+
+        public bool Equals(Point p) {
+            return this.X == p.X && this.Y == p.Y;
+        }
+        
+        public override bool Equals(object o) {
+            return o is Point && this.Equals((Point)o);
+        }
+
+        public static bool operator ==(Point l, Point r) {
+            return l.Equals(r);
+        }
+
+        public static bool operator !=(Point l, Point r) {
+            return !l.Equals(r);
+        }
     }
 }

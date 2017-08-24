@@ -18,6 +18,7 @@ using Xceed.Wpf.Toolkit;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Data.Entity;
+using System.Text.RegularExpressions;
 
 namespace Beep {
     /// <summary>
@@ -31,8 +32,6 @@ namespace Beep {
         //private static readonly Point BEEP_SIZE = new Point(23, 26); // 10
          // 7
         //private static readonly Point BEEP_SIZE = new Point(46, 53); // 5
-
-        private bool isBoxed = true;
 
         // hexagon length values. only change HEXAGON_SIDE_LENGTH 
 
@@ -51,10 +50,8 @@ namespace Beep {
 
         public static Color MouseClickColor = (Color)ColorConverter.ConvertFromString("#FF66BAB7");
 
-        // point that is selected by user
-        private List<Point> SelectedPointList = new List<Point>();
-        private List<Point> ColouredPointList = new List<Point>();
-        private Point BEEP_SIZE = new Point(49, 45);
+        private Point BEEP_SIZE = new Point(44, 45);
+        private bool isBoxed = false;
 
         private bool useMouseDownColorDrag = true;
         private bool isMouseDownColorDragging = false;
@@ -183,9 +180,11 @@ namespace Beep {
         //private void UpdateUsedColors(object sender, ColorChangeEventArgs e) {
         private void UpdateUsedColors() {
             List<Color> usedColors = new List<Color>();
+
             Parallel.ForEach(bw.tiles.Values, tile => {
                 if (!usedColors.Contains(tile.Color) && usedColors.Count<120) usedColors.Add(tile.Color);
             });
+
             UpdateColorPickers(ColorsToColorItems(usedColors));
         }
 
@@ -202,14 +201,6 @@ namespace Beep {
             ObservableCollection<ColorItem> usedColorItems = new ObservableCollection<ColorItem>();
             usedColors.ForEach(color => usedColorItems.Add(new ColorItem(color, color.ToString())));
             return usedColorItems;
-        }
-
-        private void ColourListTiles(List<Point> listPoint) {
-            foreach (Point m in listPoint) {
-                Polygon temp = (Polygon)this.FindName(HexagonPointToName(m));
-                if (temp != null) temp.Fill = new SolidColorBrush(HEXAGON_FUN_COLOR);
-                ColouredPointList.Add(m);
-            }
         }
 												
         // returns a polygon of six points representing a hexagon
@@ -490,48 +481,48 @@ namespace Beep {
         }
 
         private void BtnSaveClick(object sender, RoutedEventArgs e) {
-
-            //using (var db = new BeepWorldContext()) {
-
-            //    var v = new SavableBeepWorld() {
-            //        Name = "Joe"
-            //    };
-            //    db.SavedBeepWorlds.Add(v);
-
-            //    db.SaveChanges();
-
-            //    var query = from b in db.SavedBeepWorlds
-            //                orderby b.Name
-            //                select b;
-                
-            //    foreach (var item in query) {
-            //        Debug.WriteLine(item.Name);
-            //    }
-            //}
-
-            ///*
             SaveFileDialog sfd = new SaveFileDialog() {
-                Filter = "Text Document|*.txt",
-                FileName = "Painting.txt",
-                DefaultExt = ".txt"
+                Filter = "BeepWorld Painting|*.beep",
+                FileName = "Painting.beep",
+                DefaultExt = "beep",
+                AddExtension = true
             };
             bool? result = sfd.ShowDialog();
-            string createText = "" + Environment.NewLine;
+            string createText = Environment.NewLine;
             if (result.HasValue && result.Value) {
                 foreach (Point Key in bw.tiles.Keys) {
                     createText = createText + String.Format("{0}:{1}", Key, bw.tiles[Key].Color) + Environment.NewLine;
                 }
-                string path = sfd.FileName;
+                string name = sfd.FileName.Substring(0, sfd.FileName.Length -5);
+                if (name.Contains("-")) throw new ArgumentException();
+                string path = String.Format("{0}-w{1}h{2}b{3}.beep", name, bw.Size.X, bw.Size.Y, bw.Boxed ? "1" : "0");
+
                 File.WriteAllText(path, createText);
             }
-            //*/
         }
 
         private void BtnLoadClick(object sender, RoutedEventArgs e) {
-            OpenFileDialog open = new OpenFileDialog() { Filter = "Text Document|*.txt" };
+            OpenFileDialog open = new OpenFileDialog() { Filter = "BeepWorld Painting|*.beep" };
             string line;
             bool? result = open.ShowDialog();
             if (result == true) {
+
+                string suffix = open.FileName.Split('-')[1];
+                MatchCollection matches = Regex.Matches(suffix, "[0-9]+");
+                int x = int.Parse(matches[0].Value);
+                int y = int.Parse(matches[1].Value);
+                Point newSize = new Point(x, y);
+                bool b = int.Parse(matches[2].Value) == 1;
+
+                // if size and b are equal dont resize
+                if (bw.Size != newSize || bw.Boxed != b) {
+                    bw.Resize(new Point(x, y), b);
+                    UnprepareBeepWorldCanvas();
+                    PrepareBeepWorldCanvas();
+                }
+
+                // todo possible error with isBoxed variable?
+
                 StreamReader file = new StreamReader(open.FileName);
                 while ((line = file.ReadLine()) != null) {
                     foreach (Point Key in bw.tiles.Keys) {
