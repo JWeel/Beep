@@ -33,7 +33,6 @@ namespace Beep {
         //private static readonly Point BEEP_SIZE = new Point(46, 53); // 5
 
         private bool isBoxed = true;
-        private bool isBoxedCheckboxControl = false;
 
         // hexagon length values. only change HEXAGON_SIDE_LENGTH 
 
@@ -522,7 +521,6 @@ namespace Beep {
                 foreach (Point Key in bw.tiles.Keys) {
                     createText = createText + String.Format("{0}:{1}", Key, bw.tiles[Key].Color) + Environment.NewLine;
                 }
-                Debug.WriteLine(createText);
                 string path = sfd.FileName;
                 File.WriteAllText(path, createText);
             }
@@ -539,7 +537,6 @@ namespace Beep {
                     foreach (Point Key in bw.tiles.Keys) {
                         line = file.ReadLine();
                         if (!string.IsNullOrWhiteSpace(line)) {
-                            Debug.WriteLine(line);
                             string[] lines = line.Split(':');
                             bw.tiles[Key].Color = (Color)ColorConverter.ConvertFromString(lines[1]);
                         }
@@ -628,13 +625,13 @@ namespace Beep {
             this.Close();
         }
 
-        private void clrPickBackground_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
-            this.Background = new SolidColorBrush((Color)clrPickBackground.SelectedColor);
+        private void ClrPickBackgroundSelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
+            if (this.IsInitialized) this.Background = new SolidColorBrush((Color)clrPickBackground.SelectedColor);
             //CanvasBackgroundColor
             
         }
 
-        private void clrPickBorderColor_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
+        private void ClrPickBorderColorSelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
             //if(useRelativeBorderColor== false)
             fixedBorderColor = (Color)clrPickBorderColor.SelectedColor;
             if (bw != null) Refresh();

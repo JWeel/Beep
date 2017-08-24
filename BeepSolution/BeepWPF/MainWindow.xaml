@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Background="#FFFBF0DA"
         Title="Beep"
+        Background="#FF112131"
         SizeChanged="OnSizeChanged">
     <!--SizeToContent="WidthAndHeight"-->
     <!-- SizeToContent="WidthAndHeight" is required to make screen size be exactly as defined below -->
@@ -31,7 +31,8 @@
         <Grid Name="CanvasGrid"
               HorizontalAlignment="Left"
               Grid.Column="0"
-            >
+              Background="#FFFFFADE"
+              Margin="5,5,5,5">
             <Canvas Name="canvas"
                     MouseLeftButtonDown="OnMouseLeftDown">
             </Canvas>
@@ -95,27 +96,22 @@
 
                                     <MenuItem.Header>
                                         <StackPanel Orientation="Vertical">
-                                            <TextBlock>
-                                    Boxed
-                                            </TextBlock>
+                                            <TextBlock>Boxed</TextBlock>
                                             <CheckBox x:Name="CheckIsBoxed"
                                                       IsChecked="True"
                                                       Checked="IsBoxedChecked"
                                                       Unchecked="IsBoxedUnchecked">
-
                                             </CheckBox>
                                             <TextBlock>Width</TextBlock>
-
                                             <xctk:IntegerUpDown Name="iudAmountPickerWidth"
                                                                 Height="20"
                                                                 Width="50"
                                                                 FontSize="12"
-                                                                Value="10"
+                                                                Value="49"
                                                                 Maximum="1000"
                                                                 Minimum="1"
                                                                 Padding="0,0,9,0"
                                                                 VerticalAlignment="Center"
-                                                               
                                                                 RenderTransformOrigin="4.307,11.068">
 
                                             </xctk:IntegerUpDown>
@@ -126,12 +122,11 @@
                                                                 Height="20"
                                                                 Width="50"
                                                                 FontSize="12"
-                                                                Value="10"
+                                                                Value="45"
                                                                 Maximum="1000"
                                                                 Minimum="1"
                                                                 Padding="0,0,9,0"
                                                                 VerticalAlignment="Center"
-                                                                
                                                                 RenderTransformOrigin="4.307,11.068" />
                                             <!--ValueChanged="AmountChangedSizeHeight"-->
 
@@ -165,10 +160,10 @@
                                                       DisplayColorAndName="False"
                                                       AvailableColorsHeader="Canvas Colors"
                                                       ShowStandardColors="True"
-                                                      SelectedColorChanged="clrPickBackground_SelectedColorChanged"
+                                                      SelectedColorChanged="ClrPickBackgroundSelectedColorChanged"
                                                       ShowDropDownButton="False"
                                                       AdvancedButtonHeader="Specify"
-                                                      SelectedColor="#FFFBF0DA" />
+                                                      SelectedColor="#FFFFFADE" />
                                 </Button>
                             </StackPanel>
 
@@ -198,7 +193,7 @@
                                                   DisplayColorAndName="False"
                                                   AvailableColorsHeader="Canvas Colors"
                                                   ShowStandardColors="True"
-                                                  SelectedColorChanged="clrPickBorderColor_SelectedColorChanged"
+                                                  SelectedColorChanged="ClrPickBorderColorSelectedColorChanged"
                                                   ShowDropDownButton="False"
                                                   AdvancedButtonHeader="Specify"
                                                   SelectedColor="Black" />
@@ -288,10 +283,10 @@
                               VerticalScrollBarVisibility="Visible"
                               Margin="0"
                               Grid.Row="0"
-                              Grid.Column="1">
+                              Grid.Column="1"
+                              Background="#FFFFFADE">
                     <ListBox Name="lbRules"
                          FlowDirection="LeftToRight"
-                         Background="WhiteSmoke"
                          HorizontalContentAlignment="Stretch"
                          ItemsSource="{Binding BeepRulesUIComponents}">
                         <ListBox.Template>

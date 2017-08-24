@@ -7,8 +7,7 @@ namespace Beep {
     /// </summary>
     public class Tile {
 
-        //public static readonly Color DEFAULT_COLOR = (Color)ColorConverter.ConvertFromString("#FF98FB98");
-        public static readonly Color DEFAULT_COLOR = (Color)ColorConverter.ConvertFromString("#FFFBF0DA");
+        public static readonly Color DEFAULT_COLOR = (Color)ColorConverter.ConvertFromString("#FFF8F3D7");
 
         public List<Point> Neighbors { get; set; }
         public Point Coordinates { get; set; }
