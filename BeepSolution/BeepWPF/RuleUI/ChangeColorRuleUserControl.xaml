@@ -70,14 +70,14 @@
                       Grid.Column="1"
                       Grid.Row="0"
                       Padding="0,0,0,1"
-                      Margin="5,1,0,0"
+                      Margin="15,1,0,0"
+                      HorizontalAlignment="Left"
                       ItemsSource="{Binding RuleMenuItems, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Mode=OneWay}"
                       Height="20"
                       Width="100"
                       Text="{Binding RuleName, Mode=OneWay}"
                       IsReadOnly="True"
                       Cursor="None"
-                      HorizontalAlignment="Left"
                       SelectionChanged="ComboBoxRuleSelected" />
 
             <StackPanel Orientation="Horizontal"

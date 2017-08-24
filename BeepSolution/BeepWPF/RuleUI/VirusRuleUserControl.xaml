@@ -75,18 +75,11 @@
                       Grid.Column="1"
                       Grid.Row="0"
                       Padding="0,0,0,1"
-                      Margin="5,1,0,0"
+                      Margin="15,1,0,0"
+                      HorizontalAlignment="Left"
                       IsReadOnly="True"
                       Cursor="None"
                       SelectionChanged="ComboBoxRuleSelected">
-
-                <!--
-            xmlns:sys="clr-namespace:System;assembly=mscorlib">
-            <ComboBox.Resources>
-                <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">0</sys:Double>
-            </ComboBox.Resources>
-            -->
-
             </ComboBox>
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Left"
