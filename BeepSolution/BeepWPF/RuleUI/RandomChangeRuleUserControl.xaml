@@ -70,7 +70,7 @@
             <ComboBox Name="comboBoxRulePicker"
                       ItemsSource="{Binding RuleMenuItems, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Mode=OneWay}"
                       Height="20"
-                      Width="100"
+                      Width="150"
                       Text="{Binding RuleName, Mode=OneWay}"
                       Grid.Column="1"
                       Grid.Row="0"

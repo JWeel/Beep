@@ -98,7 +98,7 @@
                                     VerticalAlignment="Center"
                                     ValueChanged="AmountChanged" />
                 <TextBox Name="txtRule1"
-                         Text="neighbors of"
+                         Text="next to"
                          Height="20"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Center"
@@ -118,7 +118,7 @@
                                   ShowDropDownButton="False"
                                   AdvancedButtonHeader="Specify" />
                 <TextBox Name="txtRule3"
-                         Text="become"
+                         Text="into"
                          Height="20"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Center"

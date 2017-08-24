@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-
         Title="Beep"
         Background="#FF0F2540"
         SizeChanged="OnSizeChanged">
@@ -28,7 +27,7 @@
           Height="{Binding ActualWidth, RelativeSource= {RelativeSource AncestorType={x:Type Window}}}"
           
         -->
-       
+
         <Grid Name="CanvasGrid"
               HorizontalAlignment="Left"
               Grid.Column="0"
@@ -38,27 +37,22 @@
                     MouseLeftButtonDown="OnMouseLeftDown">
             </Canvas>
         </Grid>
-        
-        <Grid
-            Name="ControlMenuGrid"
-            MinWidth="200"
+
+        <Grid Name="ControlMenuGrid"
+              MinWidth="200"
               Background="#DAC9A6"
-          
-            
-             Grid.Column="1">
+              Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="4*" />
                 <RowDefinition Height="96*" />
             </Grid.RowDefinitions>
-            
 
-            <StackPanel
-                Grid.Row="0"
-                
-                HorizontalAlignment="Right"
-                Orientation="Horizontal"
-                ClipToBounds="False"
-                Panel.ZIndex="3">
+
+            <StackPanel Grid.Row="0"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal"
+                        ClipToBounds="False"
+                        Panel.ZIndex="3">
                 <Menu Height="20"
                       HorizontalAlignment="Right"
                       Name="ControlMenu"
@@ -90,8 +84,7 @@
 
                             <StackPanel Width="157"
                                         RenderTransformOrigin="0.06,0.567"
-                                        Margin="0"
-                                       >
+                                        Margin="0">
                                 <MenuItem StaysOpenOnClick="true">
 
 
@@ -99,7 +92,7 @@
                                         <StackPanel Orientation="Vertical">
                                             <TextBlock>Boxed</TextBlock>
                                             <CheckBox x:Name="CheckIsBoxed"
-                                                      IsChecked="True"
+                                                      IsChecked="False"
                                                       Checked="IsBoxedChecked"
                                                       Unchecked="IsBoxedUnchecked">
                                             </CheckBox>
@@ -108,7 +101,7 @@
                                                                 Height="20"
                                                                 Width="50"
                                                                 FontSize="12"
-                                                                Value="49"
+                                                                Value="44"
                                                                 Maximum="1000"
                                                                 Minimum="1"
                                                                 Padding="0,0,9,0"
@@ -202,38 +195,35 @@
                             </StackPanel>
 
                         </MenuItem>
-                        
-                            
-                        
+
+
+
                         <MenuItem Header="_Hexagon Size"
                                   Style="{StaticResource menuParentStyle}"
                                   ItemContainerStyle="{DynamicResource MenuItemStyle1}"
                                   Template="{DynamicResource MenuItemControlTemplate2}"
                                   StaysOpenOnClick="true">
                             <StackPanel Width="157"
-                                    
-                                    RenderTransformOrigin="0.06,0.567"
-                                    Margin="0,5"
-                                    
-                                    >
+                                        RenderTransformOrigin="0.06,0.567"
+                                        Margin="0,5">
                                 <StackPanel Orientation="Vertical">
-                                <TextBlock Margin="4,3,2,1"> Select Hexagon side length</TextBlock>
+                                    <TextBlock Margin="4,3,2,1"> Select Hexagon side length</TextBlock>
 
-                                <xctk:IntegerUpDown Name="iudAmountPickerHexagonSize"
-                                                    Height="20"
-                                                    Width="50"
-                                                    FontSize="12"
-                                                    Value="7"
-                                                    Maximum="20"
-                                                    Minimum="1"
-                                                    Padding="0,0,9,0"
-                                                    VerticalAlignment="Center"
-                                                    ValueChanged="AmountHexSizeChanged"
-                                                    RenderTransformOrigin="4.307,11.068" />
-                            </StackPanel>
+                                    <xctk:IntegerUpDown Name="iudAmountPickerHexagonSize"
+                                                        Height="20"
+                                                        Width="50"
+                                                        FontSize="12"
+                                                        Value="7"
+                                                        Maximum="20"
+                                                        Minimum="1"
+                                                        Padding="0,0,9,0"
+                                                        VerticalAlignment="Center"
+                                                        ValueChanged="AmountHexSizeChanged"
+                                                        RenderTransformOrigin="4.307,11.068" />
+                                </StackPanel>
                             </StackPanel>
                         </MenuItem>
-                        
+
                     </MenuItem>
 
 
@@ -267,29 +257,30 @@
             </StackPanel>
 
             <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="90*" />
-                <ColumnDefinition Width="2*" />
-            </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="1.618*" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="6*" />
+                    <ColumnDefinition Width="227*" />
+                    <ColumnDefinition Width="52*" />
+                    <ColumnDefinition Width="6*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1.618*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
 
 
                 <ScrollViewer FlowDirection="LeftToRight"
                               CanContentScroll="True"
                               VerticalScrollBarVisibility="Visible"
-                              Margin="0"
+                              Margin="6,0,5.2,0"
                               Grid.Row="0"
-                              Grid.Column="1"
-                              Background="#FFFFFADE">
+                              Background="#FFFFFADE"
+                              Grid.ColumnSpan="4">
                     <ListBox Name="lbRules"
-                         FlowDirection="LeftToRight"
-                         HorizontalContentAlignment="Stretch"
-                         ItemsSource="{Binding BeepRulesUIComponents}">
+                             FlowDirection="LeftToRight"
+                             HorizontalContentAlignment="Stretch"
+                             ItemsSource="{Binding BeepRulesUIComponents}">
                         <ListBox.Template>
                             <ControlTemplate>
                                 <ItemsPresenter></ItemsPresenter>
@@ -305,11 +296,11 @@
                             </Style>
                         </ListBox.ItemContainerStyle>
                     </ListBox>
-            </ScrollViewer>
-                <Grid
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    VerticalAlignment="Top">
+                </ScrollViewer>
+                <Grid Grid.Row="1"
+                      VerticalAlignment="Top"
+                      Grid.ColumnSpan="4"
+                      Margin="6,0,5.2,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="10*" />
@@ -322,96 +313,81 @@
                         <RowDefinition Height="25*" />
                         <RowDefinition Height="25*" />
                         <RowDefinition Height="25*" />
-                        
+
                     </Grid.RowDefinitions>
 
 
                     <Button Name="BtnClear"
-                    Content="Clear"
-                    HorizontalAlignment="Center"
-                    
-                    Click="BtnClearClick"
-                    Grid.Row="3"
-                    Grid.Column="2">
+                            Content="Clear"
+                            HorizontalAlignment="Center"
+                            Click="BtnClearClick"
+                            Grid.Row="3"
+                            Grid.Column="2">
 
-            </Button>
-            <Button 
-                    Click="ClrPickMouseButtonClick"
-                Grid.Row="2"
-                Grid.Column="2"
-                    >
-                <xctk:ColorPicker Name="clrPickMouse"
-                                  Height="20"
-                                  Width="35"
-                                  Padding="0,0,0,1"
-                                  BorderThickness="0"
-                                  DisplayColorAndName="False"
-                                  AvailableColorsHeader="Canvas Colors"
-                                  ShowStandardColors="True"
-                                  SelectedColorChanged="MouseColorChanged"
-                                  
-                                  ShowDropDownButton="False"
-                                  AdvancedButtonHeader="Specify"
+                    </Button>
+                    <Button Click="ClrPickMouseButtonClick"
+                            Grid.Row="2"
+                            Grid.Column="2">
+                        <xctk:ColorPicker Name="clrPickMouse"
+                                          Height="20"
+                                          Width="35"
+                                          Padding="0,0,0,1"
+                                          BorderThickness="0"
+                                          DisplayColorAndName="False"
+                                          AvailableColorsHeader="Canvas Colors"
+                                          ShowStandardColors="True"
+                                          SelectedColorChanged="MouseColorChanged"
+                                          ShowDropDownButton="False"
+                                          AdvancedButtonHeader="Specify"
                                           SelectedColor="#66BAB7" />
-            </Button>
+                    </Button>
 
 
-                    <StackPanel
-                        Orientation="Horizontal"
-                        HorizontalAlignment="Center"
-                        Grid.Row="1"
-                        Grid.Column="2">
-                        
-            <Button Name="btnPaint"
-                    Content="Paint"
-                    HorizontalAlignment="Center"
-                   
-                    Click="BtnPaintClick"
-                    
-                    RenderTransformOrigin="-0.171,3.889" 
-                    Grid.Row="1"
-                    Grid.Column="2"/>
-                    
-            <xctk:IntegerUpDown Name="iudAmountPicker1"
-                                Height="30"
-                                Width="70"
-                                FontSize="16"
-                                Value="1"
-                                Maximum="100"
-                                Minimum="1"
-                                Padding="0,0,9,0"
-                                VerticalAlignment="Center"
-                                ValueChanged="AmountChanged"
-                                
-                                
-                                RenderTransformOrigin="4.307,11.068"
-                                 />
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                Grid.Row="1"
+                                Grid.Column="2">
+
+                        <Button Name="btnPaint"
+                                Content="Paint"
+                                HorizontalAlignment="Center"
+                                Click="BtnPaintClick"
+                                RenderTransformOrigin="-0.171,3.889"
+                                Grid.Row="1"
+                                Grid.Column="2" />
+
+                        <xctk:IntegerUpDown Name="iudAmountPicker1"
+                                            Height="30"
+                                            Width="70"
+                                            FontSize="16"
+                                            Value="1"
+                                            Maximum="100"
+                                            Minimum="1"
+                                            Padding="0,0,9,0"
+                                            VerticalAlignment="Center"
+                                            ValueChanged="AmountChanged"
+                                            RenderTransformOrigin="4.307,11.068" />
                     </StackPanel>
-                    <StackPanel
-                        HorizontalAlignment="Center"
-                        Orientation="Horizontal"
-                        Grid.Row="0"
-                        Grid.Column="2">
+                    <StackPanel HorizontalAlignment="Center"
+                                Orientation="Horizontal"
+                                Grid.Row="0"
+                                Grid.Column="2">
                         <TextBox Text="Indefinite:"
                                  Width="60"
-                                 Height="30"
-                                 
-                                 
-                                  />
+                                 Height="30" />
 
                         <CheckBox Name="chkIndefinite"
                                   Width="20"
                                   Height="20"
                                   Checked="IsCheckedIndefinite"
-                                  Unchecked="IsUncheckedIndefinite"
-                                   />
+                                  Unchecked="IsUncheckedIndefinite" />
 
                     </StackPanel>
-                   
-                    
+
+
                 </Grid>
             </Grid>
-            
+
         </Grid>
     </Grid>
 

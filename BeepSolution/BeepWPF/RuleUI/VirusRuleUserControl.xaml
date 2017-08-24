@@ -102,9 +102,8 @@
                                     VerticalAlignment="Center"
                                 ValueChanged="AmountChanged"/>
             <TextBox Name="txtRule2"
-                     Text="virus color"
+                     Text="color"
                      Height="20"
-                         Width="64"
                          Margin="1,0,0,0"
                          HorizontalAlignment="Left"
                      VerticalAlignment="Center"
