@@ -184,7 +184,7 @@ namespace Beep {
         private void UpdateUsedColors() {
             List<Color> usedColors = new List<Color>();
             Parallel.ForEach(bw.tiles.Values, tile => {
-                if (!usedColors.Contains(tile.Color)) usedColors.Add(tile.Color);
+                if (!usedColors.Contains(tile.Color) && usedColors.Count<120) usedColors.Add(tile.Color);
             });
             UpdateColorPickers(ColorsToColorItems(usedColors));
         }

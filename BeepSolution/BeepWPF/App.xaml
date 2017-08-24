@@ -75,7 +75,7 @@
                 <Trigger Property="IsMouseOver"
                          Value="true">
                     <Setter Property="Background"
-                            Value="#FF0F2540" />
+                            Value="#080808" />
                 </Trigger>
                 <Trigger Property="IsKeyboardFocusWithin"
                          Value="true">
@@ -190,7 +190,7 @@
                     </MultiTrigger.Conditions>
                     <Setter Property="Background"
                             TargetName="templateRoot"
-                            Value="#FF0F2540" />
+                            Value="#080808" />
                     <Setter Property="BorderBrush"
                             TargetName="templateRoot"
                             Value="#21000000" />
@@ -242,7 +242,7 @@
                         <Border x:Name="SubMenuBorder"
                                 BorderBrush="#FF999999"
                                 BorderThickness="1"
-                                Background="#FF0F2540"
+                                Background="#080808"
                                 Padding="2">
                             <ScrollViewer x:Name="SubMenuScrollViewer"
                                           Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
@@ -297,7 +297,7 @@
                          Value="True">
                     <Setter Property="Background"
                             TargetName="templateRoot"
-                            Value="#FF0F2540" />
+                            Value="#080808" />
                     <!--<Setter Property="BorderBrush" TargetName="templateRoot" Value="#FF26A0DA"/>-->
                 </Trigger>
                 <Trigger Property="IsEnabled"
@@ -307,7 +307,7 @@
                             Value="#FF707070" />
                     <Setter Property="Fill"
                             TargetName="GlyphPanel"
-                            Value="#FF0F2540" />
+                            Value="#080808" />
                 </Trigger>
                 <Trigger Property="CanContentScroll"
                          SourceName="SubMenuScrollViewer"
@@ -322,10 +322,7 @@
             </ControlTemplate.Triggers>
         </ControlTemplate>
 
-
-        
-
-
+       
         <LinearGradientBrush x:Key="GradientBrush"
                              StartPoint="0,0"
                              EndPoint="1,1">

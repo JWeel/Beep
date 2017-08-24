@@ -33,7 +33,8 @@
               HorizontalAlignment="Left"
               Grid.Column="0"
               Background="#FB9966"
-              Margin="5,5,5,5">
+              Margin="5,5,5,5"
+              >
             <Canvas Name="canvas"
                     MouseLeftButtonDown="OnMouseLeftDown">
             </Canvas>
@@ -42,7 +43,7 @@
         <Grid
             Name="ControlMenuGrid"
             MinWidth="200"
-              Background="#DAC9A6"
+              Background="#BDC0BA"
           
             
              Grid.Column="1">
@@ -324,7 +325,7 @@
                         <RowDefinition Height="25*" />
                         
                     </Grid.RowDefinitions>
-
+                   
 
                     <Button Name="BtnClear"
                     Content="Clear"
