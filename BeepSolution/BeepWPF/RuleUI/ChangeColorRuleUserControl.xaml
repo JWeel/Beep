@@ -6,7 +6,8 @@
                            xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                            xmlns:beep="clr-namespace:Beep"
                            xmlns:local="clr-namespace:Beep.RuleUI"
-                           Width="349">
+                           HorizontalAlignment="Stretch"
+                           >
 
     <Grid>
         <DockPanel Name="pnlCollapsed"
@@ -29,7 +30,7 @@
                     Content="O"
                     Width="20"
                     Height="20"
-                    Margin="0,1,0,1"
+                    Margin="0,1,5,0"
                     DockPanel.Dock="Right"
                     HorizontalAlignment="Right"
                     PreviewMouseDown="BtnDragMouseDown" />
@@ -37,7 +38,7 @@
                     Content="X"
                     Width="20"
                     Height="20"
-                    Margin="1,1,5,0"
+                    Margin="0,1,1,0"
                     DockPanel.Dock="Right"
                     HorizontalAlignment="Right"
                     Click="DeleteButtonClick" />
@@ -125,14 +126,13 @@
                                   AdvancedButtonHeader="Specify" />
             </StackPanel>
 
+            
             <StackPanel Orientation="Horizontal"
                         Grid.Column="4"
                         HorizontalAlignment="Right"
                         Grid.Row="0">
                 <Button Name="btnDeleteRule"
                     Content="X"
-                FontSize="12"
-                FontWeight="Bold"
                 Height="20"
                 Width="20"
                 Margin="0,1,1,0"
@@ -143,7 +143,7 @@
                     Content="O"
                     Width="20"
                         Height="20"
-                        Margin="1,1,5,0"
+                        Margin="0,1,5,0"
                         HorizontalAlignment="Right"
                     PreviewMouseDown="BtnDragMouseDown" />
             </StackPanel>
