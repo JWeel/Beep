@@ -66,15 +66,17 @@ namespace Beep.Rules {
             foreach (Tile t in tiles.Values) {
                 if (t.Color == MatchColor) {
                     //add a contagionrate randomizer here
-
+                    for(int i = 1; i< ContagionRate+1; i++) {
+                   
                     Point p = t.Neighbors[rand.Next(0, t.Neighbors.Count)];
 
-                    if (tiles[p].Color == MatchColor || PreviousColors.Contains(tiles[p].Color)) {
-                        //Debug.WriteLine("previous color hit");
-                        continue;
-                    }
-                    TileList.Add(tiles[p]);
+                        if (tiles[p].Color == MatchColor || PreviousColors.Contains(tiles[p].Color)) {
+                            //Debug.WriteLine("previous color hit");
+                            continue;
+                        }
+                        TileList.Add(tiles[p]);
                     alteredTiles[p].Color = MatchColor;
+                    }
                 }
             }
             PreviousColors.Add(MatchColor);
