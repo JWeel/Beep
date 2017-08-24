@@ -47,43 +47,37 @@ namespace Beep.Rules {
         public bool ColorNeighboringMatchers { get; set; }
 
         int counter = 0;
-        bool brightnessUp = true;
+        bool brightnessDown = true;
 
 
         public override Dictionary<Point, Tile> Run() {
             Dictionary<Point, Tile> alteredTiles = DeepCopyDict(tiles);
-           if(brightnessUp) {
-                alteredTiles = CalculateVirus(alteredTiles, brightnessUp);
-                counter++;
-                brightnessUp = brightnessCheck();
-            }
-            else {
+           
+                alteredTiles = CalculateVirus(alteredTiles, brightnessDown);
+                brightnessDown = brightnessCheck(brightnessDown);
 
-                alteredTiles= CalculateVirus(alteredTiles, brightnessUp);
-                counter--;
-                brightnessUp = brightnessCheck();
-            }
-
-            
-            
             
             return alteredTiles;
         }
 
-        public bool brightnessCheck() {
-            bool b = true;
-            if (counter > 20 && counter <60) {
-                 b = !b;
-                counter = 100;
+        public bool brightnessCheck(bool b) {
+            if(b && counter < 10) {
+                counter++;
                 return b;
-            }
-            else if(counter<80) {
-
-                return b = !b;
+            }else if(b && counter == 10) {
+                counter = 0;
+                return !b;
+            }else if (!b && counter < 10) {
+                counter++;
+                return !b;
+            } else if(!b && counter == 10) {
+                counter = 0;
+                return b;
             }
             else {
                 return b;
             }
+           
         }
 
         public Dictionary<Point,Tile> CalculateVirus(Dictionary<Point,Tile> alteredTiles, bool b) {
@@ -117,9 +111,9 @@ namespace Beep.Rules {
                 }
             }
             PreviousColors.Add(MatchColor);
-            if (b) MatchColor = ChangeColorBrightness(MatchColor, 0.010F);
+            if (b) MatchColor = ChangeColorBrightness(MatchColor, -0.010F);
             else {
-                MatchColor = ChangeColorBrightness(MatchColor, -0.010F);
+                MatchColor = ChangeColorBrightness(MatchColor, 0.010F);
             }
             foreach (Tile t in TileList) {
 

@@ -103,7 +103,7 @@
             <xctk:IntegerUpDown Name="iudAmountPickerContagionRate"
                                 Height="20"
                                 Width="32"
-                                Value="6"
+                                Value="1"
                                 Maximum="6"
                                 Minimum="1"
                                     Padding="0,0,9,0"
