@@ -381,9 +381,10 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Name="border"
+                        <Border Name="border" CornerRadius="2"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 Background="{TemplateBinding Background}"
+                                Opacity="1"
                          
                                 
                                >
@@ -427,8 +428,12 @@
            
            
         </Style>
-       
 
+        <Style TargetType="{x:Type Border}">
+            <Setter Property="CornerRadius"
+                    Value="2" />
+
+        </Style>
 
     </Application.Resources>
 </Application>

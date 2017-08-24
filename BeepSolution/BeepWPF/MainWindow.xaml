@@ -86,10 +86,10 @@
                                   StaysOpenOnClick="true">
 
 
-                            <Button Width="157"
-                                    RenderTransformOrigin="0.06,0.567"
-                                    Margin="0,5"
-                                    Height="178">
+                            <StackPanel Width="157"
+                                        RenderTransformOrigin="0.06,0.567"
+                                        Margin="0"
+                                       >
                                 <MenuItem StaysOpenOnClick="true">
 
 
@@ -115,10 +115,11 @@
                                                                 Minimum="1"
                                                                 Padding="0,0,9,0"
                                                                 VerticalAlignment="Center"
-                                                                ValueChanged="AmountChanged"
+                                                               
                                                                 RenderTransformOrigin="4.307,11.068">
 
                                             </xctk:IntegerUpDown>
+                                            <!--ValueChanged="AmountChangedSizeWidth"-->
                                             <TextBlock>Heigth</TextBlock>
 
                                             <xctk:IntegerUpDown Name="iudAmountPickerHeigth"
@@ -130,8 +131,9 @@
                                                                 Minimum="1"
                                                                 Padding="0,0,9,0"
                                                                 VerticalAlignment="Center"
-                                                                ValueChanged="AmountChanged"
+                                                                
                                                                 RenderTransformOrigin="4.307,11.068" />
+                                            <!--ValueChanged="AmountChangedSizeHeight"-->
 
                                             <Button Content="Set size"
                                                     Click="BtnSize_Click">
@@ -141,7 +143,7 @@
 
                                 </MenuItem>
 
-                            </Button>
+                            </StackPanel>
 
 
                             <!--<MenuItem Header="Small"-->
@@ -212,10 +214,11 @@
                                   ItemContainerStyle="{DynamicResource MenuItemStyle1}"
                                   Template="{DynamicResource MenuItemControlTemplate2}"
                                   StaysOpenOnClick="true">
-                            <Button Width="157"
+                            <StackPanel Width="157"
+                                    
                                     RenderTransformOrigin="0.06,0.567"
                                     Margin="0,5"
-                                    Height="140"
+                                    
                                     >
                                 <StackPanel Orientation="Vertical">
                                 <TextBlock Margin="4,3,2,1"> Select Hexagon side length</TextBlock>
@@ -232,7 +235,7 @@
                                                     ValueChanged="AmountHexSizeChanged"
                                                     RenderTransformOrigin="4.307,11.068" />
                             </StackPanel>
-                            </Button>
+                            </StackPanel>
                         </MenuItem>
                         
                     </MenuItem>
@@ -396,6 +399,8 @@
                         <TextBox Text="Indefinite:"
                                  Width="60"
                                  Height="30"
+                                 
+                                 
                                   />
 
                         <CheckBox Name="chkIndefinite"

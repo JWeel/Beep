@@ -586,27 +586,37 @@ namespace Beep {
         //}
 
         private void BtnSize_Click(object sender, RoutedEventArgs e) {
-            int result;
-            Point newSize = new Point();
+            var result = System.Windows.MessageBox.Show("Be careful, setting the size will create a new painting. Your old painting will be lost. Would you like to continue?", "Warning!", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if(result == MessageBoxResult.Yes) {
+                Point newSize = new Point();
 
-            
-            if (iudAmountPickerWidth != null && iudAmountPickerHeigth != null) {
-                newSize.X = (int)iudAmountPickerWidth.Value;
-                newSize.Y = (int)iudAmountPickerHeigth.Value;
+
+                if (iudAmountPickerWidth != null && iudAmountPickerHeigth != null) {
+                    newSize.X = (int)iudAmountPickerWidth.Value;
+                    newSize.Y = (int)iudAmountPickerHeigth.Value;
+                }
+                bw.Resize(newSize, isBoxed);
+                UnprepareBeepWorldCanvas();
+
+                PrepareBeepWorldCanvas();
+
+                Refresh();
+                UpdateUsedColors();
             }
+            else {
+                iudAmountPickerWidth.Value = 10;
+                iudAmountPickerHeigth.Value = 10; 
+            }
+            
+           
+            
 
 
 
             
 
             
-            bw.Resize(newSize, isBoxed);
-            UnprepareBeepWorldCanvas();
-
-            PrepareBeepWorldCanvas();
-
-            Refresh();
-            UpdateUsedColors();
+           
 
             //foreach(UIElement c in canvas.Children) {
             //    canvas.Children.Remove(c);
@@ -694,6 +704,7 @@ namespace Beep {
 
             if (bw != null) {
                 if (!bw.Boxed) {
+
                     var result = System.Windows.MessageBox.Show("Be careful, by boxing the canvas you will lose your current painting. Would you like to proceed?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                     if (result == MessageBoxResult.Yes) {

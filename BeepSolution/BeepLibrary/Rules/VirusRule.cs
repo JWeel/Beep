@@ -82,21 +82,20 @@ namespace Beep.Rules {
 
         public Dictionary<Point,Tile> CalculateVirus(Dictionary<Point,Tile> alteredTiles, bool b) {
 
-            foreach (Tile t in tiles.Values) {
-                if (t.Color == MouseColor) {
-                    t.Color = MatchColor;
-
-
-                }
-            }
+           
 
             List<Tile> TileList = new List<Tile>();
             List<Color> PreviousColors = new List<Color>();
-
+            foreach (Tile t in tiles.Values) {
+               
+            }
 
             foreach (Tile t in tiles.Values) {
                 if (t.Color == MatchColor) {
-                    //add a contagionrate randomizer here
+                    if (t.Color == MouseColor) {
+                        TileList.Add(t);
+                    }
+                    // contagionrate randomizer here
                     for (int i = 1; i < ContagionRate + 1; i++) {
 
                         Point p = t.Neighbors[rand.Next(0, t.Neighbors.Count)];
@@ -111,6 +110,8 @@ namespace Beep.Rules {
                 }
             }
             PreviousColors.Add(MatchColor);
+
+
             if (b) MatchColor = ChangeColorBrightness(MatchColor, -0.010F);
             else {
                 MatchColor = ChangeColorBrightness(MatchColor, 0.010F);
