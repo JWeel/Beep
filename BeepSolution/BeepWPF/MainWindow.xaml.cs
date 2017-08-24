@@ -629,7 +629,7 @@ namespace Beep {
         }
 
         private void clrPickBackground_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
-            canvas.Background = new SolidColorBrush((Color)clrPickBackground.SelectedColor);
+            this.Background = new SolidColorBrush((Color)clrPickBackground.SelectedColor);
             //CanvasBackgroundColor
             
         }

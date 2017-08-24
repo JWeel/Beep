@@ -5,10 +5,10 @@ namespace Beep {
     /// <summary>
     /// Represents a tile in the two-dimensional hexagonal grid of an instance of Beep.BeepWorld
     /// </summary>
-    // TODO change Tile to struct, would make life simpler
     public class Tile {
 
-        public static readonly Color DEFAULT_COLOR = (Color) ColorConverter.ConvertFromString("#FF98FB98");
+        //public static readonly Color DEFAULT_COLOR = (Color)ColorConverter.ConvertFromString("#FF98FB98");
+        public static readonly Color DEFAULT_COLOR = (Color)ColorConverter.ConvertFromString("#FFFBF0DA");
 
         public List<Point> Neighbors { get; set; }
         public Point Coordinates { get; set; }
