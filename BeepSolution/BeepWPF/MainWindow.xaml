@@ -96,8 +96,7 @@
                                             <TextBlock>Boxed</TextBlock>
                                             <CheckBox x:Name="CheckIsBoxed"
                                                       IsChecked="False"
-                                                      Checked="IsBoxedChecked"
-                                                      Unchecked="IsBoxedUnchecked">
+                                                     >
                                             </CheckBox>
                                             <TextBlock>Width</TextBlock>
                                             <xctk:IntegerUpDown Name="iudAmountPickerWidth"

@@ -577,7 +577,9 @@ namespace Beep {
 
         private void BtnSize_Click(object sender, RoutedEventArgs e) {
             var result = System.Windows.MessageBox.Show("Be careful, setting the size will create a new painting. Your old painting will be lost. Would you like to continue?", "Warning!", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-            if(result == MessageBoxResult.Yes) {
+
+
+            if (result == MessageBoxResult.Yes) {
                 Point newSize = new Point();
 
 
@@ -585,7 +587,7 @@ namespace Beep {
                     newSize.X = (int)iudAmountPickerWidth.Value;
                     newSize.Y = (int)iudAmountPickerHeigth.Value;
                 }
-                bw.Resize(newSize, isBoxed);
+                bw.Resize(newSize, CheckIsBoxed.IsChecked.Value);
                 UnprepareBeepWorldCanvas();
 
                 PrepareBeepWorldCanvas();
@@ -594,23 +596,30 @@ namespace Beep {
                 UpdateUsedColors();
             }
             else {
-                iudAmountPickerWidth.Value = 10;
-                iudAmountPickerHeigth.Value = 10; 
+                CheckIsBoxed.IsChecked = bw.Boxed;
+               iudAmountPickerWidth.Value = bw.Size.X;
+                iudAmountPickerHeigth.Value = bw.Size.Y; 
             }
-            
+          
            
+                 
+
+                        //if (result == MessageBoxResult.Yes) {
+                            
+                        //    bw.Resize(bw.Size, CheckIsBoxed.IsChecked.Value);
+                        //    UnprepareBeepWorldCanvas();
+
+                        //    PrepareBeepWorldCanvas();
+
+                        //    Refresh();
+                        //    UpdateUsedColors(); ;
+                        //}
+                       
+            
             
 
-
-
-            
-
-            
+          
            
-
-            //foreach(UIElement c in canvas.Children) {
-            //    canvas.Children.Remove(c);
-            //}
         }
 
         // closes the application
@@ -686,50 +695,6 @@ namespace Beep {
             clrPickMouse.IsOpen = true;
         }
 
-        private void IsBoxedChecked(object sender, RoutedEventArgs e) {
-            if (bw != null) {
-                if (!bw.Boxed) {
-                    var result = System.Windows.MessageBox.Show("Be careful, by boxing the canvas you will lose your current painting. Would you like to proceed?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-
-                    if (result == MessageBoxResult.Yes) {
-                        isBoxed = true;
-                        bw.Resize(bw.Size, isBoxed);
-                        UnprepareBeepWorldCanvas();
-
-                        PrepareBeepWorldCanvas();
-
-                        Refresh();
-                        UpdateUsedColors(); ;
-                    } else {
-                        CheckIsBoxed.Checked -= IsBoxedChecked;
-                        CheckIsBoxed.Unchecked -= IsBoxedUnchecked;
-                        CheckIsBoxed.IsChecked = false;
-                        CheckIsBoxed.Unchecked += IsBoxedUnchecked;
-                        CheckIsBoxed.Checked += IsBoxedChecked;
-                    }
-                }
-            }
-        }
-
-
-
-        private void IsBoxedUnchecked(object sender, RoutedEventArgs e) {
-            var result = System.Windows.MessageBox.Show("Be careful, by unboxing the canvas you will lose your current painting. Would you like to proceed?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-            if (result == MessageBoxResult.Yes) {
-                isBoxed = false;
-                bw.Resize(bw.Size, isBoxed);
-                UnprepareBeepWorldCanvas();
-
-                PrepareBeepWorldCanvas();
-                Refresh();
-                UpdateUsedColors();
-            } else {
-                CheckIsBoxed.Checked -= IsBoxedChecked;
-                CheckIsBoxed.Unchecked -= IsBoxedUnchecked;
-                CheckIsBoxed.IsChecked = true;
-                CheckIsBoxed.Checked += IsBoxedChecked;
-                CheckIsBoxed.Unchecked += IsBoxedUnchecked;
-            }
-        }
+       
     }
 }
