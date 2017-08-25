@@ -50,30 +50,40 @@
               HorizontalAlignment="Stretch"
               VerticalAlignment="Stretch"
               Height="100">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="3*" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition />
-                <RowDefinition Height="1.5*" />
-                <RowDefinition Height="1.5*" />
-                <RowDefinition />
+                <RowDefinition Height="4*" />
             </Grid.RowDefinitions>
 
-            <Button Name="btnCollapse"
-                    Grid.Column="0"
-                    Grid.Row="0"
-                    Content="-"
-                    Width="20"
-                    Height="20"
-                    Margin="3,1,0,0"
-                    Padding="0,0,0,4"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Click="BtnCollapseOrExpandClick" />
-            <ComboBox Name="comboBoxRulePicker"
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Horizontal"
+                            Grid.Column="0"
+                            Grid.Row="0">
+                    <Button Name="btnCollapse"
+                            Content="-"
+                            Width="20"
+                            Height="20"
+                            Margin="3,1,0,0"
+                            Padding="0,0,0,4"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Click="BtnCollapseOrExpandClick" />
+                    <CheckBox Name="chkEnabled2"
+                              HorizontalAlignment="Left"
+                              VerticalAlignment="Center"
+                              Height="20"
+                              Width="20"
+                              Margin="1,2,0,0"
+                              IsChecked="True"
+                              Click="BtnEnableClick" />
+                </StackPanel>
+                <ComboBox Name="comboBoxRulePicker"
                       ItemsSource="{Binding RuleMenuItems, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Mode=OneWay}"
                       Height="20"
                       Text="{Binding RuleName, Mode=OneWay}"
@@ -85,70 +95,84 @@
                       IsReadOnly="True"
                       Cursor="None"
                       SelectionChanged="ComboBoxRuleSelected">
-            </ComboBox>
-            <StackPanel Orientation="Horizontal"
-                        HorizontalAlignment="Left"
-                        Grid.Column="1"
-                        Grid.Row="2">
-            <TextBox Name="txtRule1"
-                     Text="contagion rate"
-                         Height="20"
-                         Margin="1,0,0,0"
-                         HorizontalAlignment="Left"
-                     VerticalAlignment="Center"
-                     IsReadOnly="True"
-                     IsHitTestVisible="false" />
-            <xctk:IntegerUpDown Name="iudAmountPickerContagionRate"
-                                Height="20"
-                                Width="32"
-                                Value="1"
-                                Maximum="6"
-                                Minimum="1"
-                                    Padding="0,0,9,0"
-                                    Margin="1,0,0,0"
-                                    VerticalAlignment="Center"
-                                ValueChanged="AmountChanged"/>
-            <TextBox Name="txtRule2"
-                     Text="color"
-                     Height="20"
-                         Margin="1,0,0,0"
-                         HorizontalAlignment="Left"
-                     VerticalAlignment="Center"
-                     IsReadOnly="True"
-                     IsHitTestVisible="false" />
-            <xctk:ColorPicker Name="clrPickMatch"
-                              Height="20"
-                              Width="20"
-                                  Padding="0,0,0,1"
-                                  Margin="1,0,0,0"
-                                  BorderThickness="0"
-                              AvailableColorsHeader="Canvas Colors"
-                              DisplayColorAndName="False"
-                              SelectedColorChanged="ClrPickMatchChanged"
-                              ShowStandardColors="True"
-                              ShowDropDownButton="False"
-                              AdvancedButtonHeader="Specify"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal"
-                        Grid.Column="4"
-                        HorizontalAlignment="Right"
-                        Grid.Row="0">
-                <Button Name="btnDeleteRule"
-                        Content="X"
-                        Height="20"
-                        Width="20"
-                        Margin="0,1,1,0"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Click="DeleteButtonClick" />
-                <Button Name="btnDrag2"
-                        Content="O"
-                        Width="20"
-                        Height="20"
-                        Margin="0,1,5,0"
-                        HorizontalAlignment="Right"
-                        PreviewMouseDown="BtnDragMouseDown" />
-            </StackPanel>
+                </ComboBox>
+                <StackPanel Orientation="Horizontal"
+                            Grid.Column="2"
+                            HorizontalAlignment="Right">
+                    <Button Name="btnDeleteRule"
+                            Content="X"
+                            Height="20"
+                            Width="20"
+                            Margin="0,1,1,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Click="DeleteButtonClick" />
+                    <Button Name="btnDrag2"
+                            Content="O"
+                            Width="20"
+                            Height="20"
+                            Margin="0,1,5,0"
+                            HorizontalAlignment="Right"
+                            PreviewMouseDown="BtnDragMouseDown" />
+                </StackPanel>
+            </Grid>
+            <Grid Name="pnlOptions"
+                  Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="13*" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            Grid.Column="1"
+                            Grid.Row="1">
+                    <TextBox Name="txtRule1"
+                             Text="contagion rate"
+                             Height="20"
+                             Margin="1,0,0,0"
+                             HorizontalAlignment="Left"
+                             VerticalAlignment="Center"
+                             IsReadOnly="True"
+                             IsHitTestVisible="false" />
+                    <xctk:IntegerUpDown Name="iudAmountPickerContagionRate"
+                                        Height="20"
+                                        Width="32"
+                                        Value="1"
+                                        Maximum="6"
+                                        Minimum="1"
+                                        Padding="0,0,9,0"
+                                        Margin="1,0,0,0"
+                                        VerticalAlignment="Center"
+                                        ValueChanged="AmountChanged" />
+                    <TextBox Name="txtRule2"
+                             Text="color"
+                             Height="20"
+                             Margin="1,0,0,0"
+                             HorizontalAlignment="Left"
+                             VerticalAlignment="Center"
+                             IsReadOnly="True"
+                             IsHitTestVisible="false" />
+                    <xctk:ColorPicker Name="clrPickMatch"
+                                      Height="20"
+                                      Width="20"
+                                      Padding="0,0,0,1"
+                                      Margin="1,0,0,0"
+                                      BorderThickness="0"
+                                      AvailableColorsHeader="Canvas Colors"
+                                      DisplayColorAndName="False"
+                                      SelectedColorChanged="ClrPickMatchChanged"
+                                      ShowStandardColors="True"
+                                      ShowDropDownButton="False"
+                                      AdvancedButtonHeader="Specify" />
+                </StackPanel>
+            </Grid>
         </Grid>
     </Grid>
 </local:BeepRuleUserControl>

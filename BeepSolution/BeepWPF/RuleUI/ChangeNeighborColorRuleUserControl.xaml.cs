@@ -29,6 +29,9 @@ namespace Beep.RuleUI {
         protected override void SetInheritedComponents() {
             panelCollapsed = pnlCollapsed;
             panelExpanded = pnlExpanded;
+            panelOptions = pnlOptions;
+            checkEnabledCollapsed = chkEnabled1;
+            checkEnabledExpanded = chkEnabled2;
         }
 
         public ChangeNeighborColorRuleUserControl(ChangeNeighborColorRule rule) {
