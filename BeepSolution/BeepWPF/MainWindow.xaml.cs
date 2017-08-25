@@ -686,15 +686,9 @@ namespace Beep {
             clrPickMouse.IsOpen = true;
         }
 
-
-        
-
         private void IsBoxedChecked(object sender, RoutedEventArgs e) {
-            
-
             if (bw != null) {
                 if (!bw.Boxed) {
-
                     var result = System.Windows.MessageBox.Show("Be careful, by boxing the canvas you will lose your current painting. Would you like to proceed?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                     if (result == MessageBoxResult.Yes) {
@@ -706,31 +700,22 @@ namespace Beep {
 
                         Refresh();
                         UpdateUsedColors(); ;
-                    }
-                    else {
+                    } else {
                         CheckIsBoxed.Checked -= IsBoxedChecked;
                         CheckIsBoxed.Unchecked -= IsBoxedUnchecked;
                         CheckIsBoxed.IsChecked = false;
                         CheckIsBoxed.Unchecked += IsBoxedUnchecked;
                         CheckIsBoxed.Checked += IsBoxedChecked;
-
                     }
-
                 }
-
             }
-           
-
-
-
         }
 
 
 
         private void IsBoxedUnchecked(object sender, RoutedEventArgs e) {
             var result = System.Windows.MessageBox.Show("Be careful, by unboxing the canvas you will lose your current painting. Would you like to proceed?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-
-            if(result == MessageBoxResult.Yes) {
+            if (result == MessageBoxResult.Yes) {
                 isBoxed = false;
                 bw.Resize(bw.Size, isBoxed);
                 UnprepareBeepWorldCanvas();
@@ -738,54 +723,13 @@ namespace Beep {
                 PrepareBeepWorldCanvas();
                 Refresh();
                 UpdateUsedColors();
-               
-            }
-            else {
+            } else {
                 CheckIsBoxed.Checked -= IsBoxedChecked;
                 CheckIsBoxed.Unchecked -= IsBoxedUnchecked;
                 CheckIsBoxed.IsChecked = true;
                 CheckIsBoxed.Checked += IsBoxedChecked;
                 CheckIsBoxed.Unchecked += IsBoxedUnchecked;
-                // isBoxedCheckboxControl = true;
             }
-            
-            
-
         }
-
-        
-
-
-
-        //private void SwitchFullScreen() {
-        //    var window = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
-        //    if(window!= null) {
-        //        if(window.WindowStyle== WindowStyle.None) {
-        //            window.WindowStyle = WindowStyle.SingleBorderWindow;
-        //            window.WindowState = WindowState;
-
-        //        }
-        //        else {
-        //            WindowState = window.WindowState;
-        //            window.WindowStyle = WindowStyle.None;
-        //            window.WindowState = System.Windows.WindowState.Maximized;
-        //            window.Topmost = true;
-
-        //        }
-        //    }
-        //}
     }
-
-    /*
-     * 
-     * 
-            if (k) {
-                var watch = Stopwatch.StartNew();
-                Parallel.ForEach(bw.tiles.Values, tile => { tile.Color = Tile.DEFAULT_COLOR; });
-                watch.Stop();
-                Debug.WriteLine(watch.ElapsedTicks);
-            }
-     * 
-     * 
-     */
 }
