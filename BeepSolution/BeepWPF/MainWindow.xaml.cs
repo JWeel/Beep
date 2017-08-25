@@ -380,7 +380,7 @@ namespace Beep {
             BeepRulesUIComponents.Add(CreateBeepRuleUserControl(br));
         }
 
-        // creates BeepRuleUserControl
+        // creates BeepRuleUserControl, a UI component 
         private BeepRuleUserControl CreateBeepRuleUserControl(BeepRule rule) {
             BeepRuleUserControl bruc = BeepRuleUserControl.Create(rule);
             bruc.SelectedRule += RuleUserControlRuleSelection;
@@ -391,7 +391,7 @@ namespace Beep {
             return bruc;
         }
 
-        //
+        //select different rules in UI
         private void RuleUserControlRuleSelection(object sender, EventArgs e) {
             BeepRuleUserControl bruc = sender as BeepRuleUserControl;
 

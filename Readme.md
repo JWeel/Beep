@@ -11,7 +11,7 @@ This project stemmed from a combination of ideas involving procedural map genera
 Our algorithm is as follows:
 
 1. Given parameters for size of the painting, generate a hexagonal grid
-2. Based on user input, select a number of tiles within the grid and give these a specific color
+2. Based on user input, find a number of tiles within the grid
 3. Change the color of surrounding tiles according to various rules specified by the user
-4. Continuously loop over 3. where reference tiles are now the affected tiles
+4. Repeat point 3 iteratively or continuously based on user input
 5. Notice pretty things being made?
