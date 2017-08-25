@@ -8,12 +8,6 @@
         Title="Beep"
         Background="#FF0F2540"
         SizeChanged="OnSizeChanged">
-    <!--SizeToContent="WidthAndHeight"-->
-    <!-- SizeToContent="WidthAndHeight" is required to make screen size be exactly as defined below -->
-    <!--Height="480"
-          Width="960"-->
-    <!--HorizontalAlignment="Left"
-          VerticalAlignment="Top"-->
     <Grid Name="ParentGrid"
           MouseMove="OnMouseMove"
           MouseLeftButtonUp="OnMouseLeftUp">
@@ -21,36 +15,23 @@
             <ColumnDefinition Width="1.618*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <!--
-        
-        Width="{Binding ActualWidth, RelativeSource= {RelativeSource AncestorType={x:Type Window}}}"
-          Height="{Binding ActualWidth, RelativeSource= {RelativeSource AncestorType={x:Type Window}}}"
-          
-        -->
-
         <Grid Name="CanvasGrid"
               HorizontalAlignment="Left"
               Grid.Column="0"
               Background="#FB9966"
-              Margin="5,5,5,5"
-              >
+              Margin="5,5,5,5">
             <Canvas Name="canvas"
                     MouseLeftButtonDown="OnMouseLeftDown">
             </Canvas>
         </Grid>
-
-
         <Grid Name="ControlMenuGrid"
               MinWidth="200"
               Background="#DAC9A6"
               Grid.Column="1">
-
             <Grid.RowDefinitions>
                 <RowDefinition Height="4*" />
                 <RowDefinition Height="96*" />
             </Grid.RowDefinitions>
-
-
             <StackPanel Grid.Row="0"
                         HorizontalAlignment="Right"
                         Orientation="Horizontal"
@@ -61,17 +42,6 @@
                       Name="ControlMenu"
                       VerticalAlignment="Top"
                       Grid.Row="0">
-                    <MenuItem Header="_Beep"
-                              Style="{StaticResource menuParentStyle}"
-                              ItemContainerStyle="{DynamicResource MenuItemStyle1}"
-                              Template="{DynamicResource MenuItemControlTemplate2}">
-                        <MenuItem Header="_Load"
-                                  Click="BtnLoadClick" />
-                        <MenuItem Header="_Save"
-                                  Click="BtnSaveClick" />
-                        <MenuItem Header="_Quit"
-                                  Click="BtnQuitClick" />
-                    </MenuItem>
                     <MenuItem Header="_Edit"
                               Style="{StaticResource menuParentStyle}"
                               ItemContainerStyle="{DynamicResource MenuItemStyle1}"
@@ -95,8 +65,7 @@
                                         <StackPanel Orientation="Vertical">
                                             <TextBlock>Boxed</TextBlock>
                                             <CheckBox x:Name="CheckIsBoxed"
-                                                      IsChecked="False"
-                                                     >
+                                                      IsChecked="True">
                                             </CheckBox>
                                             <TextBlock>Width</TextBlock>
                                             <xctk:IntegerUpDown Name="iudAmountPickerWidth"
@@ -127,7 +96,7 @@
                                             <!--ValueChanged="AmountChangedSizeHeight"-->
 
                                             <Button Content="Set size"
-                                                    Click="BtnSize_Click">
+                                                    Click="BtnSizeClick">
                                             </Button>
                                         </StackPanel>
                                     </MenuItem.Header>
@@ -160,7 +129,7 @@
                                                       SelectedColorChanged="ClrPickBackgroundSelectedColorChanged"
                                                       ShowDropDownButton="False"
                                                       AdvancedButtonHeader="Specify"
-                                                      SelectedColor="#FFFFFADE" />
+                                                      SelectedColor="#FF0F2540" />
                                 </Button>
                             </StackPanel>
 
@@ -194,13 +163,8 @@
                                                   ShowDropDownButton="False"
                                                   AdvancedButtonHeader="Specify"
                                                   SelectedColor="Black" />
-
                             </StackPanel>
-
                         </MenuItem>
-
-
-
                         <MenuItem Header="_Hexagon Size"
                                   Style="{StaticResource menuParentStyle}"
                                   ItemContainerStyle="{DynamicResource MenuItemStyle1}"
@@ -211,7 +175,6 @@
                                         Margin="0,5">
                                 <StackPanel Orientation="Vertical">
                                     <TextBlock Margin="4,3,2,1"> Select Hexagon side length</TextBlock>
-
                                     <xctk:IntegerUpDown Name="iudAmountPickerHexagonSize"
                                                         Height="20"
                                                         Width="50"
@@ -226,32 +189,25 @@
                                 </StackPanel>
                             </StackPanel>
                         </MenuItem>
-
                     </MenuItem>
-
-
-
-
-
-                    <!--<MenuItem Header="_View"
-                              Style="{StaticResource menuParentStyle}"
-                              ItemContainerStyle="{DynamicResource MenuItemStyle1}"
-                              Template="{DynamicResource MenuItemControlTemplate2}">
-                        <MenuItem Header="Full Screen"
-                                  Click="SetFullscreenClick" />
-
-                    </MenuItem>-->
-
                     <MenuItem Name="mnuAddRule"
                               Header="_Add Rule"
                               Style="{StaticResource menuParentStyle}"
                               ItemContainerStyle="{DynamicResource MenuItemStyle1}"
                               Template="{DynamicResource MenuItemControlTemplate2}">
                     </MenuItem>
-                    
 
-
-
+                    <MenuItem Header="_Beep"
+                              Style="{StaticResource menuParentStyle}"
+                              ItemContainerStyle="{DynamicResource MenuItemStyle1}"
+                              Template="{DynamicResource MenuItemControlTemplate2}">
+                        <MenuItem Header="_Load"
+                                  Click="BtnLoadClick" />
+                        <MenuItem Header="_Save"
+                                  Click="BtnSaveClick" />
+                        <MenuItem Header="_Quit"
+                                  Click="BtnQuitClick" />
+                    </MenuItem>
 
                 </Menu>
             </StackPanel>
