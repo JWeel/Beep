@@ -80,7 +80,6 @@
                                                                 RenderTransformOrigin="4.307,11.068">
 
                                             </xctk:IntegerUpDown>
-                                            <!--ValueChanged="AmountChangedSizeWidth"-->
                                             <TextBlock>Heigth</TextBlock>
 
                                             <xctk:IntegerUpDown Name="iudAmountPickerHeigth"
@@ -93,8 +92,6 @@
                                                                 Padding="0,0,9,0"
                                                                 VerticalAlignment="Center"
                                                                 RenderTransformOrigin="4.307,11.068" />
-                                            <!--ValueChanged="AmountChangedSizeHeight"-->
-
                                             <Button Content="Set size"
                                                     Click="BtnSizeClick">
                                             </Button>
@@ -321,7 +318,6 @@
                                             Minimum="1"
                                             Padding="0,0,9,0"
                                             VerticalAlignment="Center"
-                                            ValueChanged="AmountChanged"
                                             RenderTransformOrigin="4.307,11.068" />
                     </StackPanel>
                     <StackPanel HorizontalAlignment="Center"

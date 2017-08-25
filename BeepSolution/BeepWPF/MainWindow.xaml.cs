@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Data.Entity;
 using System.Text.RegularExpressions;
+using System.Windows.Media.Imaging;
 
 namespace Beep {
     /// <summary>
@@ -455,13 +456,8 @@ namespace Beep {
             Refresh();
             UpdateUsedColors();
         }
-
-        // ???? what is this ¿¿¿¿
-        private void AmountChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {
-          
-        }
-
-        // experimental drag drop code
+        
+        // starts a drag drop sequence
         private void RuleUserControlDragPreviewMouseDown(object sender, MouseEventArgs e) {
             if (sender is BeepRuleUserControl && e.LeftButton == MouseButtonState.Pressed) {
                 BeepRuleUserControl draggedItem = sender as BeepRuleUserControl;
@@ -469,6 +465,7 @@ namespace Beep {
             }
         }
 
+        // swaps position of user controls after drag drop
         private void RuleUserControlDragDropped(object sender, DragEventArgs e) {
             BeepRuleUserControl draggedBruc = e.Data.GetData("drag") as BeepRuleUserControl;
             BeepRuleUserControl targetBruc = ((ListBoxItem)(sender)).DataContext as BeepRuleUserControl;
@@ -508,6 +505,18 @@ namespace Beep {
                 File.WriteAllText(path, createText);
 
                 // save
+                Size size = new Size(this.Width, this.Height);
+                canvas.Measure(size);
+
+                var rtb = new RenderTargetBitmap((int)this.Width, (int)this.Height, 96, 96, PixelFormats.Pbgra32);
+                rtb.Render(canvas);
+
+                var enc = new PngBitmapEncoder();
+                enc.Frames.Add(BitmapFrame.Create(rtb));
+
+                using (var stm = File.Create(name + ".png")) {
+                    enc.Save(stm);
+                }
             }
         }
 
