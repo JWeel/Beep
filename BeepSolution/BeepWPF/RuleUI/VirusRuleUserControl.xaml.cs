@@ -38,6 +38,7 @@ namespace Beep.RuleUI {
             SetInheritedComponents();
             clrPickMatch.SelectedColor = rule.MatchColor;
             rule.MouseColor = MainWindow.MouseClickColor;
+            rule.ColorNeighboringMatchers = ChangeVirusColor.IsChecked.Value;
         }
         private void AmountChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {
             (Rule as VirusRule).ContagionRate = (int)e.NewValue;
@@ -45,6 +46,11 @@ namespace Beep.RuleUI {
 
         private void ClrPickMatchChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e) {
             (Rule as VirusRule).MatchColor = (Color)e.NewValue;
+        }
+
+        private void ChangeVirusColorClick(object sender, RoutedEventArgs e) {
+            
+           (Rule as VirusRule).ColorNeighboringMatchers = ChangeVirusColor.IsChecked.Value;
         }
     }
 }

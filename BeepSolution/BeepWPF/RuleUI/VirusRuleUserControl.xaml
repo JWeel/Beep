@@ -84,17 +84,17 @@
                               Click="BtnEnableClick" />
                 </StackPanel>
                 <ComboBox Name="comboBoxRulePicker"
-                      ItemsSource="{Binding RuleMenuItems, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Mode=OneWay}"
-                      Height="20"
-                      Text="{Binding RuleName, Mode=OneWay}"
-                      Grid.Column="1"
-                      Grid.Row="0"
-                      Padding="5,0,0,1"
-                      Margin="5,1,0,0"
-                      HorizontalAlignment="Left"
-                      IsReadOnly="True"
-                      Cursor="None"
-                      SelectionChanged="ComboBoxRuleSelected">
+                          ItemsSource="{Binding RuleMenuItems, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Mode=OneWay}"
+                          Height="20"
+                          Text="{Binding RuleName, Mode=OneWay}"
+                          Grid.Column="1"
+                          Grid.Row="0"
+                          Padding="5,0,0,1"
+                          Margin="5,1,0,0"
+                          HorizontalAlignment="Left"
+                          IsReadOnly="True"
+                          Cursor="None"
+                          SelectionChanged="ComboBoxRuleSelected">
                 </ComboBox>
                 <StackPanel Orientation="Horizontal"
                             Grid.Column="2"
@@ -129,6 +129,24 @@
                     <RowDefinition Height="2*" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
+                <TextBlock Margin="55.99,0,64.02,0"
+                           Grid.Row="2"
+                           Grid.Column="1"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center">
+                    Change virus color
+                </TextBlock>
+                <CheckBox HorizontalAlignment="Center"
+                          VerticalAlignment="Top"
+                          Grid.Column="1"
+                          Margin="146,5,10,6"
+                          Grid.Row="2"
+                          Grid.RowSpan="2"
+                          Name="ChangeVirusColor"
+                          Click="ChangeVirusColorClick"
+                          IsChecked="True">
+
+                </CheckBox>
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Center"
                             Grid.Column="1"

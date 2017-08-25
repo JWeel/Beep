@@ -20,6 +20,7 @@
                          Color="#080808" />
         <SolidColorBrush x:Key="Menu.Static.Border"
                          Color="Transparent" />
+       
         <Style x:Key="MenuItemStyle1"
                TargetType="{x:Type MenuItem}">
             <Setter Property="HorizontalContentAlignment"
@@ -114,7 +115,7 @@
                                       Width="16" />
                     <Border x:Name="GlyphPanel"
                             BorderBrush="#FF0F2540"
-                            BorderThickness="1"
+                            BorderThickness="0"
                             Background="#FF0F2540"
                             ClipToBounds="False"
                             HorizontalAlignment="Center"
@@ -243,7 +244,7 @@
                                 BorderBrush="#FF999999"
                                 BorderThickness="1"
                                 Background="#080808"
-                                Padding="2">
+                                Padding="1">
                             <ScrollViewer x:Name="SubMenuScrollViewer"
                                           Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
                                 <Grid RenderOptions.ClearTypeHint="Enabled">
