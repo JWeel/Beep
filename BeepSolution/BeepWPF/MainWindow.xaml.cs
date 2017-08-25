@@ -284,7 +284,7 @@ namespace Beep {
             }
         }
 
-        //
+        //changes color tiles on mouse left click
         private void OnMouseLeftDown(object sender, MouseButtonEventArgs e) {
             PixelPoint p = e.GetPosition(sender as IInputElement);
             Point axialPoint = MouseCoordinatesToAxialCoordinates(p.X, p.Y);
@@ -379,7 +379,7 @@ namespace Beep {
             BeepRulesUIComponents.Add(CreateBeepRuleUserControl(br));
         }
 
-        //
+        // creates BeepRuleUserControl
         private BeepRuleUserControl CreateBeepRuleUserControl(BeepRule rule) {
             BeepRuleUserControl bruc = BeepRuleUserControl.Create(rule);
             bruc.SelectedRule += RuleUserControlRuleSelection;
