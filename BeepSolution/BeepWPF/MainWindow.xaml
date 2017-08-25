@@ -110,6 +110,7 @@
                                   ItemContainerStyle="{DynamicResource MenuItemStyle1}"
                                   Template="{DynamicResource MenuItemControlTemplate2}"
                                   StaysOpenOnClick="true">
+                           
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock>Choose Background Color</TextBlock>
                                 <Button Width="55">
@@ -192,6 +193,7 @@
                               ItemContainerStyle="{DynamicResource MenuItemStyle1}"
                               Template="{DynamicResource MenuItemControlTemplate2}">
                     </MenuItem>
+
                     <MenuItem Header="_Beep"
                               Style="{StaticResource menuParentStyle}"
                               ItemContainerStyle="{DynamicResource MenuItemStyle1}"
@@ -203,6 +205,7 @@
                         <MenuItem Header="_Quit"
                                   Click="BtnQuitClick" />
                     </MenuItem>
+
                 </Menu>
             </StackPanel>
 

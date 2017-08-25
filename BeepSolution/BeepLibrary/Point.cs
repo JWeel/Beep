@@ -20,7 +20,7 @@ namespace Beep {
             return string.Format("({0},{1})", X, Y);
         }
         
-
+        //default Equals constructors
         public bool Equals(Point p) {
             return this.X == p.X && this.Y == p.Y;
         }

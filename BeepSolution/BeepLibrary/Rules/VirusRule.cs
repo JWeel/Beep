@@ -32,7 +32,7 @@ namespace Beep.Rules {
             MouseColor = colorArguments[1];
             ContagionRate = intArguments[0];
             ColorNeighboringMatchers = boolArguments[0];
-            IsAbleToInfect = boolArguments[1];
+           // IsAbleToInfect = boolArguments[1];
 
         }
         
@@ -86,6 +86,7 @@ namespace Beep.Rules {
 
             List<Tile> TileList = new List<Tile>();
             List<Color> PreviousColors = new List<Color>();
+
             foreach (Tile t in tiles.Values) {
                
             }
@@ -96,26 +97,31 @@ namespace Beep.Rules {
                         TileList.Add(t);
                     }
                     // contagionrate randomizer here
-                    for (int i = 1; i < ContagionRate + 1; i++) {
+                    for (int i = 0; i < ContagionRate; i++) {
 
                         Point p = t.Neighbors[rand.Next(0, t.Neighbors.Count)];
 
                         if (tiles[p].Color == MatchColor || PreviousColors.Contains(tiles[p].Color)) {
                             //Debug.WriteLine("previous color hit");
-                            continue;
+                            //continue;
                         }
-                        TileList.Add(tiles[p]);
-                        alteredTiles[p].Color = MatchColor;
+                        else {
+                            TileList.Add(tiles[p]);
+                            alteredTiles[p].Color = MatchColor;
+                        }
+                        
                     }
                 }
             }
-            PreviousColors.Add(MatchColor);
+            //PreviousColors.Add(MatchColor);
 
-
-            if (b) MatchColor = ChangeColorBrightness(MatchColor, -0.010F);
-            else {
-                MatchColor = ChangeColorBrightness(MatchColor, 0.020F);
+            if (ColorNeighboringMatchers) {
+                if (b) MatchColor = ChangeColorBrightness(MatchColor, -0.010F);
+                else {
+                    MatchColor = ChangeColorBrightness(MatchColor, 0.020F);
+                }
             }
+            PreviousColors.Add(MatchColor);
             foreach (Tile t in TileList) {
 
                 alteredTiles[t.Coordinates].Color = MatchColor;
