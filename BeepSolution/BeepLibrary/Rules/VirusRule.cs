@@ -47,7 +47,7 @@ namespace Beep.Rules {
         public bool ColorNeighboringMatchers { get; set; }
 
         int counter = 0;
-        bool brightnessDown = true;
+        bool brightnessDown;
 
 
         public override Dictionary<Point, Tile> Run() {
@@ -63,16 +63,16 @@ namespace Beep.Rules {
         public bool brightnessCheck(bool b) {
             if(b && counter < 10) {
                 counter++;
-                return b;
+                return true;
             }else if(b && counter == 10) {
                 counter = 0;
-                return !b;
+                return  false;
             }else if (!b && counter < 10) {
                 counter++;
-                return !b;
+                return false;
             } else if(!b && counter == 10) {
                 counter = 0;
-                return b;
+                return true;
             }
             else {
                 return b;
@@ -114,7 +114,7 @@ namespace Beep.Rules {
 
             if (b) MatchColor = ChangeColorBrightness(MatchColor, -0.010F);
             else {
-                MatchColor = ChangeColorBrightness(MatchColor, 0.010F);
+                MatchColor = ChangeColorBrightness(MatchColor, 0.020F);
             }
             foreach (Tile t in TileList) {
 
