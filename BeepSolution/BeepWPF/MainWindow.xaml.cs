@@ -46,6 +46,8 @@ namespace Beep {
         private static readonly Color HEXAGON_FILL_COLOR = (Color)ColorConverter.ConvertFromString("#FFDEAD"); // NavajoWhite LOL
         private static readonly Color HEXAGON_FUN_COLOR = (Color)ColorConverter.ConvertFromString("#FFFFD700");
 
+        private static readonly Color HEXAGON_HIGHLIGHT_COLOR = Brushes.SlateGray.Color;
+
         private readonly double WINDOW_MIN_WIDTH;
 
         public static Color MouseClickColor = (Color)ColorConverter.ConvertFromString("#FF66BAB7");
@@ -142,7 +144,7 @@ namespace Beep {
             WINDOW_MIN_WIDTH = ControlMenuGrid.MinWidth * 1.618 + ControlMenuGrid.MinWidth;
         }
 
-        private void CalculateHexPolygonSize() {
+    private void CalculateHexPolygonSize() {
          HEXAGON_HORIZONTAL_LENGTH = Sqrt(3) * HEXAGON_SIDE_LENGTH;
          HEXAGON_HORIZONTAL_HALF = HEXAGON_HORIZONTAL_LENGTH / 2;
          HEXAGON_VERTICAL_EDGE = HEXAGON_SIDE_LENGTH / 2;
@@ -181,9 +183,12 @@ namespace Beep {
         private void UpdateUsedColors() {
             List<Color> usedColors = new List<Color>();
 
-            Parallel.ForEach(bw.tiles.Values, tile => {
-                if (!usedColors.Contains(tile.Color) && usedColors.Count<120) usedColors.Add(tile.Color);
-            });
+            //Parallel.ForEach(bw.tiles.Values, tile => {
+            //    if (!usedColors.Contains(tile.Color) && usedColors.Count<120) usedColors.Add(tile.Color);
+            //});
+            foreach(Tile tile in bw.tiles.Values) {
+                if (!usedColors.Contains(tile.Color) && usedColors.Count < 120) usedColors.Add(tile.Color);
+            }
 
             UpdateColorPickers(ColorsToColorItems(usedColors));
         }
@@ -244,9 +249,8 @@ namespace Beep {
             Point axialPoint = MouseCoordinatesToAxialCoordinates(p.X, p.Y);
             Polygon po = (Polygon)this.FindName(HexagonPointToName(axialPoint));
 
-            //MouseText.Text = (int)(p.X) + " , " + (int)(p.Y);
-
             if (po != null) {
+                // dragging a color over tiles
                 if (useMouseDownColorDrag && isMouseDownColorDragging) {
                     if ((po.Fill as SolidColorBrush).Color != MouseClickColor) {
                         bw.tiles[axialPoint].Color = MouseClickColor;
@@ -256,14 +260,11 @@ namespace Beep {
                         }
                         else if ((po.Stroke as SolidColorBrush).Color != fixedBorderColor) po.Stroke = new SolidColorBrush(fixedBorderColor);
                     }
+                // regular tile highlighting
                 } else {
                     if (po != highlightedHexPolygon) {
-                        po.Fill = Brushes.SlateGray;
-                        po.Stroke = Brushes.SlateGray;
-
-                        if (highlightedHexPolygon != null && (highlightedHexPolygon.Fill as SolidColorBrush).Color == (Brushes.BlueViolet as SolidColorBrush).Color) {
-                            highlightedHexPolygon = null;
-                        }
+                        po.Fill = new SolidColorBrush(HEXAGON_HIGHLIGHT_COLOR);
+                        po.Stroke = po.Fill;
 
                         if (highlightedHexPolygon != null) {
                             highlightedHexPolygon.Fill = new SolidColorBrush(bw.tiles[HexagonNameToPoint(highlightedHexPolygon.Name)].Color);
@@ -273,6 +274,7 @@ namespace Beep {
                         highlightedHexPolygon = po;
                     }
                 }
+            // mouse moves out of canvas
             } else {
                 if (highlightedHexPolygon != null) {
                     highlightedHexPolygon.Fill = new SolidColorBrush(bw.tiles[HexagonNameToPoint(highlightedHexPolygon.Name)].Color);
@@ -288,11 +290,15 @@ namespace Beep {
             Point axialPoint = MouseCoordinatesToAxialCoordinates(p.X, p.Y);
             if (bw.tiles.ContainsKey(axialPoint)) {
                 bw.tiles[axialPoint].Color = MouseClickColor;
+
+                Polygon po = (Polygon)this.FindName(HexagonPointToName(axialPoint));
+                po.Fill = new SolidColorBrush(MouseClickColor);
+                if (useRelativeBorderColor) po.Stroke = po.Fill;
+                else po.Stroke = new SolidColorBrush(fixedBorderColor);
+
                 UpdateRules();
                 UpdateUsedColors();
             }
-            //MouseTextCopy.Text = axialPoint.X + " , " + axialPoint.Y;
-
             if (useMouseDownColorDrag) isMouseDownColorDragging = true;
         }
 
@@ -304,8 +310,8 @@ namespace Beep {
         // converts coordinates of mouse to axial coordinates
         private Point MouseCoordinatesToAxialCoordinates(double mouseX, double mouseY) {
             // invert offset
-            double offsetX = mouseX - HEXAGON_HORIZONTAL_HALF; // DONT ASK ME WHY
-            double offsetY = mouseY - HEXAGON_SIDE_LENGTH; // I HAVE NO IDEA
+            double offsetX = mouseX - HEXAGON_HORIZONTAL_HALF - (HEXAGON_SIDE_LENGTH / 4); // DONT ASK ME WHY
+            double offsetY = mouseY - HEXAGON_SIDE_LENGTH - (HEXAGON_SIDE_LENGTH/4); // I HAVE NO IDEA
 
             // apply axial conversion
             double axialX = (offsetX * Sqrt(3) / 3 - offsetY / 3) / HEXAGON_SIDE_LENGTH;
@@ -500,6 +506,8 @@ namespace Beep {
                 string path = String.Format("{0}-w{1}h{2}b{3}.beep", name, bw.Size.X, bw.Size.Y, bw.Boxed ? "1" : "0");
 
                 File.WriteAllText(path, createText);
+
+                // save
             }
         }
 
@@ -535,8 +543,9 @@ namespace Beep {
                         }
                     }
                 }
-                Refresh();
                 file.Close();
+                Refresh();
+                UpdateUsedColors();
             }
         }
 
@@ -551,75 +560,28 @@ namespace Beep {
             highlightedHexPolygon = null;
         }
 
-        //private void ResizeCanvasToFullScreen() {
-        //    Point newSize = new Point();
+        private void BtnSizeClick(object sender, RoutedEventArgs e) {
+            if (!this.IsInitialized) return;
 
-        //    bool b = true;
+            int newSizeX = (int)iudAmountPickerWidth.Value;
+            int newSizeY = (int)iudAmountPickerHeigth.Value;
+            bool boxed = (bool)CheckIsBoxed.IsChecked;
 
+            if (newSizeX == bw.Size.X && newSizeY == bw.Size.Y && boxed == bw.Boxed) return;
 
-        //    newSize.X = (int)CanvasGrid.ActualWidth;
-        //    newSize.Y = (int)CanvasGrid.ActualHeight;
-        //    ResizeCanvas(newSize, b);
-
-
-        //}
-
-        //private void ResizeCanvas(Point p, bool b) {
-        //    Point newSize = new Point();
-        //    bw.Resize(newSize, b);
-        //    UnprepareBeepWorldCanvas();
-
-        //    PrepareBeepWorldCanvas();
-
-        //    Refresh();
-        //    UpdateUsedColors();
-        //}
-
-        private void BtnSize_Click(object sender, RoutedEventArgs e) {
             var result = System.Windows.MessageBox.Show("Be careful, setting the size will create a new painting. Your old painting will be lost. Would you like to continue?", "Warning!", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-
-
             if (result == MessageBoxResult.Yes) {
-                Point newSize = new Point();
-
-
-                if (iudAmountPickerWidth != null && iudAmountPickerHeigth != null) {
-                    newSize.X = (int)iudAmountPickerWidth.Value;
-                    newSize.Y = (int)iudAmountPickerHeigth.Value;
-                }
-                bw.Resize(newSize, CheckIsBoxed.IsChecked.Value);
                 UnprepareBeepWorldCanvas();
-
+                bw.Resize(newSizeX, newSizeY, boxed);
                 PrepareBeepWorldCanvas();
-
                 Refresh();
                 UpdateUsedColors();
-            }
-            else {
+            } else {
+                // restore current values
                 CheckIsBoxed.IsChecked = bw.Boxed;
-               iudAmountPickerWidth.Value = bw.Size.X;
+                iudAmountPickerWidth.Value = bw.Size.X;
                 iudAmountPickerHeigth.Value = bw.Size.Y; 
             }
-          
-           
-                 
-
-                        //if (result == MessageBoxResult.Yes) {
-                            
-                        //    bw.Resize(bw.Size, CheckIsBoxed.IsChecked.Value);
-                        //    UnprepareBeepWorldCanvas();
-
-                        //    PrepareBeepWorldCanvas();
-
-                        //    Refresh();
-                        //    UpdateUsedColors(); ;
-                        //}
-                       
-            
-            
-
-          
-           
         }
 
         // closes the application
@@ -676,11 +638,6 @@ namespace Beep {
         private void SetFullscreenClick(object sender, RoutedEventArgs e) {
             ControlMenuGrid.Visibility = Visibility.Collapsed;
             ParentGrid.ColumnDefinitions.RemoveAt(0);
-            //ResizeCanvasToFullScreen();
-           
-            
-           
-
         }
 
         // hides or shows the rules part of the window depending on overall window size
@@ -694,7 +651,5 @@ namespace Beep {
         private void ClrPickMouseButtonClick(object sender, RoutedEventArgs e) {
             clrPickMouse.IsOpen = true;
         }
-
-       
     }
 }
